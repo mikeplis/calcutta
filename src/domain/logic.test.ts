@@ -9,6 +9,7 @@ import {
   isLotOver,
   getActivePlayerTurn,
   applyAction,
+  MAX_UNDO_DEPTH,
 } from './logic'
 
 // -- Helpers --
@@ -675,6 +676,53 @@ describe('Full auction flow', () => {
     expect(state.players.find((p) => p.id === 'p1')!.balance).toBe(1000)
     expect(state.players.find((p) => p.id === 'p2')!.balance).toBe(980)
     expect(state.players.find((p) => p.id === 'p3')!.balance).toBe(985)
+  })
+})
+
+describe('stateHistory cap', () => {
+  it('never exceeds MAX_UNDO_DEPTH after many actions', () => {
+    let state = startAuction(
+      makeBaseState({
+        players: [
+          makePlayer({ id: 'p1', name: 'Alice', balance: 100000 }),
+          makePlayer({ id: 'p2', name: 'Bob', balance: 100000 }),
+          makePlayer({ id: 'p3', name: 'Charlie', balance: 100000 }),
+        ],
+        lots: Array.from({ length: 100 }, (_, i) => makeLot({ id: `lot${i}` })),
+        lotStates: Object.fromEntries(
+          Array.from({ length: 100 }, (_, i) => [`lot${i}`, { status: 'pending' as const }])
+        ),
+      })
+    )
+
+    // Each lot: open + 2 passes = 3 history entries per lot
+    for (let i = 0; i < 100; i++) {
+      // Opener alternates based on who won last lot
+      const opener = state.openerPlayerId
+      state = placeBid(state, opener, 1)
+      if (state.phase === 'complete') break
+      const lotState = state.lotStates[`lot${i}`]
+      if (lotState.status === 'sold') continue
+      // Pass remaining players
+      for (const p of state.players) {
+        if (p.id !== opener) {
+          state = pass(state, p.id)
+          if (state.lotStates[`lot${i}`]?.status === 'sold') break
+        }
+      }
+      if (state.phase === 'complete') break
+    }
+
+    expect(state.stateHistory.length).toBeLessThanOrEqual(MAX_UNDO_DEPTH)
+  })
+
+  it('stateForHistory has empty stateHistory (no nesting)', () => {
+    let state = startAuction(makeBaseState())
+    state = placeBid(state, 'p1', 10)
+
+    // The history entry should have an empty stateHistory
+    expect(state.stateHistory.length).toBe(1)
+    expect(state.stateHistory[0].stateHistory).toEqual([])
   })
 })
 

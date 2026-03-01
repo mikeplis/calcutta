@@ -1,5 +1,7 @@
 import type { AuctionState, AuctionAction, LotAuctionState, Player } from './types'
 
+export const MAX_UNDO_DEPTH = 50
+
 export function getCurrentLot(state: AuctionState) {
   return state.lots[state.currentLotIndex] ?? null
 }
@@ -243,7 +245,7 @@ export function applyAction(state: AuctionState, action: AuctionAction): Auction
           ...state,
           lotStates: newLotStates,
           openerPlayerId: actualOpener,
-          stateHistory: [...state.stateHistory, stateForHistory],
+          stateHistory: [...state.stateHistory, stateForHistory].slice(-MAX_UNDO_DEPTH),
         }
 
         // Check if lot is immediately over (only one player can afford to raise)
@@ -270,7 +272,7 @@ export function applyAction(state: AuctionState, action: AuctionAction): Auction
       const newState: AuctionState = {
         ...state,
         lotStates: newLotStates,
-        stateHistory: [...state.stateHistory, stateForHistory],
+        stateHistory: [...state.stateHistory, stateForHistory].slice(-MAX_UNDO_DEPTH),
       }
 
       // Auto-resolve if lot is over
@@ -316,7 +318,7 @@ export function applyAction(state: AuctionState, action: AuctionAction): Auction
       const newState: AuctionState = {
         ...state,
         lotStates: newLotStates,
-        stateHistory: [...state.stateHistory, stateForHistory],
+        stateHistory: [...state.stateHistory, stateForHistory].slice(-MAX_UNDO_DEPTH),
       }
 
       // Check if lot is over after this pass
@@ -356,7 +358,7 @@ export function applyAction(state: AuctionState, action: AuctionAction): Auction
         lotStates: newLotStates,
         currentLotIndex: nextLotIndex,
         phase: isComplete ? 'complete' : 'active',
-        stateHistory: [...state.stateHistory, stateForHistory],
+        stateHistory: [...state.stateHistory, stateForHistory].slice(-MAX_UNDO_DEPTH),
       }
     }
 
