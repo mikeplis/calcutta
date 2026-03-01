@@ -31,12 +31,22 @@ export function SummaryScreen({ onNewAuction }: { onNewAuction: () => void }) {
     return { name: player.name, totalSpent, lotsWon: lotsWonDetails.length, balance: player.balance }
   })
 
+  const escapeCsvField = (value: string | number): string => {
+    const str = String(value)
+    if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+      return `"${str.replace(/"/g, '""')}"`
+    }
+    return str
+  }
+
   const handleExportCsv = () => {
     const header = 'Lot,Teams,Winner,Price\n'
-    const rows = soldLots.map((l) => `"${l.label}","${l.teams}","${l.winner}",${l.price}`).join('\n')
+    const rows = soldLots
+      .map((l) => `${escapeCsvField(l.label)},${escapeCsvField(l.teams)},${escapeCsvField(l.winner)},${l.price}`)
+      .join('\n')
     const playerHeader = '\n\nPlayer,Total Spent,Lots Won,Remaining Balance\n'
     const playerRows = playerSummaries
-      .map((p) => `"${p.name}",${p.totalSpent},${p.lotsWon},${p.balance}`)
+      .map((p) => `${escapeCsvField(p.name)},${p.totalSpent},${p.lotsWon},${p.balance}`)
       .join('\n')
 
     const csv = header + rows + playerHeader + playerRows
