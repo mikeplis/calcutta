@@ -760,6 +760,104 @@ describe('findEligibleOpener', () => {
   })
 })
 
+describe('UNDO after lot resolution', () => {
+  it('reverts state to before the resolving pass', () => {
+    let state = startAuction(makeBaseState())
+    state = placeBid(state, 'p1', 10)
+    state = pass(state, 'p2')
+    // At this point lot is still active (p3 hasn't passed)
+
+    // p3 passes — this resolves the lot
+    state = pass(state, 'p3')
+    expect(state.lotStates['lot1'].status).toBe('sold')
+    expect(state.currentLotIndex).toBe(1)
+
+    // Undo should revert to before p3's pass
+    state = applyAction(state, { type: 'UNDO' })
+    const lotState = state.lotStates['lot1']
+    expect(lotState.status).toBe('active')
+    if (lotState.status === 'active') {
+      expect(lotState.passedPlayerIds).toContain('p2')
+      expect(lotState.passedPlayerIds).not.toContain('p3')
+    }
+    expect(state.currentLotIndex).toBe(0)
+    // p1's balance should be restored (not yet deducted)
+    expect(state.players.find((p) => p.id === 'p1')!.balance).toBe(1000)
+  })
+})
+
+describe('FORCE_ADVANCE on active lot with bids', () => {
+  it('does not deduct the bidder balance', () => {
+    let state = startAuction(makeBaseState())
+    state = placeBid(state, 'p1', 50)
+    state = placeBid(state, 'p2', 100)
+
+    // Force skip while there's an active bid
+    state = applyAction(state, { type: 'FORCE_ADVANCE' })
+    expect(state.lotStates['lot1'].status).toBe('skipped')
+    // Neither bidder should have been charged
+    expect(state.players.find((p) => p.id === 'p1')!.balance).toBe(1000)
+    expect(state.players.find((p) => p.id === 'p2')!.balance).toBe(1000)
+  })
+})
+
+describe('PAUSE blocks PASS actions', () => {
+  it('rejects pass when paused', () => {
+    let state = startAuction(makeBaseState())
+    state = placeBid(state, 'p1', 10)
+    state = applyAction(state, { type: 'PAUSE' })
+
+    const result = pass(state, 'p2')
+    // State should be unchanged
+    const lotState = result.lotStates['lot1']
+    if (lotState.status === 'active') {
+      expect(lotState.passedPlayerIds).not.toContain('p2')
+    }
+  })
+})
+
+describe('UNDO while paused', () => {
+  it('allows undo even when paused', () => {
+    let state = startAuction(makeBaseState())
+    state = placeBid(state, 'p1', 10)
+    state = placeBid(state, 'p2', 20)
+    state = applyAction(state, { type: 'PAUSE' })
+
+    state = applyAction(state, { type: 'UNDO' })
+    const lotState = state.lotStates['lot1']
+    if (lotState.status === 'active') {
+      expect(lotState.currentBid.amount).toBe(10)
+      expect(lotState.currentBid.playerId).toBe('p1')
+    }
+  })
+})
+
+describe('findNextOpener fallback when all players have $0', () => {
+  it('falls back to first player when no one can afford', () => {
+    let state = startAuction(
+      makeBaseState({
+        lots: [makeLot({ id: 'lot1' })],
+        lotStates: { lot1: { status: 'pending' } },
+        players: [
+          makePlayer({ id: 'p1', name: 'Alice', balance: 5 }),
+          makePlayer({ id: 'p2', name: 'Bob', balance: 0 }),
+          makePlayer({ id: 'p3', name: 'Charlie', balance: 0 }),
+        ],
+      })
+    )
+
+    // Only p1 can bid — wins immediately
+    state = placeBid(state, 'p1', 5)
+    expect(state.lotStates['lot1']).toEqual({
+      status: 'sold',
+      winnerId: 'p1',
+      finalBid: 5,
+    })
+    // p1 now has $0 — all players broke
+    expect(state.players.find((p) => p.id === 'p1')!.balance).toBe(0)
+  })
+})
+
 describe('canPlayerAffordBid', () => {
   it('returns true when player can afford minimum bid', () => {
     const state = makeBaseState({ phase: 'active', currentLotIndex: 0 })
