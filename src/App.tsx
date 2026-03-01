@@ -26,7 +26,7 @@ function AppRoutes() {
     () => LocalAuctionService.loadSaved()
   )
 
-  const handleStart = useCallback(() => {
+  const handleStart = useCallback(async () => {
     const { players, lots, openerPlayerId } = useSetupStore.getState()
 
     const lotStates: Record<string, LotAuctionState> = {}
@@ -48,7 +48,7 @@ function AppRoutes() {
     }
 
     const svc = new LocalAuctionService(initialState, false)
-    svc.dispatch({ type: 'START_AUCTION' })
+    await svc.dispatch({ type: 'START_AUCTION' })
     svc.enablePersistence()
     setService(svc)
     navigate('/auction')
