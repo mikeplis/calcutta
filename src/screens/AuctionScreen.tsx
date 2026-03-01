@@ -5,7 +5,7 @@ import { PlayerList } from './components/PlayerList'
 import { AdminControls } from './components/AdminControls'
 import { LotHistoryPanel } from './components/LotHistoryPanel'
 
-export function AuctionScreen() {
+export function AuctionScreen({ onNewAuction }: { onNewAuction: () => void }) {
   const { state, dispatch } = useAuction()
 
   const handleBid = (playerId: string, amount: number) => {
@@ -28,6 +28,7 @@ export function AuctionScreen() {
             onForceAdvance={() => dispatch({ type: 'FORCE_ADVANCE' })}
             onPause={() => dispatch({ type: 'PAUSE' })}
             onResume={() => dispatch({ type: 'RESUME' })}
+            onNewAuction={onNewAuction}
           />
         </div>
 

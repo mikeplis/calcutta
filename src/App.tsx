@@ -16,7 +16,7 @@ function AuctionView({ onNewAuction }: { onNewAuction: () => void }) {
     return <SummaryScreen onNewAuction={onNewAuction} />
   }
 
-  return <AuctionScreen />
+  return <AuctionScreen onNewAuction={onNewAuction} />
 }
 
 function AppRoutes() {
