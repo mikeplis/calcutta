@@ -64,9 +64,9 @@ export class LocalAuctionService implements AuctionService {
       if (!raw) return null
       const saved = JSON.parse(raw) as AuctionState
       if (saved.phase !== 'active' && saved.phase !== 'complete') return null
-      // Create a placeholder initial state — it won't be used since persist=true
-      // will load from storage
-      return new LocalAuctionService(saved)
+      const service = new LocalAuctionService(saved, false)
+      service.enablePersistence()
+      return service
     } catch {
       return null
     }

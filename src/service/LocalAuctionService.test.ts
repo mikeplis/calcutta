@@ -192,6 +192,26 @@ describe('LocalAuctionService', () => {
     expect(LocalAuctionService.loadSaved()).toBeNull()
   })
 
+  it('loadSaved service continues to persist on subsequent dispatches', async () => {
+    const service = new LocalAuctionService(makeTestState(), false)
+    await service.dispatch({ type: 'START_AUCTION' })
+    service.enablePersistence()
+
+    const restored = LocalAuctionService.loadSaved()
+    expect(restored).not.toBeNull()
+
+    // Dispatch an action on the restored service
+    await restored!.dispatch({ type: 'PLACE_BID', playerId: 'p1', amount: 15 })
+
+    // Verify it persisted the new state
+    const savedRaw = localStorage.getItem(STORAGE_KEY)
+    expect(savedRaw).not.toBeNull()
+    const saved = JSON.parse(savedRaw!)
+    const lotState = saved.lotStates['lot1']
+    expect(lotState.status).toBe('active')
+    expect(lotState.currentBid.amount).toBe(15)
+  })
+
   it('new service with persist=false ignores existing localStorage', async () => {
     // Simulate a previous auction saved in storage
     const oldService = new LocalAuctionService(makeTestState(), false)
