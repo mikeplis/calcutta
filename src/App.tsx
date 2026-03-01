@@ -1,35 +1,83 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useCallback } from 'react'
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom'
+import { AuctionServiceProvider } from './service/AuctionContext'
+import { LocalAuctionService } from './service/LocalAuctionService'
+import { useSetupStore } from './hooks/useSetupStore'
+import { SetupScreen } from './screens/SetupScreen'
+import { AuctionScreen } from './screens/AuctionScreen'
+import { SummaryScreen } from './screens/SummaryScreen'
+import { useAuction } from './hooks/useAuction'
+import type { AuctionState, LotAuctionState } from './domain/types'
 
-function App() {
-  const [count, setCount] = useState(0)
+function AuctionView({ onNewAuction }: { onNewAuction: () => void }) {
+  const { state } = useAuction()
+
+  if (state.phase === 'complete') {
+    return <SummaryScreen onNewAuction={onNewAuction} />
+  }
+
+  return <AuctionScreen />
+}
+
+function AppRoutes() {
+  const navigate = useNavigate()
+  const [service, setService] = useState<LocalAuctionService | null>(null)
+
+  const handleStart = useCallback(() => {
+    const { players, lots, openerPlayerId } = useSetupStore.getState()
+
+    const lotStates: Record<string, LotAuctionState> = {}
+    for (const lot of lots) {
+      lotStates[lot.id] = { status: 'pending' }
+    }
+
+    const initialState: AuctionState = {
+      auctionId: crypto.randomUUID(),
+      players,
+      lots,
+      lotStates,
+      currentLotIndex: 0,
+      phase: 'setup',
+      openerPlayerId,
+      adminId: 'local-admin',
+      stateHistory: [],
+      paused: false,
+    }
+
+    const svc = new LocalAuctionService(initialState)
+    svc.dispatch({ type: 'START_AUCTION' })
+    setService(svc)
+    navigate('/auction')
+  }, [navigate])
+
+  const handleNewAuction = useCallback(() => {
+    if (service) {
+      service.clearStorage()
+    }
+    setService(null)
+    navigate('/')
+  }, [service, navigate])
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Routes>
+      <Route path="/" element={<SetupScreen onStart={handleStart} />} />
+      <Route
+        path="/auction"
+        element={
+          service ? (
+            <AuctionServiceProvider service={service}>
+              <AuctionView onNewAuction={handleNewAuction} />
+            </AuctionServiceProvider>
+          ) : (
+            <Navigate to="/" replace />
+          )
+        }
+      />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   )
 }
 
-export default App
+export default function App() {
+  return <AppRoutes />
+}

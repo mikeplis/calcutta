@@ -1,0 +1,80 @@
+import type { AuctionState } from '../../domain/types'
+import { getActivePlayerTurn, getCurrentLotState, getEligibleBidders } from '../../domain/logic'
+
+type Props = {
+  state: AuctionState
+}
+
+export function PlayerList({ state }: Props) {
+  const lotState = getCurrentLotState(state)
+  const activePlayer = getActivePlayerTurn(state)
+  const eligible = lotState?.status === 'active' ? getEligibleBidders(state) : []
+  const eligibleIds = new Set(eligible.map((p) => p.id))
+  const passedIds = lotState?.status === 'active' ? new Set(lotState.passedPlayerIds) : new Set<string>()
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+      <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Players</h3>
+      <div className="space-y-2">
+        {state.players.map((player) => {
+          const isActive = activePlayer?.id === player.id
+          const hasPassed = passedIds.has(player.id)
+          const isEligible = eligibleIds.has(player.id)
+          const isCurrentBidder =
+            lotState?.status === 'active' && lotState.currentBid.playerId === player.id
+
+          return (
+            <div
+              key={player.id}
+              className={`flex items-center justify-between p-3 rounded-lg border-2 transition-all ${
+                isActive
+                  ? 'border-blue-500 bg-blue-50 shadow-md'
+                  : hasPassed
+                    ? 'border-gray-200 bg-gray-50 opacity-60'
+                    : isCurrentBidder
+                      ? 'border-green-300 bg-green-50'
+                      : 'border-gray-200'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <span className={`font-semibold ${hasPassed ? 'line-through text-gray-400' : 'text-gray-900'}`}>
+                  {player.name}
+                </span>
+                {isActive && (
+                  <span className="text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full animate-pulse">
+                    BIDDING
+                  </span>
+                )}
+                {isCurrentBidder && !isActive && (
+                  <span className="text-xs bg-green-600 text-white px-2 py-0.5 rounded-full">
+                    HIGH BID
+                  </span>
+                )}
+                {hasPassed && (
+                  <span className="text-xs bg-gray-400 text-white px-2 py-0.5 rounded-full">
+                    PASSED
+                  </span>
+                )}
+                {!hasPassed && !isEligible && lotState?.status === 'active' && player.id !== lotState.currentBid.playerId && (
+                  <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">
+                    SKIPPED
+                  </span>
+                )}
+              </div>
+              <div className="text-right">
+                <span className={`font-bold ${player.balance < 50 ? 'text-red-600' : 'text-gray-900'}`}>
+                  ${player.balance}
+                </span>
+                {player.lotsWon.length > 0 && (
+                  <span className="text-xs text-gray-400 ml-2">
+                    {player.lotsWon.length} lot{player.lotsWon.length !== 1 ? 's' : ''}
+                  </span>
+                )}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}

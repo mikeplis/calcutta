@@ -96,7 +96,6 @@ describe('LocalAuctionService', () => {
     await service.dispatch({ type: 'START_AUCTION' })
     await service.dispatch({ type: 'PLACE_BID', playerId: 'p1', amount: 10 })
 
-    const stateAfterBid = service.getState()
     await service.dispatch({ type: 'PLACE_BID', playerId: 'p2', amount: 20 })
     await service.dispatch({ type: 'UNDO' })
 

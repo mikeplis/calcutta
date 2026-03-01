@@ -1,0 +1,44 @@
+type Props = {
+  paused: boolean
+  onUndo: () => void
+  onForceAdvance: () => void
+  onPause: () => void
+  onResume: () => void
+  canUndo: boolean
+}
+
+export function AdminControls({ paused, onUndo, onForceAdvance, onPause, onResume, canUndo }: Props) {
+  return (
+    <div className="flex items-center gap-2 flex-wrap">
+      <span className="text-xs font-medium text-gray-400 uppercase tracking-wide">Admin:</span>
+      <button
+        onClick={onUndo}
+        disabled={!canUndo}
+        className="px-3 py-1.5 text-sm bg-yellow-100 text-yellow-800 rounded-lg hover:bg-yellow-200 disabled:opacity-40 disabled:cursor-not-allowed font-medium"
+      >
+        Undo
+      </button>
+      <button
+        onClick={onForceAdvance}
+        className="px-3 py-1.5 text-sm bg-orange-100 text-orange-800 rounded-lg hover:bg-orange-200 font-medium"
+      >
+        Skip Lot
+      </button>
+      {paused ? (
+        <button
+          onClick={onResume}
+          className="px-3 py-1.5 text-sm bg-green-100 text-green-800 rounded-lg hover:bg-green-200 font-medium"
+        >
+          Resume
+        </button>
+      ) : (
+        <button
+          onClick={onPause}
+          className="px-3 py-1.5 text-sm bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 font-medium"
+        >
+          Pause
+        </button>
+      )}
+    </div>
+  )
+}

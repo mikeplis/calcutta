@@ -7,8 +7,10 @@ const STORAGE_KEY = 'calcutta-auction-state'
 export class LocalAuctionService implements AuctionService {
   private state: AuctionState
   private listeners = new Set<(state: AuctionState) => void>()
+  private persist: boolean
 
-  constructor(initialState: AuctionState, private persist = true) {
+  constructor(initialState: AuctionState, persist = true) {
+    this.persist = persist
     const saved = persist ? this.loadFromStorage() : null
     this.state = saved ?? initialState
   }

@@ -6,10 +6,8 @@ import {
   getMinimumBid,
   canPlayerAffordBid,
   getEligibleBidders,
-  getNextBidder,
   isLotOver,
   getActivePlayerTurn,
-  isValidBid,
   applyAction,
 } from './logic'
 
@@ -513,7 +511,6 @@ describe('UNDO action', () => {
     let state = startAuction(makeBaseState())
     state = placeBid(state, 'p1', 10)
 
-    const afterBid = state
     state = placeBid(state, 'p2', 20)
 
     state = applyAction(state, { type: 'UNDO' })
