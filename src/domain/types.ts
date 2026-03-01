@@ -1,0 +1,53 @@
+export type Player = {
+  id: string
+  name: string
+  balance: number
+  lotsWon: string[] // lot IDs
+}
+
+export type Team = {
+  name: string
+  seed: number
+  region: string
+}
+
+export type Lot = {
+  id: string
+  label: string // e.g. "East 16/15 Seeds" or "Duke"
+  teams: Team[]
+}
+
+export type Bid = {
+  playerId: string
+  amount: number
+  timestamp: number
+}
+
+export type LotAuctionState =
+  | { status: 'pending' }
+  | { status: 'active'; currentBid: Bid; passedPlayerIds: string[]; openerId: string }
+  | { status: 'sold'; winnerId: string; finalBid: number }
+  | { status: 'skipped' }
+
+export type AuctionState = {
+  auctionId: string
+  players: Player[]
+  lots: Lot[]
+  lotStates: Record<string, LotAuctionState>
+  currentLotIndex: number
+  phase: 'setup' | 'active' | 'complete'
+  openerPlayerId: string // who opens the current lot
+  adminId: string
+  stateHistory: AuctionState[] // for undo support
+  paused: boolean
+}
+
+// Discriminated union of all auction actions
+export type AuctionAction =
+  | { type: 'START_AUCTION' }
+  | { type: 'PLACE_BID'; playerId: string; amount: number }
+  | { type: 'PASS'; playerId: string }
+  | { type: 'UNDO' }
+  | { type: 'FORCE_ADVANCE' }
+  | { type: 'PAUSE' }
+  | { type: 'RESUME' }
