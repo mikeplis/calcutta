@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import type { AuctionState } from '../../domain/types'
-import { getMinimumBid, getActivePlayerTurn, getCurrentLotState } from '../../domain/logic'
+import { getMinimumBid, getActivePlayerTurn, getCurrentLotState, findEligibleOpener } from '../../domain/logic'
 
 type Props = {
   state: AuctionState
@@ -19,21 +19,7 @@ export function BidControls({ state, onBid, onPass }: Props) {
   // Determine who can act
   let activePlayerId: string | null = null
   if (isPending) {
-    // The opener (or eligible opener if original can't afford) needs to bid
-    activePlayerId = state.openerPlayerId
-    // Check if opener can afford — if not, find next
-    const opener = state.players.find((p) => p.id === state.openerPlayerId)
-    if (!opener || opener.balance < 1) {
-      // Find next eligible
-      const openerIndex = state.players.findIndex((p) => p.id === state.openerPlayerId)
-      for (let i = 1; i < state.players.length; i++) {
-        const idx = (openerIndex + i) % state.players.length
-        if (state.players[idx].balance >= 1) {
-          activePlayerId = state.players[idx].id
-          break
-        }
-      }
-    }
+    activePlayerId = findEligibleOpener(state)
   } else if (isActive) {
     const turn = getActivePlayerTurn(state)
     activePlayerId = turn?.id ?? null

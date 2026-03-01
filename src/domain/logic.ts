@@ -120,11 +120,7 @@ function findNextOpener(state: AuctionState, winnerId: string): string {
   for (let i = 0; i < playerCount; i++) {
     const index = (winnerIndex + i) % playerCount
     const player = state.players[index]
-    if (player.balance >= 1 || (i === 0 && player.id === winnerId)) {
-      // For the winner, we need to check their post-deduction balance
-      // The balance in state is already updated at this point
-      if (player.balance >= 1) return player.id
-    }
+    if (player.balance >= 1) return player.id
   }
 
   // Fallback — shouldn't happen in practice
@@ -178,7 +174,7 @@ function resolveLot(state: AuctionState): AuctionState {
   }
 }
 
-function findEligibleOpener(state: AuctionState): string | null {
+export function findEligibleOpener(state: AuctionState): string | null {
   const openerIndex = state.players.findIndex((p) => p.id === state.openerPlayerId)
   const playerCount = state.players.length
 

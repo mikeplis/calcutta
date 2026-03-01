@@ -10,6 +10,7 @@ import {
   getActivePlayerTurn,
   applyAction,
   MAX_UNDO_DEPTH,
+  findEligibleOpener,
 } from './logic'
 
 // -- Helpers --
@@ -723,6 +724,39 @@ describe('stateHistory cap', () => {
     // The history entry should have an empty stateHistory
     expect(state.stateHistory.length).toBe(1)
     expect(state.stateHistory[0].stateHistory).toEqual([])
+  })
+})
+
+describe('findEligibleOpener', () => {
+  it('returns the opener when they can afford $1', () => {
+    const state = makeBaseState({ phase: 'active', openerPlayerId: 'p1' })
+    expect(findEligibleOpener(state)).toBe('p1')
+  })
+
+  it('skips to next player when opener cannot afford $1', () => {
+    const state = makeBaseState({
+      phase: 'active',
+      openerPlayerId: 'p1',
+      players: [
+        makePlayer({ id: 'p1', name: 'Alice', balance: 0 }),
+        makePlayer({ id: 'p2', name: 'Bob', balance: 1000 }),
+        makePlayer({ id: 'p3', name: 'Charlie', balance: 1000 }),
+      ],
+    })
+    expect(findEligibleOpener(state)).toBe('p2')
+  })
+
+  it('returns null when all players have $0', () => {
+    const state = makeBaseState({
+      phase: 'active',
+      openerPlayerId: 'p1',
+      players: [
+        makePlayer({ id: 'p1', name: 'Alice', balance: 0 }),
+        makePlayer({ id: 'p2', name: 'Bob', balance: 0 }),
+        makePlayer({ id: 'p3', name: 'Charlie', balance: 0 }),
+      ],
+    })
+    expect(findEligibleOpener(state)).toBeNull()
   })
 })
 
