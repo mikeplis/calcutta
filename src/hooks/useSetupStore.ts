@@ -33,7 +33,15 @@ export const useSetupStore = create<SetupState>((set, get) => ({
   addPlayer: (name) => {
     const id = `player-${nextPlayerId++}`
     set((s) => {
-      const newPlayer: Player = { id, name, balance: s.defaultBalance, lotsWon: [] }
+      // Deduplicate name if it already exists
+      let finalName = name
+      const existingNames = new Set(s.players.map((p) => p.name))
+      if (existingNames.has(finalName)) {
+        let suffix = 2
+        while (existingNames.has(`${name} ${suffix}`)) suffix++
+        finalName = `${name} ${suffix}`
+      }
+      const newPlayer: Player = { id, name: finalName, balance: s.defaultBalance, lotsWon: [] }
       const newPlayers = [...s.players, newPlayer]
       return {
         players: newPlayers,

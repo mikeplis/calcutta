@@ -118,8 +118,8 @@ export function SummaryScreen({ onNewAuction }: { onNewAuction: () => void }) {
               <tbody>
                 {playerSummaries
                   .sort((a, b) => b.totalSpent - a.totalSpent)
-                  .map((player) => (
-                    <tr key={player.name} className="border-b border-gray-100">
+                  .map((player, i) => (
+                    <tr key={i} className="border-b border-gray-100">
                       <td className="py-2 pr-4 font-medium">{player.name}</td>
                       <td className="py-2 pr-4 text-right font-bold">${player.totalSpent}</td>
                       <td className="py-2 pr-4 text-right">{player.lotsWon}</td>
