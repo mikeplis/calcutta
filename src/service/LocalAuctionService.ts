@@ -58,6 +58,20 @@ export class LocalAuctionService implements AuctionService {
     }
   }
 
+  static loadSaved(): LocalAuctionService | null {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY)
+      if (!raw) return null
+      const saved = JSON.parse(raw) as AuctionState
+      if (saved.phase !== 'active' && saved.phase !== 'complete') return null
+      // Create a placeholder initial state — it won't be used since persist=true
+      // will load from storage
+      return new LocalAuctionService(saved)
+    } catch {
+      return null
+    }
+  }
+
   enablePersistence(): void {
     this.persist = true
     this.saveToStorage()

@@ -13,7 +13,8 @@
       "Bash(git commit:*)",
       "Bash(npx vitest:*)",
       "Bash(npx tsc:*)",
-      "Bash(npx vite build:*)"
+      "Bash(npx vite build:*)",
+      "Bash(Auction\" flow still clears storage as before.:*)"
     ]
   }
 }

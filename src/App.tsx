@@ -21,7 +21,9 @@ function AuctionView({ onNewAuction }: { onNewAuction: () => void }) {
 
 function AppRoutes() {
   const navigate = useNavigate()
-  const [service, setService] = useState<LocalAuctionService | null>(null)
+  const [service, setService] = useState<LocalAuctionService | null>(
+    () => LocalAuctionService.loadSaved()
+  )
 
   const handleStart = useCallback(() => {
     const { players, lots, openerPlayerId } = useSetupStore.getState()
@@ -61,7 +63,16 @@ function AppRoutes() {
 
   return (
     <Routes>
-      <Route path="/" element={<SetupScreen onStart={handleStart} />} />
+      <Route
+        path="/"
+        element={
+          service ? (
+            <Navigate to="/auction" replace />
+          ) : (
+            <SetupScreen onStart={handleStart} />
+          )
+        }
+      />
       <Route
         path="/auction"
         element={
