@@ -12,6 +12,7 @@ type Props = {
 
 export function AdminControls({ paused, onUndo, onForceAdvance, onPause, onResume, onNewAuction, canUndo }: Props) {
   const [confirmingNew, setConfirmingNew] = useState(false)
+  const [confirmingSkip, setConfirmingSkip] = useState(false)
 
   return (
     <div className="flex items-center gap-2 flex-wrap">
@@ -23,12 +24,30 @@ export function AdminControls({ paused, onUndo, onForceAdvance, onPause, onResum
       >
         Undo
       </button>
-      <button
-        onClick={onForceAdvance}
-        className="px-3 py-1.5 text-sm bg-orange-100 text-orange-800 rounded-lg hover:bg-orange-200 font-medium"
-      >
-        Skip Lot
-      </button>
+      {confirmingSkip ? (
+        <>
+          <span className="text-sm text-orange-600 font-medium">Are you sure?</span>
+          <button
+            onClick={() => { onForceAdvance(); setConfirmingSkip(false) }}
+            className="px-3 py-1.5 text-sm bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-medium"
+          >
+            Yes, skip
+          </button>
+          <button
+            onClick={() => setConfirmingSkip(false)}
+            className="px-3 py-1.5 text-sm bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 font-medium"
+          >
+            Cancel
+          </button>
+        </>
+      ) : (
+        <button
+          onClick={() => setConfirmingSkip(true)}
+          className="px-3 py-1.5 text-sm bg-orange-100 text-orange-800 rounded-lg hover:bg-orange-200 font-medium"
+        >
+          Skip Lot
+        </button>
+      )}
       {paused ? (
         <button
           onClick={onResume}
