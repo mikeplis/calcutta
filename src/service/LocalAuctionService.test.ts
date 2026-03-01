@@ -1,6 +1,8 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { LocalAuctionService } from './LocalAuctionService'
 import type { AuctionState } from '../domain/types'
+
+const STORAGE_KEY = 'calcutta-auction-state'
 
 function makeTestState(overrides?: Partial<AuctionState>): AuctionState {
   return {
@@ -26,6 +28,10 @@ function makeTestState(overrides?: Partial<AuctionState>): AuctionState {
 }
 
 describe('LocalAuctionService', () => {
+  beforeEach(() => {
+    localStorage.clear()
+  })
+
   it('returns initial state from getState', () => {
     const initial = makeTestState()
     const service = new LocalAuctionService(initial, false)
@@ -103,5 +109,100 @@ describe('LocalAuctionService', () => {
     if (lotState.status === 'active') {
       expect(lotState.currentBid.amount).toBe(10)
     }
+  })
+
+  it('persists state to localStorage when persistence is enabled', async () => {
+    const service = new LocalAuctionService(makeTestState(), false)
+    await service.dispatch({ type: 'START_AUCTION' })
+    expect(localStorage.getItem(STORAGE_KEY)).toBeNull()
+
+    service.enablePersistence()
+    expect(localStorage.getItem(STORAGE_KEY)).not.toBeNull()
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)!)
+    expect(saved.phase).toBe('active')
+  })
+
+  it('persists on every dispatch after enablePersistence', async () => {
+    const service = new LocalAuctionService(makeTestState(), false)
+    await service.dispatch({ type: 'START_AUCTION' })
+    service.enablePersistence()
+
+    await service.dispatch({ type: 'PLACE_BID', playerId: 'p1', amount: 10 })
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)!)
+    const lotState = saved.lotStates['lot1']
+    expect(lotState.status).toBe('active')
+    expect(lotState.currentBid.amount).toBe(10)
+  })
+
+  it('does not persist when persistence is disabled', async () => {
+    const service = new LocalAuctionService(makeTestState(), false)
+    await service.dispatch({ type: 'START_AUCTION' })
+    await service.dispatch({ type: 'PLACE_BID', playerId: 'p1', amount: 10 })
+    expect(localStorage.getItem(STORAGE_KEY)).toBeNull()
+  })
+
+  it('clearStorage removes saved state', async () => {
+    const service = new LocalAuctionService(makeTestState(), false)
+    await service.dispatch({ type: 'START_AUCTION' })
+    service.enablePersistence()
+    expect(localStorage.getItem(STORAGE_KEY)).not.toBeNull()
+
+    service.clearStorage()
+    expect(localStorage.getItem(STORAGE_KEY)).toBeNull()
+  })
+
+  it('loadSaved returns service from localStorage for active auction', async () => {
+    const service = new LocalAuctionService(makeTestState(), false)
+    await service.dispatch({ type: 'START_AUCTION' })
+    await service.dispatch({ type: 'PLACE_BID', playerId: 'p1', amount: 10 })
+    service.enablePersistence()
+
+    const restored = LocalAuctionService.loadSaved()
+    expect(restored).not.toBeNull()
+    const state = restored!.getState()
+    expect(state.phase).toBe('active')
+    const lotState = state.lotStates['lot1']
+    if (lotState.status === 'active') {
+      expect(lotState.currentBid.amount).toBe(10)
+    }
+  })
+
+  it('loadSaved returns service for complete auction', async () => {
+    const service = new LocalAuctionService(makeTestState(), false)
+    await service.dispatch({ type: 'START_AUCTION' })
+    await service.dispatch({ type: 'PLACE_BID', playerId: 'p1', amount: 10 })
+    await service.dispatch({ type: 'PASS', playerId: 'p2' })
+    await service.dispatch({ type: 'PASS', playerId: 'p3' })
+    await service.dispatch({ type: 'PLACE_BID', playerId: 'p1', amount: 5 })
+    await service.dispatch({ type: 'PASS', playerId: 'p2' })
+    await service.dispatch({ type: 'PASS', playerId: 'p3' })
+    service.enablePersistence()
+
+    const restored = LocalAuctionService.loadSaved()
+    expect(restored).not.toBeNull()
+    expect(restored!.getState().phase).toBe('complete')
+  })
+
+  it('loadSaved returns null when nothing is saved', () => {
+    expect(LocalAuctionService.loadSaved()).toBeNull()
+  })
+
+  it('loadSaved returns null for setup-phase state', () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(makeTestState()))
+    expect(LocalAuctionService.loadSaved()).toBeNull()
+  })
+
+  it('new service with persist=false ignores existing localStorage', async () => {
+    // Simulate a previous auction saved in storage
+    const oldService = new LocalAuctionService(makeTestState(), false)
+    await oldService.dispatch({ type: 'START_AUCTION' })
+    await oldService.dispatch({ type: 'PLACE_BID', playerId: 'p1', amount: 99 })
+    oldService.enablePersistence()
+
+    // Create a fresh service without persistence — should use initialState, not saved
+    const freshState = makeTestState({ auctionId: 'fresh' })
+    const freshService = new LocalAuctionService(freshState, false)
+    expect(freshService.getState().auctionId).toBe('fresh')
+    expect(freshService.getState().phase).toBe('setup')
   })
 })
