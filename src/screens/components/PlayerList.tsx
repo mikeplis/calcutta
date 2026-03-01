@@ -11,6 +11,14 @@ export function PlayerList({ state }: Props) {
   const eligible = lotState?.status === 'active' ? getEligibleBidders(state) : []
   const eligibleIds = new Set(eligible.map((p) => p.id))
   const passedIds = lotState?.status === 'active' ? new Set(lotState.passedPlayerIds) : new Set<string>()
+  const maxStartingBalance = Math.max(...state.players.map((p) => {
+    const spent = p.lotsWon.reduce((sum, lotId) => {
+      const ls = state.lotStates[lotId]
+      return sum + (ls?.status === 'sold' ? ls.finalBid : 0)
+    }, 0)
+    return p.balance + spent
+  }))
+  const lowBalanceThreshold = maxStartingBalance * 0.2
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
@@ -62,7 +70,7 @@ export function PlayerList({ state }: Props) {
                 )}
               </div>
               <div className="text-right">
-                <span className={`font-bold ${player.balance < 50 ? 'text-red-600' : 'text-gray-900'}`}>
+                <span className={`font-bold ${player.balance < lowBalanceThreshold ? 'text-red-600' : 'text-gray-900'}`}>
                   ${player.balance}
                 </span>
                 {player.lotsWon.length > 0 && (

@@ -6,7 +6,7 @@ type Props = {
 }
 
 export function LotHistoryPanel({ state }: Props) {
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(true)
 
   const completedLots = state.lots
     .map((lot) => ({ lot, lotState: state.lotStates[lot.id] }))

@@ -32,7 +32,20 @@ export function BidControls({ state, onBid, onPass }: Props) {
     setBidAmount(minBid)
   }, [minBid])
 
-  if (!activePlayer || state.paused) return null
+  if (state.paused) return null
+
+  if (!activePlayer) {
+    if (isPending || isActive) {
+      return (
+        <div className="bg-white rounded-xl shadow-sm border border-orange-200 p-4 text-center">
+          <span className="text-sm text-orange-700 font-medium">
+            No eligible bidders — use Skip Lot to advance
+          </span>
+        </div>
+      )
+    }
+    return null
+  }
 
   const maxBid = activePlayer.balance
   const quickIncrements = [1, 5, 10, 25]
