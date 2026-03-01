@@ -7,6 +7,7 @@ import { SetupScreen } from './screens/SetupScreen'
 import { AuctionScreen } from './screens/AuctionScreen'
 import { SummaryScreen } from './screens/SummaryScreen'
 import { useAuction } from './hooks/useAuction'
+import { ErrorBoundary } from './screens/components/ErrorBoundary'
 import type { AuctionState, LotAuctionState } from './domain/types'
 
 function AuctionView({ onNewAuction }: { onNewAuction: () => void }) {
@@ -62,6 +63,7 @@ function AppRoutes() {
   }, [service, navigate])
 
   return (
+    <ErrorBoundary>
     <Routes>
       <Route
         path="/"
@@ -87,6 +89,7 @@ function AppRoutes() {
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+    </ErrorBoundary>
   )
 }
 
