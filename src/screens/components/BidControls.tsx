@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import type { AuctionState } from '../../domain/types'
 import { getMinimumBid, getActivePlayerTurn, getCurrentLotState, findEligibleOpener } from '../../domain/logic'
 
@@ -35,9 +35,19 @@ export function BidControls({ state, onBid, onPass }: Props) {
   if (!activePlayer || state.paused) return null
 
   const maxBid = activePlayer.balance
+  const quickIncrements = [1, 5, 10, 25]
+  const currentBidAmount = isActive && lotState?.status === 'active' ? lotState.currentBid.amount : 0
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && bidAmount >= minBid && bidAmount <= maxBid) {
+      onBid(activePlayer.id, bidAmount)
+    } else if (e.key === 'Escape' && isActive) {
+      onPass(activePlayer.id)
+    }
+  }, [bidAmount, minBid, maxBid, activePlayer.id, isActive, onBid, onPass])
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4" onKeyDown={handleKeyDown}>
       <div className="text-center mb-3">
         <span className="text-sm text-gray-500">
           {isPending ? 'Opening bid by' : "It's"}{' '}
@@ -75,6 +85,22 @@ export function BidControls({ state, onBid, onPass }: Props) {
             Pass
           </button>
         )}
+      </div>
+
+      <div className="flex items-center gap-2 justify-center mt-2">
+        {quickIncrements.map((inc) => {
+          const target = Math.min(currentBidAmount + inc, maxBid)
+          return (
+            <button
+              key={inc}
+              onClick={() => setBidAmount(Math.max(target, minBid))}
+              disabled={target < minBid}
+              className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed font-medium"
+            >
+              +${inc}
+            </button>
+          )
+        })}
       </div>
 
       <div className="text-center mt-2 text-xs text-gray-400">
