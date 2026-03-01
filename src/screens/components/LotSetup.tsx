@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { useSetupStore } from '../../hooks/useSetupStore'
+import { validateConfig } from '../../domain/validation'
 
 export function LotSetup() {
   const { lots, removeLot, updateLotLabel, resetLots, players, openerPlayerId } =
@@ -24,9 +25,12 @@ export function LotSetup() {
     reader.onload = () => {
       try {
         const config = JSON.parse(reader.result as string)
-        if (config.lots && Array.isArray(config.lots)) {
-          useSetupStore.getState().importConfig(config)
+        const error = validateConfig(config)
+        if (error) {
+          alert(`Invalid config: ${error}`)
+          return
         }
+        useSetupStore.getState().importConfig(config)
       } catch {
         alert('Invalid JSON file')
       }
