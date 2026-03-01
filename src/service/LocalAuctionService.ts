@@ -58,6 +58,11 @@ export class LocalAuctionService implements AuctionService {
     }
   }
 
+  enablePersistence(): void {
+    this.persist = true
+    this.saveToStorage()
+  }
+
   clearStorage(): void {
     try {
       localStorage.removeItem(STORAGE_KEY)

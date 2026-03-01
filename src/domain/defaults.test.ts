@@ -43,9 +43,20 @@ describe('generateDefaultLots', () => {
     }
   })
 
-  it('bundles come before individual lots', () => {
-    const firstIndividualIndex = lots.findIndex((l) => l.teams.length === 1)
-    const lastBundleIndex = lots.findLastIndex((l) => l.teams.length === 2)
-    expect(lastBundleIndex).toBeLessThan(firstIndividualIndex)
+  it('lots are grouped by region with bundles first then seeds 12 to 1', () => {
+    // Each region should have 14 lots: 2 bundles + 12 individual
+    for (let r = 0; r < 4; r++) {
+      const regionLots = lots.slice(r * 14, (r + 1) * 14)
+
+      // First two are bundles
+      expect(regionLots[0].teams).toHaveLength(2)
+      expect(regionLots[1].teams).toHaveLength(2)
+
+      // Remaining 12 are individual, from seed 12 down to 1
+      for (let i = 0; i < 12; i++) {
+        expect(regionLots[2 + i].teams).toHaveLength(1)
+        expect(regionLots[2 + i].teams[0].seed).toBe(12 - i)
+      }
+    }
   })
 })

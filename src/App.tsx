@@ -44,8 +44,9 @@ function AppRoutes() {
       paused: false,
     }
 
-    const svc = new LocalAuctionService(initialState)
+    const svc = new LocalAuctionService(initialState, false)
     svc.dispatch({ type: 'START_AUCTION' })
+    svc.enablePersistence()
     setService(svc)
     navigate('/auction')
   }, [navigate])

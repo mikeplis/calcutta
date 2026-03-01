@@ -28,7 +28,7 @@ export const useSetupStore = create<SetupState>((set, get) => ({
   players: [],
   lots: generateDefaultLots(),
   openerPlayerId: '',
-  defaultBalance: 1000,
+  defaultBalance: 100,
 
   addPlayer: (name) => {
     const id = `player-${nextPlayerId++}`

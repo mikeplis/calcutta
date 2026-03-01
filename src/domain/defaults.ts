@@ -26,15 +26,11 @@ function makeIndividualLot(seed: number, region: string): Lot {
 export function generateDefaultLots(): Lot[] {
   const lots: Lot[] = []
 
-  // Bundle lots: 15/16 seeds and 13/14 seeds for each region
+  // Group by region: bundles first (15/16, 13/14), then individual seeds 12 down to 1
   for (const region of REGIONS) {
     lots.push(makeBundleLot(region, [15, 16]))
     lots.push(makeBundleLot(region, [13, 14]))
-  }
-
-  // Individual lots: seeds 1-12 for each region
-  for (const region of REGIONS) {
-    for (let seed = 1; seed <= 12; seed++) {
+    for (let seed = 12; seed >= 1; seed--) {
       lots.push(makeIndividualLot(seed, region))
     }
   }
