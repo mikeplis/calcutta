@@ -49,7 +49,6 @@ export function BidControls({ state, onBid, onPass }: Props) {
 
   const maxBid = activePlayer.balance
   const quickIncrements = [1, 5, 10, 25]
-  const currentBidAmount = isActive && lotState?.status === 'active' ? lotState.currentBid.amount : 0
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && bidAmount >= minBid && bidAmount <= maxBid) {
@@ -102,7 +101,7 @@ export function BidControls({ state, onBid, onPass }: Props) {
 
       <div className="flex items-center gap-2 justify-center mt-2">
         {quickIncrements.map((inc) => {
-          const target = Math.min(currentBidAmount + inc, maxBid)
+          const target = Math.min(bidAmount + inc, maxBid)
           return (
             <button
               key={inc}
