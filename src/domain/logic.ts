@@ -204,6 +204,7 @@ export function applyAction(state: AuctionState, action: AuctionAction): Auction
         lotStates,
         stateHistory: [],
         paused: false,
+        claimedPlayers: {},
       }
     }
 

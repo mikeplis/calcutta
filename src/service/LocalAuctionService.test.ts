@@ -23,6 +23,7 @@ function makeTestState(overrides?: Partial<AuctionState>): AuctionState {
     adminId: 'admin',
     stateHistory: [],
     paused: false,
+    claimedPlayers: {},
     ...overrides,
   }
 }

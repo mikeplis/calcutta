@@ -40,6 +40,7 @@ export type AuctionState = {
   adminId: string
   stateHistory: AuctionState[] // for undo support
   paused: boolean
+  claimedPlayers: Record<string, string> // playerId → sessionToken
 }
 
 // Discriminated union of all auction actions

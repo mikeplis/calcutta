@@ -99,6 +99,12 @@ describe('START_AUCTION', () => {
     const result = startAuction(state)
     expect(result.phase).toBe('setup')
   })
+
+  it('initializes claimedPlayers to empty object', () => {
+    const state = makeBaseState({ claimedPlayers: { p1: 'some-token' } })
+    const result = startAuction(state)
+    expect(result.claimedPlayers).toEqual({})
+  })
 })
 
 describe('Opening bid', () => {
