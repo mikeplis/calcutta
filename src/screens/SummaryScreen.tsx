@@ -1,7 +1,7 @@
 import { useAuction } from '../hooks/useAuction'
 
 export function SummaryScreen({ onNewAuction }: { onNewAuction: () => void }) {
-  const { state } = useAuction()
+  const { state, isAdmin } = useAuction()
 
   const soldLots = state.lots
     .map((lot) => ({ lot, lotState: state.lotStates[lot.id] }))
@@ -71,12 +71,14 @@ export function SummaryScreen({ onNewAuction }: { onNewAuction: () => void }) {
             >
               Export CSV
             </button>
-            <button
-              onClick={onNewAuction}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300"
-            >
-              New Auction
-            </button>
+            {isAdmin && (
+              <button
+                onClick={onNewAuction}
+                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300"
+              >
+                New Auction
+              </button>
+            )}
           </div>
         </div>
 
