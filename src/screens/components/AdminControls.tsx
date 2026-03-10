@@ -10,7 +10,7 @@ type Props = {
   canUndo: boolean
 }
 
-export function AdminControls({ paused, onUndo, onForceAdvance, onPause, onResume, onNewAuction, canUndo }: Props) {
+export function AdminControls({ paused: _paused, onUndo, onForceAdvance, onPause: _onPause, onResume: _onResume, onNewAuction, canUndo }: Props) {
   const [confirmingNew, setConfirmingNew] = useState(false)
   const [confirmingSkip, setConfirmingSkip] = useState(false)
 
