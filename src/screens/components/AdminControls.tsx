@@ -48,21 +48,7 @@ export function AdminControls({ paused, onUndo, onForceAdvance, onPause, onResum
           Skip Lot
         </button>
       )}
-      {paused ? (
-        <button
-          onClick={onResume}
-          className="px-3 py-1.5 text-sm bg-green-100 text-green-800 rounded-lg hover:bg-green-200 font-medium"
-        >
-          Resume
-        </button>
-      ) : (
-        <button
-          onClick={onPause}
-          className="px-3 py-1.5 text-sm bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 font-medium"
-        >
-          Pause
-        </button>
-      )}
+      {/* TODO: Pause/Resume hidden — triggers a React hooks error */}
       {confirmingNew ? (
         <>
           <span className="text-sm text-red-600 font-medium">Are you sure?</span>

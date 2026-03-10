@@ -75,17 +75,5 @@ describe('AdminControls', () => {
     })
   })
 
-  describe('Pause / Resume toggle', () => {
-    it('shows Pause button when not paused', () => {
-      const { getByText, props } = renderControls({ paused: false })
-      fireEvent.click(getByText('Pause'))
-      expect(props.onPause).toHaveBeenCalledOnce()
-    })
-
-    it('shows Resume button when paused', () => {
-      const { getByText, props } = renderControls({ paused: true })
-      fireEvent.click(getByText('Resume'))
-      expect(props.onResume).toHaveBeenCalledOnce()
-    })
-  })
+  // Pause/Resume tests removed — buttons temporarily hidden
 })
