@@ -72,12 +72,8 @@ export function AuctionScreen({ onNewAuction }: { onNewAuction: () => void }) {
           <h1 className="text-2xl font-bold text-gray-900">Calcutta Auction</h1>
           {isAdmin ? (
             <AdminControls
-              paused={state.paused}
               canUndo={state.stateHistory.length > 0}
               onUndo={() => dispatch({ type: 'UNDO' })}
-              onForceAdvance={() => dispatch({ type: 'FORCE_ADVANCE' })}
-              onPause={() => dispatch({ type: 'PAUSE' })}
-              onResume={() => dispatch({ type: 'RESUME' })}
               onNewAuction={onNewAuction}
             />
           ) : null}
