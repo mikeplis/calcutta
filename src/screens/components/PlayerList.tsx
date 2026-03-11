@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { AuctionState } from '../../domain/types'
 import { getActivePlayerTurn, getCurrentLotState, getEligibleBidders } from '../../domain/logic'
 
@@ -6,6 +7,7 @@ type Props = {
 }
 
 export function PlayerList({ state }: Props) {
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set())
   const lotState = getCurrentLotState(state)
   const activePlayer = getActivePlayerTurn(state)
   const eligible = lotState?.status === 'active' ? getEligibleBidders(state) : []
@@ -31,10 +33,20 @@ export function PlayerList({ state }: Props) {
           const isCurrentBidder =
             lotState?.status === 'active' && lotState.currentBid.playerId === player.id
 
+          const isExpanded = expandedIds.has(player.id)
+          const toggleExpanded = () => {
+            if (player.lotsWon.length === 0) return
+            setExpandedIds((prev) => {
+              const next = new Set(prev)
+              next.has(player.id) ? next.delete(player.id) : next.add(player.id)
+              return next
+            })
+          }
+
           return (
             <div
               key={player.id}
-              className={`flex items-center justify-between p-3 rounded-lg border-2 transition-all ${
+              className={`rounded-lg border-2 transition-all ${
                 isActive
                   ? 'border-blue-500 bg-blue-50 shadow-md'
                   : hasPassed
@@ -44,41 +56,70 @@ export function PlayerList({ state }: Props) {
                       : 'border-gray-200'
               }`}
             >
-              <div className="flex items-center gap-2">
-                <span className={`font-semibold ${hasPassed ? 'line-through text-gray-400' : 'text-gray-900'}`}>
-                  {player.name}
-                </span>
-                {isActive && (
-                  <span className="text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full animate-pulse">
-                    BIDDING
+              <div
+                className={`flex items-center justify-between p-3${player.lotsWon.length > 0 ? ' cursor-pointer' : ''}`}
+                onClick={toggleExpanded}
+              >
+                <div className="flex items-center gap-2">
+                  <span className={`font-semibold ${hasPassed ? 'line-through text-gray-400' : 'text-gray-900'}`}>
+                    {player.name}
                   </span>
-                )}
-                {isCurrentBidder && !isActive && (
-                  <span className="text-xs bg-green-600 text-white px-2 py-0.5 rounded-full">
-                    HIGH BID
-                  </span>
-                )}
-                {hasPassed && (
-                  <span className="text-xs bg-gray-400 text-white px-2 py-0.5 rounded-full">
-                    PASSED
-                  </span>
-                )}
-                {!hasPassed && !isEligible && lotState?.status === 'active' && player.id !== lotState.currentBid.playerId && (
-                  <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">
-                    SKIPPED
-                  </span>
-                )}
+                  {isActive && (
+                    <span className="text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full animate-pulse">
+                      BIDDING
+                    </span>
+                  )}
+                  {isCurrentBidder && !isActive && (
+                    <span className="text-xs bg-green-600 text-white px-2 py-0.5 rounded-full">
+                      HIGH BID
+                    </span>
+                  )}
+                  {hasPassed && (
+                    <span className="text-xs bg-gray-400 text-white px-2 py-0.5 rounded-full">
+                      PASSED
+                    </span>
+                  )}
+                  {!hasPassed && !isEligible && lotState?.status === 'active' && player.id !== lotState.currentBid.playerId && (
+                    <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">
+                      SKIPPED
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="text-right">
+                    <span className={`font-bold ${player.balance < lowBalanceThreshold ? 'text-red-600' : 'text-gray-900'}`}>
+                      ${player.balance}
+                    </span>
+                    {player.lotsWon.length > 0 && (
+                      <span className="text-xs text-gray-400 ml-2">
+                        {player.lotsWon.length} lot{player.lotsWon.length !== 1 ? 's' : ''}
+                      </span>
+                    )}
+                  </div>
+                  {player.lotsWon.length > 0 && (
+                    <span className="text-gray-400 text-xs">{isExpanded ? '▲' : '▼'}</span>
+                  )}
+                </div>
               </div>
-              <div className="text-right">
-                <span className={`font-bold ${player.balance < lowBalanceThreshold ? 'text-red-600' : 'text-gray-900'}`}>
-                  ${player.balance}
-                </span>
-                {player.lotsWon.length > 0 && (
-                  <span className="text-xs text-gray-400 ml-2">
-                    {player.lotsWon.length} lot{player.lotsWon.length !== 1 ? 's' : ''}
-                  </span>
-                )}
-              </div>
+              {isExpanded && (
+                <div className="px-3 pb-3 space-y-1">
+                  {player.lotsWon.map((lotId) => {
+                    const lot = state.lots.find((l) => l.id === lotId)
+                    const ls = state.lotStates[lotId]
+                    const seeds = lot?.teams.map((t) => `#${t.seed}`).join('/') ?? ''
+                    const paid = ls?.status === 'sold' ? ls.finalBid : null
+                    return (
+                      <div key={lotId} className="flex items-center justify-between text-sm py-1 border-t border-gray-100">
+                        <span className="text-gray-500">
+                          <span className="text-gray-400 mr-1">{seeds}</span>
+                          {lot?.label ?? lotId}
+                        </span>
+                        {paid !== null && <span className="font-medium text-green-700">${paid}</span>}
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
             </div>
           )
         })}
