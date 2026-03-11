@@ -102,6 +102,21 @@ export function BidControls({ state, onBid, onPass }: Props) {
 
       <div className="flex items-center gap-2 justify-center mt-2">
         {quickIncrements.map((inc) => {
+          if (isPending) {
+            // Opening bid: set to exact amount
+            const target = Math.min(inc, maxBid)
+            return (
+              <button
+                key={inc}
+                onClick={() => setBidInput(String(Math.max(target, minBid)))}
+                disabled={target < minBid}
+                className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed font-medium"
+              >
+                ${inc}
+              </button>
+            )
+          }
+          // Active bidding: increment from current amount
           const target = Math.min(bidAmount + inc, maxBid)
           return (
             <button

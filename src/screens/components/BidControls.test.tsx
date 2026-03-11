@@ -100,8 +100,35 @@ describe('BidControls', () => {
     })
   })
 
-  describe('quick increment buttons', () => {
-    it('updates bid amount, clamped to max', () => {
+  describe('quick buttons', () => {
+    it('sets exact amount on opening bid (pending)', () => {
+      const state = makeBaseState({ phase: 'active' }) // lot1 is pending
+      const { getByText, getByRole } = renderBidControls(state)
+
+      fireEvent.click(getByText('$5'))
+      const input = getByRole('spinbutton') as HTMLInputElement
+      expect(input.value).toBe('5')
+    })
+
+    it('shows labels without "+" prefix on opening bid', () => {
+      const state = makeBaseState({ phase: 'active' })
+      const { getByText, queryByText } = renderBidControls(state)
+
+      expect(getByText('$5')).toBeInTheDocument()
+      expect(queryByText('+$5')).not.toBeInTheDocument()
+    })
+
+    it('increments from current amount during active bidding', () => {
+      const state = makeActiveState()
+      const { getByText, getByRole } = renderBidControls(state)
+
+      fireEvent.click(getByText('+$5'))
+      const input = getByRole('spinbutton') as HTMLInputElement
+      // minBid is 11 (currentBid 10 + 1), so +5 = 16
+      expect(input.value).toBe('16')
+    })
+
+    it('clamps increment to max balance', () => {
       const state = makeActiveState({
         players: [
           makePlayer({ id: 'p1', name: 'Alice', balance: 10 }),
@@ -111,9 +138,7 @@ describe('BidControls', () => {
       })
       const { getByText, getByRole } = renderBidControls(state)
 
-      // Click +25 — should clamp to Bob's balance of 20
       fireEvent.click(getByText('+$25'))
-
       const input = getByRole('spinbutton') as HTMLInputElement
       expect(Number(input.value)).toBeLessThanOrEqual(20)
     })
