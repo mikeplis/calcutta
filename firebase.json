@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "calcutta-bid",
     "public": "dist",
     "ignore": [
       "firebase.json",
