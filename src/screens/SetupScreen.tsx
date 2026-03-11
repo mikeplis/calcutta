@@ -63,7 +63,7 @@ export function SetupScreen({ onStart }: { onStart: () => void }) {
             Start Auction
           </button>
         </div>
-        {!canStart && (
+        {!canStart && !testMode && (
           <p className="text-right text-sm text-gray-500 mt-2">
             Need at least 2 players and 1 lot to start.
           </p>
