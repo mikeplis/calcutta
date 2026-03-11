@@ -8,7 +8,7 @@ import { LotHistoryPanel } from './components/LotHistoryPanel'
 import type { LotAuctionState } from '../domain/types'
 import { getActivePlayerTurn, getCurrentLotState, findEligibleOpener } from '../domain/logic'
 
-type SoldInfo = { winner: string; amount: number; lotLabel: string }
+type SoldInfo = { winner: string; amount: number; lotLabel: string; seedLabel: string }
 
 export function AuctionScreen({ onNewAuction }: { onNewAuction: () => void }) {
   const { state, dispatch, isAdmin, currentPlayerId } = useAuction()
@@ -48,6 +48,7 @@ export function AuctionScreen({ onNewAuction }: { onNewAuction: () => void }) {
         winner: winner?.name ?? 'Unknown',
         amount: curState.finalBid,
         lotLabel: lot?.label ?? lotId,
+        seedLabel: lot?.teams.map((t) => `#${t.seed}`).join('/') ?? '',
       }
       break
     }

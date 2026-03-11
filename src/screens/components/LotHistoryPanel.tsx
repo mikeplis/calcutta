@@ -30,7 +30,12 @@ export function LotHistoryPanel({ state }: Props) {
         <div className="px-4 pb-4 space-y-1">
           {completedLots.map(({ lot, lotState }) => (
             <div key={lot.id} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
-              <span className="text-sm font-medium text-gray-700">{lot.label}</span>
+              <span className="text-sm font-medium text-gray-700">
+                <span className="text-gray-400 font-normal mr-1">
+                  {lot.teams.map((t) => `#${t.seed}`).join('/')}
+                </span>
+                {lot.label}
+              </span>
               {lotState.status === 'sold' ? (
                 <span className="text-sm">
                   <span className="text-gray-500">

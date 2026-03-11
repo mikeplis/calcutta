@@ -55,7 +55,7 @@ describe('LotCard', () => {
   describe('sold overlay', () => {
     it('shows sold info when soldInfo is provided', () => {
       const state = makeActiveState()
-      const soldInfo = { winner: 'Alice', amount: 50, lotLabel: 'Lot 1' }
+      const soldInfo = { winner: 'Alice', amount: 50, lotLabel: 'Lot 1', seedLabel: '#1' }
       const { getByText } = render(<LotCard state={state} soldInfo={soldInfo} />)
 
       expect(getByText('SOLD')).toBeInTheDocument()
@@ -67,7 +67,7 @@ describe('LotCard', () => {
 
     it('click starts dismiss animation', () => {
       const state = makeActiveState()
-      const soldInfo = { winner: 'Alice', amount: 50, lotLabel: 'Lot 1' }
+      const soldInfo = { winner: 'Alice', amount: 50, lotLabel: 'Lot 1', seedLabel: '#1' }
       const { getByText } = render(
         <LotCard state={state} soldInfo={soldInfo} />,
       )
@@ -80,7 +80,7 @@ describe('LotCard', () => {
 
     it('clearing soldInfo starts dismiss animation', () => {
       const state = makeActiveState()
-      const soldInfo = { winner: 'Alice', amount: 50, lotLabel: 'Lot 1' }
+      const soldInfo = { winner: 'Alice', amount: 50, lotLabel: 'Lot 1', seedLabel: '#1' }
       const { getByText, rerender } = render(
         <LotCard state={state} soldInfo={soldInfo} />,
       )
