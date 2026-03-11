@@ -75,10 +75,21 @@ export function LotCard({ state, soldInfo, onDismissSold }: Props) {
           {lot.teams.map((team, i) => (
             <span
               key={i}
-              className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 rounded-full text-sm"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-sm"
             >
+              {team.logoUrl && (
+                <img src={team.logoUrl} alt="" className="w-5 h-5 object-contain drop-shadow-[0_0_1px_rgba(0,0,0,0.3)]" />
+              )}
               <span className="font-medium text-gray-900">{team.name}</span>
-              <span className="text-gray-500">({team.region} #{team.seed})</span>
+              {team.record && (
+                <span className="text-gray-500">{team.record}</span>
+              )}
+              {team.conference && (
+                <span className="text-gray-400">{team.conference}</span>
+              )}
+              {!team.record && !team.conference && (
+                <span className="text-gray-500">({team.region} #{team.seed})</span>
+              )}
             </span>
           ))}
         </div>
