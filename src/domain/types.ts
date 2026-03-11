@@ -9,6 +9,9 @@ export type Team = {
   name: string
   seed: number
   region: string
+  logoUrl?: string
+  record?: string
+  conference?: string
 }
 
 export type Lot = {
