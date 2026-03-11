@@ -25,7 +25,7 @@ export function PlayerSetup() {
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
         <h2 className="text-xl font-semibold text-gray-900">Players</h2>
         <div className="flex items-center gap-2">
           <label className="text-sm text-gray-600">Default balance:</label>
@@ -64,7 +64,7 @@ export function PlayerSetup() {
           {players.map((player, index) => (
             <div
               key={player.id}
-              className={`flex items-center gap-3 p-3 rounded-lg border ${
+              className={`flex flex-wrap items-center gap-2 p-3 rounded-lg border ${
                 player.id === openerPlayerId
                   ? 'border-blue-300 bg-blue-50'
                   : 'border-gray-200'
@@ -75,7 +75,7 @@ export function PlayerSetup() {
                 type="text"
                 value={player.name}
                 onChange={(e) => updatePlayerName(player.id, e.target.value)}
-                className="flex-1 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="min-w-0 flex-1 basis-32 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
               <div className="flex items-center gap-1">
                 <span className="text-sm text-gray-500">$</span>
@@ -89,7 +89,7 @@ export function PlayerSetup() {
               </div>
               <button
                 onClick={() => setOpener(player.id)}
-                className={`text-xs px-2 py-1 rounded ${
+                className={`text-xs px-2 py-1 rounded whitespace-nowrap ${
                   player.id === openerPlayerId
                     ? 'bg-blue-600 text-white'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -100,7 +100,7 @@ export function PlayerSetup() {
               </button>
               <button
                 onClick={() => removePlayer(player.id)}
-                className="text-red-500 hover:text-red-700 text-sm"
+                className="text-red-500 hover:text-red-700 text-sm whitespace-nowrap"
                 title="Remove player"
               >
                 Remove
