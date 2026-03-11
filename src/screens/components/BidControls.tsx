@@ -11,7 +11,8 @@ type Props = {
 export function BidControls({ state, onBid, onPass }: Props) {
   const lotState = getCurrentLotState(state)
   const minBid = getMinimumBid(state)
-  const [bidAmount, setBidAmount] = useState(minBid)
+  const [bidInput, setBidInput] = useState(String(minBid))
+  const bidAmount = Number(bidInput) || 0
 
   const isPending = lotState?.status === 'pending'
   const isActive = lotState?.status === 'active'
@@ -29,7 +30,7 @@ export function BidControls({ state, onBid, onPass }: Props) {
 
   // Update bid amount when minimum changes
   useEffect(() => {
-    setBidAmount(minBid)
+    setBidInput(String(minBid))
   }, [minBid])
 
   if (state.paused) return null
@@ -73,8 +74,8 @@ export function BidControls({ state, onBid, onPass }: Props) {
           <span className="text-gray-500 font-medium">$</span>
           <input
             type="number"
-            value={bidAmount}
-            onChange={(e) => setBidAmount(Number(e.target.value))}
+            value={bidInput}
+            onChange={(e) => setBidInput(e.target.value)}
             min={minBid}
             max={maxBid}
             className="w-24 px-3 py-2 border border-gray-300 rounded-lg text-center text-lg font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -105,7 +106,7 @@ export function BidControls({ state, onBid, onPass }: Props) {
           return (
             <button
               key={inc}
-              onClick={() => setBidAmount(Math.max(target, minBid))}
+              onClick={() => setBidInput(String(Math.max(target, minBid)))}
               disabled={target < minBid}
               className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed font-medium"
             >

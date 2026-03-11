@@ -119,6 +119,22 @@ describe('BidControls', () => {
     })
   })
 
+  describe('bid input', () => {
+    it('allows clearing and retyping a value', () => {
+      const state = makeActiveState()
+      const { getByRole } = renderBidControls(state)
+      const input = getByRole('spinbutton') as HTMLInputElement
+
+      // Clear the input
+      fireEvent.change(input, { target: { value: '' } })
+      expect(input.value).toBe('')
+
+      // Type a new value
+      fireEvent.change(input, { target: { value: '15' } })
+      expect(input.value).toBe('15')
+    })
+  })
+
   describe('keyboard shortcuts', () => {
     it('Enter calls onBid', () => {
       const state = makeActiveState()
