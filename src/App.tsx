@@ -12,6 +12,7 @@ import { ErrorBoundary } from './screens/components/ErrorBoundary'
 import type { AuctionState, LotAuctionState } from './domain/types'
 
 const SESSION_TOKEN_KEY = 'calcutta-session-token'
+const ADMIN_AUCTION_KEY = 'calcutta-admin-auction-id'
 
 function getSessionToken(): string {
   let token = sessionStorage.getItem(SESSION_TOKEN_KEY)
@@ -48,6 +49,7 @@ function AuctionRoute() {
   const [error, setError] = useState<string | null>(null)
   const [currentPlayerId, setCurrentPlayerId] = useState<string | null>(null)
   const sessionToken = useState(() => getSessionToken())[0]
+  const isAdmin = auctionId === sessionStorage.getItem(ADMIN_AUCTION_KEY)
 
   useEffect(() => {
     if (!auctionId) return
@@ -105,7 +107,7 @@ function AuctionRoute() {
   }
 
   return (
-    <AuctionServiceProvider service={service} isAdmin={false} currentPlayerId={currentPlayerId}>
+    <AuctionServiceProvider service={service} isAdmin={isAdmin} currentPlayerId={currentPlayerId}>
       <AuctionView onNewAuction={() => {}} />
     </AuctionServiceProvider>
   )
@@ -141,6 +143,7 @@ function AppRoutes() {
 
     const svc = await FirebaseAuctionService.create(initialState)
     await svc.dispatch({ type: 'START_AUCTION' })
+    sessionStorage.setItem(ADMIN_AUCTION_KEY, initialState.auctionId)
     setService(svc)
     navigate(`/auction/${initialState.auctionId}`)
   }, [navigate])
@@ -149,6 +152,7 @@ function AppRoutes() {
     if (service) {
       service.destroy()
     }
+    sessionStorage.removeItem(ADMIN_AUCTION_KEY)
     setService(null)
     setCurrentPlayerId(null)
     navigate('/')
