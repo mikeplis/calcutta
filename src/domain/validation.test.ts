@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { validateConfig } from './validation'
+import type { Team } from './types'
 
 function makeValidConfig() {
   return {
@@ -82,5 +83,19 @@ describe('validateConfig', () => {
     const config = makeValidConfig()
     ;(config as Record<string, unknown>).lots = undefined
     expect(validateConfig(config)).toBe('Missing or invalid "lots" array')
+  })
+
+  it('accepts teams with optional metadata fields', () => {
+    const config = makeValidConfig()
+    const teamWithMetadata: Team = {
+      name: 'Duke',
+      seed: 1,
+      region: 'East',
+      logoUrl: 'https://example.com/duke.png',
+      record: '29-2',
+      conference: 'ACC',
+    }
+    config.lots[0].teams = [teamWithMetadata]
+    expect(validateConfig(config)).toBeNull()
   })
 })

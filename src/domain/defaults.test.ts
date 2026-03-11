@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest'
-import { generateDefaultLots } from './defaults'
+import { describe, it, expect, vi } from 'vitest'
+import { generateDefaultLots, loadDefaultConfig } from './defaults'
 
 describe('generateDefaultLots', () => {
   const lots = generateDefaultLots()
@@ -58,5 +58,46 @@ describe('generateDefaultLots', () => {
         expect(regionLots[2 + i].teams[0].seed).toBe(12 - i)
       }
     }
+  })
+})
+
+describe('loadDefaultConfig', () => {
+  it('returns fetched config when JSON is available', async () => {
+    const mockConfig = {
+      players: [],
+      lots: [{ id: 'lot1', label: 'Test', teams: [{ name: 'Duke', seed: 1, region: 'East' }] }],
+      openerPlayerId: '',
+    }
+    vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce({
+      ok: true,
+      json: () => Promise.resolve(mockConfig),
+    } as Response)
+
+    const config = await loadDefaultConfig()
+    expect(config.lots).toEqual(mockConfig.lots)
+
+    vi.restoreAllMocks()
+  })
+
+  it('falls back to hardcoded defaults when fetch fails', async () => {
+    vi.spyOn(globalThis, 'fetch').mockRejectedValueOnce(new Error('Network error'))
+
+    const config = await loadDefaultConfig()
+    expect(config.lots).toHaveLength(56)
+    expect(config.lots[0].teams[0].name).toBe('East 15 Seed')
+
+    vi.restoreAllMocks()
+  })
+
+  it('falls back to hardcoded defaults when response has empty lots', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce({
+      ok: true,
+      json: () => Promise.resolve({ players: [], lots: [], openerPlayerId: '' }),
+    } as Response)
+
+    const config = await loadDefaultConfig()
+    expect(config.lots).toHaveLength(56)
+
+    vi.restoreAllMocks()
   })
 })

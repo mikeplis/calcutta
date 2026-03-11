@@ -1,12 +1,13 @@
 import { create } from 'zustand'
 import type { Player, Lot } from '../domain/types'
-import { generateDefaultLots } from '../domain/defaults'
+import { generateDefaultLots, loadDefaultConfig } from '../domain/defaults'
 
 type SetupState = {
   players: Player[]
   lots: Lot[]
   openerPlayerId: string
   defaultBalance: number
+  loading: boolean
   addPlayer: (name: string) => void
   removePlayer: (id: string) => void
   updatePlayerName: (id: string, name: string) => void
@@ -14,9 +15,6 @@ type SetupState = {
   setDefaultBalance: (balance: number) => void
   setOpener: (playerId: string) => void
   setLots: (lots: Lot[]) => void
-  moveLot: (fromIndex: number, toIndex: number) => void
-  removeLot: (id: string) => void
-  updateLotLabel: (id: string, label: string) => void
   resetLots: () => void
   importConfig: (config: { players: Player[]; lots: Lot[]; openerPlayerId: string }) => void
   exportConfig: () => { players: Player[]; lots: Lot[]; openerPlayerId: string }
@@ -29,6 +27,7 @@ export const useSetupStore = create<SetupState>((set, get) => ({
   lots: generateDefaultLots(),
   openerPlayerId: '',
   defaultBalance: 100,
+  loading: true,
 
   addPlayer: (name) => {
     const id = `player-${nextPlayerId++}`
@@ -77,23 +76,11 @@ export const useSetupStore = create<SetupState>((set, get) => ({
 
   setLots: (lots) => set({ lots }),
 
-  moveLot: (fromIndex, toIndex) =>
-    set((s) => {
-      const lots = [...s.lots]
-      const [moved] = lots.splice(fromIndex, 1)
-      lots.splice(toIndex, 0, moved)
-      return { lots }
-    }),
-
-  removeLot: (id) =>
-    set((s) => ({ lots: s.lots.filter((l) => l.id !== id) })),
-
-  updateLotLabel: (id, label) =>
-    set((s) => ({
-      lots: s.lots.map((l) => (l.id === id ? { ...l, label } : l)),
-    })),
-
-  resetLots: () => set({ lots: generateDefaultLots() }),
+  resetLots: () => {
+    loadDefaultConfig().then((config) => {
+      useSetupStore.setState({ lots: config.lots })
+    })
+  },
 
   importConfig: (config) =>
     set({
@@ -111,3 +98,11 @@ export const useSetupStore = create<SetupState>((set, get) => ({
     }
   },
 }))
+
+// Load default config asynchronously on startup
+loadDefaultConfig().then((config) => {
+  useSetupStore.setState({
+    lots: config.lots,
+    loading: false,
+  })
+})

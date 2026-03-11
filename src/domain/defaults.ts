@@ -1,4 +1,4 @@
-import type { Lot, Team } from './types'
+import type { Lot, Player, Team } from './types'
 
 const REGIONS = ['East', 'West', 'South', 'Midwest'] as const
 
@@ -36,4 +36,28 @@ export function generateDefaultLots(): Lot[] {
   }
 
   return lots
+}
+
+export type DefaultConfig = {
+  players: Player[]
+  lots: Lot[]
+  openerPlayerId: string
+}
+
+export async function loadDefaultConfig(): Promise<DefaultConfig> {
+  try {
+    const res = await fetch('/default-config.json')
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    const config = await res.json()
+    if (Array.isArray(config.lots) && config.lots.length > 0) {
+      return config as DefaultConfig
+    }
+  } catch {
+    // Fall back to hardcoded defaults
+  }
+  return {
+    players: [],
+    lots: generateDefaultLots(),
+    openerPlayerId: '',
+  }
 }
