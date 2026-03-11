@@ -1,3 +1,5 @@
+import { JSDOM } from 'jsdom'
+
 const BRACKET_URL = 'https://ncaa-api.henrygd.me/brackets/basketball-men/d1'
 const STANDINGS_URL = 'https://ncaa-api.henrygd.me/standings/basketball-men/d1'
 const LOGO_BASE = 'https://www.ncaa.com'
@@ -36,6 +38,8 @@ type Team = {
   logoUrl?: string
   record?: string
   conference?: string
+  kenpomRank?: number
+  kenpomAdjEM?: number
 }
 
 type Lot = {
@@ -96,6 +100,52 @@ function extractTeams(bracketData: { championships: [{ games: BracketGame[]; reg
   }
 
   return teams
+}
+
+// KenPom team name → bracket short name
+const KENPOM_ALIASES: Record<string, string> = {
+  'Ole Miss': 'Mississippi',
+  'UConn': 'Connecticut',
+  'Omaha': 'Nebraska Omaha',
+  'SIU Edwardsville': 'SIUE',
+}
+
+async function fetchKenpom(): Promise<Map<string, { rank: number; adjEM: number }>> {
+  try {
+    const { readFileSync } = await import('fs')
+    const { fileURLToPath } = await import('url')
+    const htmlPath = fileURLToPath(new URL('kenpom.html', import.meta.url))
+    const html = readFileSync(htmlPath, 'utf-8')
+    const doc = new JSDOM(html).window.document
+    const map = new Map<string, { rank: number; adjEM: number }>()
+    for (const row of doc.querySelectorAll('#ratings-table tbody tr')) {
+      const rank = parseInt(row.querySelector('td.hard_left')?.textContent?.trim() ?? '', 10)
+      const name = row.querySelector('td.next_left a')?.textContent?.trim() ?? ''
+      const adjEM = parseFloat(row.querySelectorAll('td')[4]?.textContent?.trim() ?? '')
+      if (!isNaN(rank) && name) map.set(name, { rank, adjEM: isNaN(adjEM) ? 0 : adjEM })
+    }
+    console.log(`KenPom: fetched ${map.size} rankings`)
+    return map
+  } catch (e) {
+    console.warn('KenPom fetch error — skipping KenPom data:', e)
+    return new Map()
+  }
+}
+
+function enrichWithKenpom(teams: Team[], kenpomMap: Map<string, { rank: number; adjEM: number }>): void {
+  let matched = 0
+  for (const team of teams) {
+    const lookupName = KENPOM_ALIASES[team.name] ?? team.name
+    const data = kenpomMap.get(lookupName)
+    if (data) {
+      team.kenpomRank = data.rank
+      team.kenpomAdjEM = data.adjEM
+      matched++
+    }
+  }
+  console.log(`KenPom: matched ${matched}/${teams.length} teams`)
+  const unmatched = teams.filter((t) => t.kenpomRank === undefined)
+  if (unmatched.length) console.warn('KenPom unmatched:', unmatched.map((t) => t.name))
 }
 
 // Bracket API and standings API use different name formats for some teams
@@ -173,7 +223,7 @@ async function main() {
   const year = parseInt(process.argv[2] ?? new Date().getFullYear().toString(), 10)
   console.log(`Fetching bracket data for ${year}...`)
 
-  const [bracketData, standings] = await Promise.all([fetchBracket(year), fetchStandings()])
+  const [bracketData, standings, kenpomMap] = await Promise.all([fetchBracket(year), fetchStandings(), fetchKenpom()])
 
   const teams = extractTeams(bracketData)
   console.log(`Extracted ${teams.length} teams from bracket`)
@@ -181,6 +231,8 @@ async function main() {
   enrichWithStandings(teams, standings)
   const matched = teams.filter((t) => t.record).length
   console.log(`Matched ${matched}/${teams.length} teams with standings data`)
+
+  enrichWithKenpom(teams, kenpomMap)
 
   const lots = buildLots(teams)
   console.log(`Built ${lots.length} lots`)

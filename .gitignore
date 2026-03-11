@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Scraped data files
+scripts/kenpom.html
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

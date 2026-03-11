@@ -12,6 +12,8 @@ export type Team = {
   logoUrl?: string
   record?: string
   conference?: string
+  kenpomRank?: number
+  kenpomAdjEM?: number
 }
 
 export type Lot = {

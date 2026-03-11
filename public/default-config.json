@@ -11,7 +11,9 @@
           "region": "East",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/mt-st-marys.70.png",
           "record": "15-17",
-          "conference": "MAAC"
+          "conference": "MAAC",
+          "kenpomRank": 278,
+          "kenpomAdjEM": -9.6
         },
         {
           "name": "Robert Morris",
@@ -19,7 +21,9 @@
           "region": "East",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/r/robert-morris.70.png",
           "record": "22-11",
-          "conference": "Horizon"
+          "conference": "Horizon",
+          "kenpomRank": 144,
+          "kenpomAdjEM": 1.66
         }
       ]
     },
@@ -33,7 +37,9 @@
           "region": "East",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/montana.70.png",
           "record": "18-15",
-          "conference": "Big Sky"
+          "conference": "Big Sky",
+          "kenpomRank": 181,
+          "kenpomAdjEM": -1.24
         },
         {
           "name": "Akron",
@@ -41,7 +47,9 @@
           "region": "East",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/a/akron.70.png",
           "record": "26-5",
-          "conference": "MAC"
+          "conference": "MAC",
+          "kenpomRank": 60,
+          "kenpomAdjEM": 13.48
         }
       ]
     },
@@ -55,7 +63,9 @@
           "region": "East",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/l/liberty.70.png",
           "record": "25-6",
-          "conference": "CUSA"
+          "conference": "CUSA",
+          "kenpomRank": 116,
+          "kenpomAdjEM": 4.66
         }
       ]
     },
@@ -69,7 +79,9 @@
           "region": "East",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/v/vcu.70.png",
           "record": "24-7",
-          "conference": "Atlantic 10"
+          "conference": "Atlantic 10",
+          "kenpomRank": 45,
+          "kenpomAdjEM": 16.86
         }
       ]
     },
@@ -83,7 +95,9 @@
           "region": "East",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/v/vanderbilt.70.png",
           "record": "24-7",
-          "conference": "SEC"
+          "conference": "SEC",
+          "kenpomRank": 13,
+          "kenpomAdjEM": 26.47
         }
       ]
     },
@@ -97,7 +111,9 @@
           "region": "East",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/b/baylor.70.png",
           "record": "16-16",
-          "conference": "Big 12"
+          "conference": "Big 12",
+          "kenpomRank": 48,
+          "kenpomAdjEM": 15.95
         }
       ]
     },
@@ -111,7 +127,9 @@
           "region": "East",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/mississippi-st.70.png",
           "record": "13-18",
-          "conference": "SEC"
+          "conference": "SEC",
+          "kenpomRank": 99,
+          "kenpomAdjEM": 7.35
         }
       ]
     },
@@ -125,7 +143,9 @@
           "region": "East",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/s/st-marys-ca.70.png",
           "record": "27-5",
-          "conference": "WCC"
+          "conference": "WCC",
+          "kenpomRank": 22,
+          "kenpomAdjEM": 23.07
         }
       ]
     },
@@ -139,7 +159,9 @@
           "region": "East",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/b/byu.70.png",
           "record": "22-10",
-          "conference": "Big 12"
+          "conference": "Big 12",
+          "kenpomRank": 25,
+          "kenpomAdjEM": 22.49
         }
       ]
     },
@@ -153,7 +175,9 @@
           "region": "East",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/o/oregon.70.png",
           "record": "12-20",
-          "conference": "Big Ten"
+          "conference": "Big Ten",
+          "kenpomRank": 102,
+          "kenpomAdjEM": 6.99
         }
       ]
     },
@@ -167,7 +191,9 @@
           "region": "East",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/a/arizona.70.png",
           "record": "29-2",
-          "conference": "Big 12"
+          "conference": "Big 12",
+          "kenpomRank": 3,
+          "kenpomAdjEM": 37.33
         }
       ]
     },
@@ -181,7 +207,9 @@
           "region": "East",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/w/wisconsin.70.png",
           "record": "22-9",
-          "conference": "Big Ten"
+          "conference": "Big Ten",
+          "kenpomRank": 23,
+          "kenpomAdjEM": 22.6
         }
       ]
     },
@@ -195,7 +223,9 @@
           "region": "East",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/a/alabama.70.png",
           "record": "23-8",
-          "conference": "SEC"
+          "conference": "SEC",
+          "kenpomRank": 15,
+          "kenpomAdjEM": 26.15
         }
       ]
     },
@@ -209,7 +239,9 @@
           "region": "East",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/d/duke.70.png",
           "record": "29-2",
-          "conference": "ACC"
+          "conference": "ACC",
+          "kenpomRank": 1,
+          "kenpomAdjEM": 40.62
         }
       ]
     },
@@ -223,7 +255,9 @@
           "region": "West",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/n/norfolk-st.70.png",
           "record": "15-16",
-          "conference": "MEAC"
+          "conference": "MEAC",
+          "kenpomRank": 320,
+          "kenpomAdjEM": -14.59
         },
         {
           "name": "Omaha",
@@ -231,7 +265,9 @@
           "region": "West",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/n/neb-omaha.70.png",
           "record": "16-17",
-          "conference": "Summit League"
+          "conference": "Summit League",
+          "kenpomRank": 262,
+          "kenpomAdjEM": -8.03
         }
       ]
     },
@@ -245,7 +281,9 @@
           "region": "West",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/u/unc-wilmington.70.png",
           "record": "26-6",
-          "conference": "CAA"
+          "conference": "CAA",
+          "kenpomRank": 110,
+          "kenpomAdjEM": 5.82
         },
         {
           "name": "Grand Canyon",
@@ -253,7 +291,9 @@
           "region": "West",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/g/grand-canyon.70.png",
           "record": "20-11",
-          "conference": "Mountain West"
+          "conference": "Mountain West",
+          "kenpomRank": 59,
+          "kenpomAdjEM": 13.54
         }
       ]
     },
@@ -267,7 +307,9 @@
           "region": "West",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/c/colorado-st.70.png",
           "record": "20-11",
-          "conference": "Mountain West"
+          "conference": "Mountain West",
+          "kenpomRank": 86,
+          "kenpomAdjEM": 9.63
         }
       ]
     },
@@ -281,7 +323,9 @@
           "region": "West",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/d/drake.70.png",
           "record": "14-20",
-          "conference": "MVC"
+          "conference": "MVC",
+          "kenpomRank": 196,
+          "kenpomAdjEM": -2.61
         }
       ]
     },
@@ -295,7 +339,9 @@
           "region": "West",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/a/arkansas.70.png",
           "record": "23-8",
-          "conference": "SEC"
+          "conference": "SEC",
+          "kenpomRank": 18,
+          "kenpomAdjEM": 25.97
         }
       ]
     },
@@ -309,7 +355,9 @@
           "region": "West",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/o/oklahoma.70.png",
           "record": "17-14",
-          "conference": "SEC"
+          "conference": "SEC",
+          "kenpomRank": 46,
+          "kenpomAdjEM": 16.81
         }
       ]
     },
@@ -323,7 +371,9 @@
           "region": "West",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/u/uconn.70.png",
           "record": "27-4",
-          "conference": "Big East"
+          "conference": "Big East",
+          "kenpomRank": 10,
+          "kenpomAdjEM": 28.28
         }
       ]
     },
@@ -337,7 +387,9 @@
           "region": "West",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/k/kansas.70.png",
           "record": "22-9",
-          "conference": "Big 12"
+          "conference": "Big 12",
+          "kenpomRank": 19,
+          "kenpomAdjEM": 25.46
         }
       ]
     },
@@ -351,7 +403,9 @@
           "region": "West",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/missouri.70.png",
           "record": "20-11",
-          "conference": "SEC"
+          "conference": "SEC",
+          "kenpomRank": 50,
+          "kenpomAdjEM": 15.51
         }
       ]
     },
@@ -365,7 +419,9 @@
           "region": "West",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/memphis.70.png",
           "record": "13-18",
-          "conference": "American"
+          "conference": "American",
+          "kenpomRank": 130,
+          "kenpomAdjEM": 3.22
         }
       ]
     },
@@ -379,7 +435,9 @@
           "region": "West",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/maryland.70.png",
           "record": "12-20",
-          "conference": "Big Ten"
+          "conference": "Big Ten",
+          "kenpomRank": 121,
+          "kenpomAdjEM": 4.19
         }
       ]
     },
@@ -393,7 +451,9 @@
           "region": "West",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/t/texas-tech.70.png",
           "record": "22-9",
-          "conference": "Big 12"
+          "conference": "Big 12",
+          "kenpomRank": 17,
+          "kenpomAdjEM": 26.09
         }
       ]
     },
@@ -407,7 +467,9 @@
           "region": "West",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/s/st-johns-ny.70.png",
           "record": "25-6",
-          "conference": "Big East"
+          "conference": "Big East",
+          "kenpomRank": 21,
+          "kenpomAdjEM": 24.48
         }
       ]
     },
@@ -421,7 +483,9 @@
           "region": "West",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/f/florida.70.png",
           "record": "25-6",
-          "conference": "SEC"
+          "conference": "SEC",
+          "kenpomRank": 4,
+          "kenpomAdjEM": 35.34
         }
       ]
     },
@@ -435,7 +499,9 @@
           "region": "South",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/a/alabama-st.70.png",
           "record": "10-22",
-          "conference": "SWAC"
+          "conference": "SWAC",
+          "kenpomRank": 318,
+          "kenpomAdjEM": -14.4
         },
         {
           "name": "Bryant",
@@ -443,7 +509,9 @@
           "region": "South",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/b/bryant.70.png",
           "record": "9-22",
-          "conference": "America East"
+          "conference": "America East",
+          "kenpomRank": 355,
+          "kenpomAdjEM": -22.98
         }
       ]
     },
@@ -457,7 +525,9 @@
           "region": "South",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/l/lipscomb.70.png",
           "record": "19-13",
-          "conference": "ASUN"
+          "conference": "ASUN",
+          "kenpomRank": 198,
+          "kenpomAdjEM": -2.82
         },
         {
           "name": "Yale",
@@ -465,7 +535,9 @@
           "region": "South",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/y/yale.70.png",
           "record": "23-5",
-          "conference": "Ivy League"
+          "conference": "Ivy League",
+          "kenpomRank": 78,
+          "kenpomAdjEM": 10.78
         }
       ]
     },
@@ -479,7 +551,9 @@
           "region": "South",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/u/uc-san-diego.70.png",
           "record": "22-10",
-          "conference": "Big West"
+          "conference": "Big West",
+          "kenpomRank": 113,
+          "kenpomAdjEM": 5.29
         }
       ]
     },
@@ -493,7 +567,9 @@
           "region": "South",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/n/north-carolina.70.png",
           "record": "24-7",
-          "conference": "ACC"
+          "conference": "ACC",
+          "kenpomRank": 31,
+          "kenpomAdjEM": 21.05
         }
       ]
     },
@@ -507,7 +583,9 @@
           "region": "South",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/n/new-mexico.70.png",
           "record": "22-9",
-          "conference": "Mountain West"
+          "conference": "Mountain West",
+          "kenpomRank": 49,
+          "kenpomAdjEM": 15.87
         }
       ]
     },
@@ -521,7 +599,9 @@
           "region": "South",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/c/creighton.70.png",
           "record": "15-16",
-          "conference": "Big East"
+          "conference": "Big East",
+          "kenpomRank": 75,
+          "kenpomAdjEM": 11.37
         }
       ]
     },
@@ -535,7 +615,9 @@
           "region": "South",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/l/louisville.70.png",
           "record": "22-9",
-          "conference": "ACC"
+          "conference": "ACC",
+          "kenpomRank": 14,
+          "kenpomAdjEM": 26.16
         }
       ]
     },
@@ -549,7 +631,9 @@
           "region": "South",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/marquette.70.png",
           "record": "12-19",
-          "conference": "Big East"
+          "conference": "Big East",
+          "kenpomRank": 85,
+          "kenpomAdjEM": 9.72
         }
       ]
     },
@@ -563,7 +647,9 @@
           "region": "South",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/o/ole-miss.70.png",
           "record": "12-19",
-          "conference": "SEC"
+          "conference": "SEC",
+          "kenpomRank": 80,
+          "kenpomAdjEM": 10.28
         }
       ]
     },
@@ -577,7 +663,9 @@
           "region": "South",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/michigan.70.png",
           "record": "29-2",
-          "conference": "Big Ten"
+          "conference": "Big Ten",
+          "kenpomRank": 2,
+          "kenpomAdjEM": 39.33
         }
       ]
     },
@@ -591,7 +679,9 @@
           "region": "South",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/t/texas-am.70.png",
           "record": "21-10",
-          "conference": "SEC"
+          "conference": "SEC",
+          "kenpomRank": 34,
+          "kenpomAdjEM": 19.85
         }
       ]
     },
@@ -605,7 +695,9 @@
           "region": "South",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/i/iowa-st.70.png",
           "record": "25-6",
-          "conference": "Big 12"
+          "conference": "Big 12",
+          "kenpomRank": 7,
+          "kenpomAdjEM": 31.19
         }
       ]
     },
@@ -619,7 +711,9 @@
           "region": "South",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/michigan-st.70.png",
           "record": "25-6",
-          "conference": "Big Ten"
+          "conference": "Big Ten",
+          "kenpomRank": 9,
+          "kenpomAdjEM": 28.95
         }
       ]
     },
@@ -633,7 +727,9 @@
           "region": "South",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/a/auburn.70.png",
           "record": "16-15",
-          "conference": "SEC"
+          "conference": "SEC",
+          "kenpomRank": 39,
+          "kenpomAdjEM": 18.73
         }
       ]
     },
@@ -647,7 +743,9 @@
           "region": "Midwest",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/s/siu-edwardsville.70.png",
           "record": "19-13",
-          "conference": "OVC"
+          "conference": "OVC",
+          "kenpomRank": 257,
+          "kenpomAdjEM": -7.6
         },
         {
           "name": "Wofford",
@@ -655,7 +753,9 @@
           "region": "Midwest",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/w/wofford.70.png",
           "record": "19-13",
-          "conference": "SoCon"
+          "conference": "SoCon",
+          "kenpomRank": 254,
+          "kenpomAdjEM": -7.3
         }
       ]
     },
@@ -669,7 +769,9 @@
           "region": "Midwest",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/t/troy.70.png",
           "record": "22-11",
-          "conference": "Sun Belt"
+          "conference": "Sun Belt",
+          "kenpomRank": 142,
+          "kenpomAdjEM": 1.72
         },
         {
           "name": "High Point",
@@ -677,7 +779,9 @@
           "region": "Midwest",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/h/high-point.70.png",
           "record": "30-4",
-          "conference": "Big South"
+          "conference": "Big South",
+          "kenpomRank": 93,
+          "kenpomAdjEM": 8.47
         }
       ]
     },
@@ -691,7 +795,9 @@
           "region": "Midwest",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/mcneese.70.png",
           "record": "27-5",
-          "conference": "Southland"
+          "conference": "Southland",
+          "kenpomRank": 69,
+          "kenpomAdjEM": 11.96
         }
       ]
     },
@@ -705,7 +811,9 @@
           "region": "Midwest",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/x/xavier.70.png",
           "record": "14-17",
-          "conference": "Big East"
+          "conference": "Big East",
+          "kenpomRank": 96,
+          "kenpomAdjEM": 7.77
         }
       ]
     },
@@ -719,7 +827,9 @@
           "region": "Midwest",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/u/utah-st.70.png",
           "record": "25-6",
-          "conference": "Mountain West"
+          "conference": "Mountain West",
+          "kenpomRank": 36,
+          "kenpomAdjEM": 19.6
         }
       ]
     },
@@ -733,7 +843,9 @@
           "region": "Midwest",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/g/georgia.70.png",
           "record": "22-9",
-          "conference": "SEC"
+          "conference": "SEC",
+          "kenpomRank": 30,
+          "kenpomAdjEM": 21.06
         }
       ]
     },
@@ -747,7 +859,9 @@
           "region": "Midwest",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/g/gonzaga.70.png",
           "record": "30-3",
-          "conference": "WCC"
+          "conference": "WCC",
+          "kenpomRank": 11,
+          "kenpomAdjEM": 28.18
         }
       ]
     },
@@ -761,7 +875,9 @@
           "region": "Midwest",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/u/ucla.70.png",
           "record": "21-10",
-          "conference": "Big Ten"
+          "conference": "Big Ten",
+          "kenpomRank": 28,
+          "kenpomAdjEM": 21.23
         }
       ]
     },
@@ -775,7 +891,9 @@
           "region": "Midwest",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/i/illinois.70.png",
           "record": "24-7",
-          "conference": "Big Ten"
+          "conference": "Big Ten",
+          "kenpomRank": 5,
+          "kenpomAdjEM": 32.73
         }
       ]
     },
@@ -789,7 +907,9 @@
           "region": "Midwest",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/c/clemson.70.png",
           "record": "22-9",
-          "conference": "ACC"
+          "conference": "ACC",
+          "kenpomRank": 38,
+          "kenpomAdjEM": 18.95
         }
       ]
     },
@@ -803,7 +923,9 @@
           "region": "Midwest",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/p/purdue.70.png",
           "record": "23-8",
-          "conference": "Big Ten"
+          "conference": "Big Ten",
+          "kenpomRank": 8,
+          "kenpomAdjEM": 29.48
         }
       ]
     },
@@ -817,7 +939,9 @@
           "region": "Midwest",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/k/kentucky.70.png",
           "record": "19-12",
-          "conference": "SEC"
+          "conference": "SEC",
+          "kenpomRank": 27,
+          "kenpomAdjEM": 21.39
         }
       ]
     },
@@ -831,7 +955,9 @@
           "region": "Midwest",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/t/tennessee.70.png",
           "record": "21-10",
-          "conference": "SEC"
+          "conference": "SEC",
+          "kenpomRank": 16,
+          "kenpomAdjEM": 26.11
         }
       ]
     },
@@ -845,7 +971,9 @@
           "region": "Midwest",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/h/houston.70.png",
           "record": "26-5",
-          "conference": "Big 12"
+          "conference": "Big 12",
+          "kenpomRank": 6,
+          "kenpomAdjEM": 32.47
         }
       ]
     }
