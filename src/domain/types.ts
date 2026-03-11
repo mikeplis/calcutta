@@ -44,6 +44,7 @@ export type AuctionState = {
   stateHistory: AuctionState[] // for undo support
   paused: boolean
   claimedPlayers: Record<string, string> // playerId → sessionToken
+  testMode: boolean
 }
 
 // Discriminated union of all auction actions

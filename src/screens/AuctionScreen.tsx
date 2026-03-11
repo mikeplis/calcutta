@@ -69,7 +69,14 @@ export function AuctionScreen({ onNewAuction }: { onNewAuction: () => void }) {
     <div className="min-h-screen bg-gray-50 p-4 md:p-6">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-4">
-          <h1 className="text-2xl font-bold text-gray-900">Calcutta Auction</h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-bold text-gray-900">Calcutta Auction</h1>
+            {state.testMode && (
+              <span className="px-2 py-0.5 text-xs font-bold bg-orange-100 text-orange-700 rounded-full uppercase tracking-wide">
+                Test Mode
+              </span>
+            )}
+          </div>
           {isAdmin ? (
             <AdminControls
               canUndo={state.stateHistory.length > 0}
@@ -106,7 +113,10 @@ export function AuctionScreen({ onNewAuction }: { onNewAuction: () => void }) {
               } else if (lotState?.status === 'active') {
                 activePlayerId = getActivePlayerTurn(state)?.id ?? null
               }
-              return activePlayerId === currentPlayerId
+              const showControls = state.testMode
+                ? activePlayerId != null
+                : activePlayerId === currentPlayerId
+              return showControls
                 ? <BidControls state={state} onBid={handleBid} onPass={handlePass} />
                 : null
             })()}

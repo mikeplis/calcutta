@@ -24,6 +24,7 @@ function makeTestState(overrides?: Partial<AuctionState>): AuctionState {
     stateHistory: [],
     paused: false,
     claimedPlayers: {},
+    testMode: false,
     ...overrides,
   }
 }

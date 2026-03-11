@@ -8,6 +8,7 @@ type SetupState = {
   openerPlayerId: string
   defaultBalance: number
   loading: boolean
+  testMode: boolean
   addPlayer: (name: string) => void
   removePlayer: (id: string) => void
   updatePlayerName: (id: string, name: string) => void
@@ -16,6 +17,7 @@ type SetupState = {
   setOpener: (playerId: string) => void
   setLots: (lots: Lot[]) => void
   resetLots: () => void
+  setTestMode: (enabled: boolean) => void
   importConfig: (config: { players: Player[]; lots: Lot[]; openerPlayerId: string }) => void
   exportConfig: () => { players: Player[]; lots: Lot[]; openerPlayerId: string }
 }
@@ -28,6 +30,7 @@ export const useSetupStore = create<SetupState>((set, get) => ({
   openerPlayerId: '',
   defaultBalance: 100,
   loading: true,
+  testMode: false,
 
   addPlayer: (name) => {
     const id = `player-${nextPlayerId++}`
@@ -73,6 +76,8 @@ export const useSetupStore = create<SetupState>((set, get) => ({
   setDefaultBalance: (balance) => set({ defaultBalance: balance }),
 
   setOpener: (playerId) => set({ openerPlayerId: playerId }),
+
+  setTestMode: (enabled) => set({ testMode: enabled }),
 
   setLots: (lots) => set({ lots }),
 

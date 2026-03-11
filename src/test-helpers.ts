@@ -36,6 +36,7 @@ export function makeBaseState(overrides?: Partial<AuctionState>): AuctionState {
     stateHistory: [],
     paused: false,
     claimedPlayers: {},
+    testMode: false,
     ...overrides,
   }
 }

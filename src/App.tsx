@@ -62,9 +62,14 @@ function AuctionRoute() {
       }
       if (svc) {
         setService(svc)
-        // Check if we already claimed a player (reconnect)
-        const existing = findClaimedPlayerId(svc.getState(), sessionToken)
-        if (existing) setCurrentPlayerId(existing)
+        // In test mode, skip player claiming and auto-select first player
+        if (svc.getState().testMode) {
+          setCurrentPlayerId(svc.getState().players[0].id)
+        } else {
+          // Check if we already claimed a player (reconnect)
+          const existing = findClaimedPlayerId(svc.getState(), sessionToken)
+          if (existing) setCurrentPlayerId(existing)
+        }
       } else {
         setError('Auction not found')
       }
@@ -120,7 +125,7 @@ function AppRoutes() {
   const sessionToken = useState(() => getSessionToken())[0]
 
   const handleStart = useCallback(async () => {
-    const { players, lots, openerPlayerId } = useSetupStore.getState()
+    const { players, lots, openerPlayerId, testMode } = useSetupStore.getState()
 
     const lotStates: Record<string, LotAuctionState> = {}
     for (const lot of lots) {
@@ -139,12 +144,16 @@ function AppRoutes() {
       stateHistory: [],
       paused: false,
       claimedPlayers: {},
+      testMode,
     }
 
     const svc = await FirebaseAuctionService.create(initialState)
     await svc.dispatch({ type: 'START_AUCTION' })
     sessionStorage.setItem(ADMIN_AUCTION_KEY, initialState.auctionId)
     setService(svc)
+    if (testMode) {
+      setCurrentPlayerId(players[0].id)
+    }
     navigate(`/auction/${initialState.auctionId}`)
   }, [navigate])
 

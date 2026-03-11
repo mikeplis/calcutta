@@ -4,7 +4,7 @@ import { PlayerSetup } from './components/PlayerSetup'
 import { LotSetup } from './components/LotSetup'
 
 export function SetupScreen({ onStart }: { onStart: () => void }) {
-  const { players, lots, openerPlayerId } = useSetupStore()
+  const { players, lots, openerPlayerId, testMode, setTestMode } = useSetupStore()
   const [activeTab, setActiveTab] = useState<'players' | 'lots'>('players')
 
   const canStart = players.length >= 2 && lots.length >= 1 && openerPlayerId !== ''
@@ -40,7 +40,17 @@ export function SetupScreen({ onStart }: { onStart: () => void }) {
 
         {activeTab === 'players' ? <PlayerSetup /> : <LotSetup />}
 
-        <div className="mt-8 flex justify-end">
+        <div className="mt-8 flex items-center justify-between">
+          <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={testMode}
+              onChange={(e) => setTestMode(e.target.checked)}
+              className="w-4 h-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500"
+            />
+            Test mode
+            <span className="text-gray-400">(solo testing, no player claiming)</span>
+          </label>
           <button
             onClick={onStart}
             disabled={!canStart}
