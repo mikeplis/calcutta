@@ -86,12 +86,12 @@ export function PlayerList({ state }: Props) {
                   )}
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="text-right">
+                  <div className="flex items-center gap-2">
                     <span className={`font-bold ${player.balance < lowBalanceThreshold ? 'text-red-600' : 'text-gray-900'}`}>
                       ${player.balance}
                     </span>
                     {player.lotsWon.length > 0 && (
-                      <span className="text-xs text-gray-400 ml-2">
+                      <span className="text-xs text-gray-400">
                         {player.lotsWon.length} lot{player.lotsWon.length !== 1 ? 's' : ''}
                       </span>
                     )}
