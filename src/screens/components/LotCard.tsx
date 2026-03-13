@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback, Fragment } from 'react'
 import type { AuctionState } from '../../domain/types'
 import { getCurrentLot, getCurrentLotState } from '../../domain/logic'
 import { SEED_PROBS } from '../../domain/seedProbabilities'
@@ -51,11 +51,14 @@ export function LotCard({ state, soldInfo, onDismissSold }: Props) {
   const totalLots = state.lots.length
 
   return (
-    <div className="relative rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+    <div className={`relative rounded-xl shadow-md overflow-hidden border-l-4 ${
+      lotState?.status === 'active' ? 'border-l-emerald-500' :
+      lotState?.status === 'pending' ? 'border-l-indigo-400' : 'border-l-transparent'
+    }`}>
       {/* Normal card content — always rendered to maintain height */}
       <div className={`bg-white p-4 sm:p-6${showOverlay ? ' invisible' : ''}`}>
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm text-gray-400 font-medium">
+          <span className="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-medium">
             Lot {lotNumber} of {totalLots}
           </span>
           {lotState?.status === 'active' && (
@@ -70,67 +73,79 @@ export function LotCard({ state, soldInfo, onDismissSold }: Props) {
           )}
         </div>
 
-        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3">{lot.label}</h2>
+        <h2 className="text-3xl font-bold text-gray-900 mb-3">{lot.label}</h2>
 
-        <div className="space-y-2 mb-4">
-          {lot.teams.map((team, i) => {
-            const probs = SEED_PROBS[team.seed]
-            const fmt = (n: number) => n < 0.01 ? '<1%' : `${Math.round(n * 100)}%`
-            const hasStats = probs || team.kenpomRank
-            return (
-              <div key={i} className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4${i > 0 ? ' pt-2 border-t border-gray-100' : ''}`}>
-                {/* Identity */}
-                <div className="flex items-center gap-2 min-w-0">
-                  {team.logoUrl && (
-                    <img src={team.logoUrl} alt="" className="w-6 h-6 object-contain flex-shrink-0 drop-shadow-[0_0_1px_rgba(0,0,0,0.3)]" />
-                  )}
-                  <span className="text-sm font-bold text-gray-400">#{team.seed}</span>
-                  <span className="font-semibold text-gray-900 truncate">{team.name}</span>
-                  {team.record && <span className="text-sm text-gray-500 flex-shrink-0">{team.record}</span>}
-                  {team.conference && <span className="text-sm text-gray-400 flex-shrink-0">{team.conference}</span>}
-                  {!team.record && !team.conference && (
-                    <span className="text-sm text-gray-500">{team.region}</span>
-                  )}
-                </div>
-                {/* Stat grid */}
-                {hasStats && (
-                  <div className="flex gap-4 text-xs flex-shrink-0 ml-8 sm:ml-0">
-                    {team.kenpomRank && (
-                      <div className="text-center" title={`KenPom rank #${team.kenpomRank}${team.kenpomAdjEM !== undefined ? ` · Adjusted Efficiency Margin: ${team.kenpomAdjEM >= 0 ? '+' : ''}${team.kenpomAdjEM.toFixed(1)} (points per 100 possessions vs average)` : ''}`}>
-                        <div className="text-gray-400 font-medium cursor-help">KP</div>
-                        <span className="font-semibold text-blue-600 whitespace-nowrap">
-                          #{team.kenpomRank}
-                          {team.kenpomAdjEM !== undefined && (
-                            <span className="font-normal text-blue-400"> ({team.kenpomAdjEM >= 0 ? '+' : ''}{team.kenpomAdjEM.toFixed(1)})</span>
-                          )}
-                        </span>
-                      </div>
-                    )}
-                    {probs && <>
-                      {([
-                        ['S16', fmt(probs.s16), 'Sweet 16 — historical rate for this seed (1985–2024)'],
-                        ['E8',  fmt(probs.e8),  'Elite 8 — historical rate for this seed (1985–2024)'],
-                        ['F4',  fmt(probs.f4),  'Final Four — historical rate for this seed (1985–2024)'],
-                        ['Final', fmt(probs.final), 'Championship game — historical rate for this seed (1985–2024)'],
-                        ['Win', fmt(probs.win), 'Champion — historical rate for this seed (1985–2024)'],
-                      ] as [string, string, string][]).map(([label, value, tooltip]) => (
-                        <div key={label} className="text-center" title={tooltip}>
-                          <div className="text-gray-400 font-medium cursor-help">{label}</div>
-                          <div className="font-medium text-gray-700">{value}</div>
+        {(() => {
+          const hasAnyStats = lot.teams.some(t => SEED_PROBS[t.seed] || t.kenpomRank)
+          const fmt = (n: number) => n < 0.01 ? '<1%' : `${Math.round(n * 100)}%`
+          const statCols = [
+            ['KP',    `KenPom rank`],
+            ['S16',   'Sweet 16 — historical rate for this seed (1985–2024)'],
+            ['E8',    'Elite 8 — historical rate for this seed (1985–2024)'],
+            ['F4',    'Final Four — historical rate for this seed (1985–2024)'],
+            ['Final', 'Championship game — historical rate for this seed (1985–2024)'],
+            ['Win',   'Champion — historical rate for this seed (1985–2024)'],
+          ] as [string, string][]
+          return (
+            <div className={`mb-4 ${hasAnyStats ? 'grid grid-cols-[1fr_repeat(6,auto)] gap-x-4 items-center text-xs' : 'space-y-2'}`}>
+              {/* Single header row shared across all teams */}
+              {hasAnyStats && (
+                <>
+                  <div />
+                  {statCols.map(([label, tooltip]) => (
+                    <div key={label} className="text-center text-gray-400 font-medium cursor-help" title={tooltip}>{label}</div>
+                  ))}
+                </>
+              )}
+              {lot.teams.map((team, i) => {
+                const probs = SEED_PROBS[team.seed]
+                return (
+                  <Fragment key={i}>
+                    {i > 0 && <div className="col-span-7 border-t border-gray-100" />}
+                    {/* Identity */}
+                    <div className="flex items-center gap-2 min-w-0 py-1">
+                      {team.logoUrl && (
+                        <img src={team.logoUrl} alt="" className="w-6 h-6 object-contain flex-shrink-0 drop-shadow-[0_0_1px_rgba(0,0,0,0.3)]" />
+                      )}
+                      <span className="text-sm font-bold text-gray-400">#{team.seed}</span>
+                      <span className="font-semibold text-gray-900 truncate">{team.name}</span>
+                      {team.record && <span className="text-sm text-gray-500 flex-shrink-0">{team.record}</span>}
+                      {team.conference && <span className="text-sm text-gray-400 flex-shrink-0">{team.conference}</span>}
+                      {!team.record && !team.conference && (
+                        <span className="text-sm text-gray-500">{team.region}</span>
+                      )}
+                    </div>
+                    {/* Stat cells — one per column, always rendered when any team has stats */}
+                    {hasAnyStats && (
+                      <>
+                        <div className="text-center" title={team.kenpomRank ? `KenPom rank #${team.kenpomRank}${team.kenpomAdjEM !== undefined ? ` · Adjusted Efficiency Margin: ${team.kenpomAdjEM >= 0 ? '+' : ''}${team.kenpomAdjEM.toFixed(1)} (points per 100 possessions vs average)` : ''}` : undefined}>
+                          {team.kenpomRank ? (
+                            <span className="font-semibold text-blue-600 whitespace-nowrap">
+                              #{team.kenpomRank}
+                              {team.kenpomAdjEM !== undefined && (
+                                <span className="font-normal text-blue-400"> ({team.kenpomAdjEM >= 0 ? '+' : ''}{team.kenpomAdjEM.toFixed(1)})</span>
+                              )}
+                            </span>
+                          ) : <span className="text-gray-300">—</span>}
                         </div>
-                      ))}
-                    </>}
-                  </div>
-                )}
-              </div>
-            )
-          })}
-        </div>
+                        {(['s16', 'e8', 'f4', 'final', 'win'] as const).map((key) => (
+                          <div key={key} className="text-center font-medium text-gray-700">
+                            {probs ? fmt(probs[key]) : <span className="text-gray-300">—</span>}
+                          </div>
+                        ))}
+                      </>
+                    )}
+                  </Fragment>
+                )
+              })}
+            </div>
+          )
+        })()}
 
         {lotState?.status === 'active' ? (
           <div className="bg-green-50 rounded-lg p-4 text-center">
             <div className="text-sm text-green-600 font-medium">Current High Bid</div>
-            <div className="text-4xl font-bold text-green-700">${lotState.currentBid.amount}</div>
+            <div className="text-5xl font-black text-emerald-700">${lotState.currentBid.amount}</div>
             <div className="text-sm text-green-600">
               by {state.players.find((p) => p.id === lotState.currentBid.playerId)?.name}
             </div>

@@ -29,7 +29,9 @@ describe('LotCard', () => {
 
       expect(getByText('AWAITING OPEN')).toBeInTheDocument()
       expect(getByText('Waiting for opening bid')).toBeInTheDocument()
-      expect(getByText('—')).toBeInTheDocument()
+      // The pending bid placeholder shows a dash in the large-text element
+      const dash = getByText('Waiting for opening bid').closest('.bg-gray-50')!
+      expect(dash).toHaveTextContent('—')
     })
   })
 
