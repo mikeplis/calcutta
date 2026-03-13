@@ -68,32 +68,34 @@ export function AuctionScreen({ onNewAuction }: { onNewAuction: () => void }) {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <header className="sticky top-0 z-20 bg-slate-900 text-white px-4 md:px-6 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <h1 className="text-lg font-bold tracking-tight">Calcutta Auction</h1>
-          {state.testMode && (
-            <span className="px-2 py-0.5 text-xs font-bold bg-orange-500 text-white rounded-full uppercase tracking-wide">
-              TEST MODE
-            </span>
-          )}
-        </div>
-        <div className="flex items-center gap-3">
+      <header className="sticky top-0 z-20 bg-slate-900 text-white px-4 md:px-6 py-2">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg font-bold tracking-tight">Calcutta Auction</h1>
+            {state.testMode && (
+              <span className="px-2 py-0.5 text-xs font-bold bg-orange-500 text-white rounded-full uppercase tracking-wide whitespace-nowrap">
+                TEST MODE
+              </span>
+            )}
+          </div>
           {isAdmin && (
             <button
               onClick={() => navigator.clipboard.writeText(window.location.href)}
-              className="px-2 py-1 text-xs bg-slate-700 text-slate-300 rounded hover:bg-slate-600"
+              className="px-2 py-1 text-xs bg-slate-700 text-slate-300 rounded hover:bg-slate-600 whitespace-nowrap"
             >
               Share
             </button>
           )}
-          {isAdmin ? (
+        </div>
+        {isAdmin && (
+          <div className="flex items-center justify-end gap-2 mt-1.5 pb-0.5">
             <AdminControls
               canUndo={state.stateHistory.length > 0}
               onUndo={() => dispatch({ type: 'UNDO' })}
               onNewAuction={onNewAuction}
             />
-          ) : null}
-        </div>
+          </div>
+        )}
       </header>
 
       <div className="max-w-6xl mx-auto p-4 md:p-6">

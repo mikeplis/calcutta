@@ -10,8 +10,7 @@ export function AdminControls({ onUndo, onNewAuction, canUndo }: Props) {
   const [confirmingNew, setConfirmingNew] = useState(false)
 
   return (
-    <div className="flex items-center gap-2 flex-wrap">
-      <span className="text-xs font-medium text-slate-400 uppercase tracking-wide">Admin:</span>
+    <div className="flex items-center gap-2">
       <button
         onClick={onUndo}
         disabled={!canUndo}

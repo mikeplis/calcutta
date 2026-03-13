@@ -87,23 +87,14 @@ export function LotCard({ state, soldInfo, onDismissSold }: Props) {
             ['Win',   'Champion — historical rate for this seed (1985–2024)'],
           ] as [string, string][]
           return (
-            <div className={`mb-4 ${hasAnyStats ? 'grid grid-cols-[1fr_repeat(6,auto)] gap-x-4 items-center text-xs' : 'space-y-2'}`}>
-              {/* Single header row shared across all teams */}
-              {hasAnyStats && (
-                <>
-                  <div />
-                  {statCols.map(([label, tooltip]) => (
-                    <div key={label} className="text-center text-gray-400 font-medium cursor-help" title={tooltip}>{label}</div>
-                  ))}
-                </>
-              )}
+            <div className="mb-4 space-y-2">
               {lot.teams.map((team, i) => {
                 const probs = SEED_PROBS[team.seed]
                 return (
                   <Fragment key={i}>
-                    {i > 0 && <div className="col-span-7 border-t border-gray-100" />}
-                    {/* Identity */}
-                    <div className="flex items-center gap-2 min-w-0 py-1">
+                    {i > 0 && <div className="border-t border-gray-100" />}
+                    {/* Identity row */}
+                    <div className="flex items-center gap-2 min-w-0 pt-1">
                       {team.logoUrl && (
                         <img src={team.logoUrl} alt="" className="w-6 h-6 object-contain flex-shrink-0 drop-shadow-[0_0_1px_rgba(0,0,0,0.3)]" />
                       )}
@@ -115,9 +106,12 @@ export function LotCard({ state, soldInfo, onDismissSold }: Props) {
                         <span className="text-sm text-gray-500">{team.region}</span>
                       )}
                     </div>
-                    {/* Stat cells — one per column, always rendered when any team has stats */}
+                    {/* Stat row — always below identity, aligned via grid */}
                     {hasAnyStats && (
-                      <>
+                      <div className="grid grid-cols-[repeat(6,1fr)] gap-x-2 text-xs items-center pb-1">
+                        {statCols.map(([label, tooltip]) => (
+                          <div key={label} className="text-center text-gray-400 font-medium cursor-help" title={tooltip}>{label}</div>
+                        ))}
                         <div className="text-center" title={team.kenpomRank ? `KenPom rank #${team.kenpomRank}${team.kenpomAdjEM !== undefined ? ` · Adjusted Efficiency Margin: ${team.kenpomAdjEM >= 0 ? '+' : ''}${team.kenpomAdjEM.toFixed(1)} (points per 100 possessions vs average)` : ''}` : undefined}>
                           {team.kenpomRank ? (
                             <span className="font-semibold text-blue-600 whitespace-nowrap">
@@ -133,7 +127,7 @@ export function LotCard({ state, soldInfo, onDismissSold }: Props) {
                             {probs ? fmt(probs[key]) : <span className="text-gray-300">—</span>}
                           </div>
                         ))}
-                      </>
+                      </div>
                     )}
                   </Fragment>
                 )

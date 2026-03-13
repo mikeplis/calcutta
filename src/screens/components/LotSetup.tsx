@@ -41,32 +41,32 @@ export function LotSetup() {
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-      <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+      <div className="flex items-center justify-between mb-3">
         <h2 className="text-xl font-semibold text-gray-900">Lots ({lots.length})</h2>
-        <div className="flex flex-wrap gap-2">
-          <button
-            onClick={resetLots}
-            className="px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200"
-          >
-            Reset to Default
-          </button>
-          <button
-            onClick={handleExport}
-            className="px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200"
-          >
-            Export JSON
-          </button>
-          <label className="px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 cursor-pointer">
-            Import JSON
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".json"
-              onChange={handleImport}
-              className="hidden"
-            />
-          </label>
-        </div>
+      </div>
+      <div className="flex gap-2 mb-4">
+        <label className="flex-1 text-center px-3 py-1.5 text-sm bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-lg hover:bg-indigo-100 cursor-pointer font-medium">
+          Import JSON
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".json"
+            onChange={handleImport}
+            className="hidden"
+          />
+        </label>
+        <button
+          onClick={handleExport}
+          className="flex-1 px-3 py-1.5 text-sm bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-lg hover:bg-indigo-100 font-medium"
+        >
+          Export JSON
+        </button>
+        <button
+          onClick={resetLots}
+          className="flex-1 px-3 py-1.5 text-sm bg-gray-100 text-gray-500 border border-gray-200 rounded-lg hover:bg-gray-200 font-medium"
+        >
+          Reset to Default
+        </button>
       </div>
 
       {loading ? (
