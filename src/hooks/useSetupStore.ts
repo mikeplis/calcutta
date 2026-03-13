@@ -11,10 +11,9 @@ type SetupState = {
   testMode: boolean
   addPlayer: (name: string) => void
   removePlayer: (id: string) => void
+  movePlayer: (id: string, direction: 'up' | 'down') => void
   updatePlayerName: (id: string, name: string) => void
-  updatePlayerBalance: (id: string, balance: number) => void
   setDefaultBalance: (balance: number) => void
-  setOpener: (playerId: string) => void
   setLots: (lots: Lot[]) => void
   resetLots: () => void
   setTestMode: (enabled: boolean) => void
@@ -47,7 +46,7 @@ export const useSetupStore = create<SetupState>((set, get) => ({
       const newPlayers = [...s.players, newPlayer]
       return {
         players: newPlayers,
-        openerPlayerId: s.openerPlayerId || id,
+        openerPlayerId: newPlayers[0]?.id ?? '',
       }
     })
   },
@@ -57,10 +56,19 @@ export const useSetupStore = create<SetupState>((set, get) => ({
       const newPlayers = s.players.filter((p) => p.id !== id)
       return {
         players: newPlayers,
-        openerPlayerId: s.openerPlayerId === id
-          ? (newPlayers[0]?.id ?? '')
-          : s.openerPlayerId,
+        openerPlayerId: newPlayers[0]?.id ?? '',
       }
+    }),
+
+  movePlayer: (id, direction) =>
+    set((s) => {
+      const idx = s.players.findIndex((p) => p.id === id)
+      if (idx === -1) return s
+      const newPlayers = [...s.players]
+      const swapIdx = direction === 'up' ? idx - 1 : idx + 1
+      if (swapIdx < 0 || swapIdx >= newPlayers.length) return s
+      ;[newPlayers[idx], newPlayers[swapIdx]] = [newPlayers[swapIdx], newPlayers[idx]]
+      return { players: newPlayers, openerPlayerId: newPlayers[0]?.id ?? '' }
     }),
 
   updatePlayerName: (id, name) =>
@@ -68,14 +76,7 @@ export const useSetupStore = create<SetupState>((set, get) => ({
       players: s.players.map((p) => (p.id === id ? { ...p, name } : p)),
     })),
 
-  updatePlayerBalance: (id, balance) =>
-    set((s) => ({
-      players: s.players.map((p) => (p.id === id ? { ...p, balance } : p)),
-    })),
-
   setDefaultBalance: (balance) => set({ defaultBalance: balance }),
-
-  setOpener: (playerId) => set({ openerPlayerId: playerId }),
 
   setTestMode: (enabled) => set({ testMode: enabled }),
 
@@ -91,7 +92,7 @@ export const useSetupStore = create<SetupState>((set, get) => ({
     set({
       players: config.players,
       lots: config.lots,
-      openerPlayerId: config.openerPlayerId,
+      openerPlayerId: config.openerPlayerId || config.players[0]?.id || '',
     }),
 
   exportConfig: () => {

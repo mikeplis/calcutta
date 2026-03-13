@@ -4,14 +4,12 @@ import { useSetupStore } from '../../hooks/useSetupStore'
 export function PlayerSetup() {
   const {
     players,
-    openerPlayerId,
     defaultBalance,
     addPlayer,
     removePlayer,
+    movePlayer,
     updatePlayerName,
-    updatePlayerBalance,
     setDefaultBalance,
-    setOpener,
   } = useSetupStore()
 
   const [newName, setNewName] = useState('')
@@ -24,7 +22,7 @@ export function PlayerSetup() {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+    <div className="bg-white rounded-xl shadow-md p-6">
       <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
         <h2 className="text-xl font-semibold text-gray-900">Players</h2>
         <div className="flex items-center gap-2">
@@ -46,12 +44,12 @@ export function PlayerSetup() {
           onChange={(e) => setNewName(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
           placeholder="Player name"
-          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
         <button
           onClick={handleAdd}
           disabled={!newName.trim()}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+          className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
           Add
         </button>
@@ -60,50 +58,42 @@ export function PlayerSetup() {
       {players.length === 0 ? (
         <p className="text-gray-500 text-center py-4">No players added yet.</p>
       ) : (
-        <div className="space-y-2">
+        <div className="divide-y divide-slate-100">
           {players.map((player, index) => (
             <div
               key={player.id}
-              className={`flex flex-wrap items-center gap-2 p-3 rounded-lg border ${
-                player.id === openerPlayerId
-                  ? 'border-blue-300 bg-blue-50'
-                  : 'border-gray-200'
-              }`}
+              className="flex flex-wrap items-center gap-2 py-3 px-2"
             >
-              <span className="text-gray-400 text-sm w-6">{index + 1}.</span>
+              <div className="flex flex-col gap-0.5">
+                <button
+                  onClick={() => movePlayer(player.id, 'up')}
+                  disabled={index === 0}
+                  className="text-slate-300 hover:text-slate-500 disabled:opacity-0 leading-none text-xs"
+                  title="Move up"
+                >
+                  ▲
+                </button>
+                <button
+                  onClick={() => movePlayer(player.id, 'down')}
+                  disabled={index === players.length - 1}
+                  className="text-slate-300 hover:text-slate-500 disabled:opacity-0 leading-none text-xs"
+                  title="Move down"
+                >
+                  ▼
+                </button>
+              </div>
               <input
                 type="text"
                 value={player.name}
                 onChange={(e) => updatePlayerName(player.id, e.target.value)}
-                className="min-w-0 flex-1 basis-32 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="min-w-0 flex-1 basis-32 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500"
               />
-              <div className="flex items-center gap-1">
-                <span className="text-sm text-gray-500">$</span>
-                <input
-                  type="number"
-                  value={player.balance}
-                  onChange={(e) => updatePlayerBalance(player.id, Number(e.target.value))}
-                  min={0}
-                  className="w-20 px-2 py-1 border border-gray-300 rounded text-sm"
-                />
-              </div>
-              <button
-                onClick={() => setOpener(player.id)}
-                className={`text-xs px-2 py-1 rounded whitespace-nowrap ${
-                  player.id === openerPlayerId
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-                title="Set as first opener"
-              >
-                {player.id === openerPlayerId ? 'Opener' : 'Set opener'}
-              </button>
               <button
                 onClick={() => removePlayer(player.id)}
-                className="text-red-500 hover:text-red-700 text-sm whitespace-nowrap"
+                className="text-slate-400 hover:text-red-500 transition-colors text-base leading-none px-1"
                 title="Remove player"
               >
-                Remove
+                ×
               </button>
             </div>
           ))}
