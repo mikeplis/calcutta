@@ -67,17 +67,25 @@ export function AuctionScreen({ onNewAuction }: { onNewAuction: () => void }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold text-gray-900">Calcutta Auction</h1>
-            {state.testMode && (
-              <span className="px-2 py-0.5 text-xs font-bold bg-orange-100 text-orange-700 rounded-full uppercase tracking-wide">
-                Test Mode
-              </span>
-            )}
-          </div>
+    <div className="min-h-screen bg-slate-50">
+      <header className="sticky top-0 z-20 bg-slate-900 text-white px-4 md:px-6 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <h1 className="text-lg font-bold tracking-tight">Calcutta Auction</h1>
+          {state.testMode && (
+            <span className="px-2 py-0.5 text-xs font-bold bg-orange-500 text-white rounded-full uppercase tracking-wide">
+              TEST MODE
+            </span>
+          )}
+        </div>
+        <div className="flex items-center gap-3">
+          {isAdmin && (
+            <button
+              onClick={() => navigator.clipboard.writeText(window.location.href)}
+              className="px-2 py-1 text-xs bg-slate-700 text-slate-300 rounded hover:bg-slate-600"
+            >
+              Share
+            </button>
+          )}
           {isAdmin ? (
             <AdminControls
               canUndo={state.stateHistory.length > 0}
@@ -86,22 +94,9 @@ export function AuctionScreen({ onNewAuction }: { onNewAuction: () => void }) {
             />
           ) : null}
         </div>
+      </header>
 
-        {isAdmin && (
-          <div className="mb-4 flex items-center gap-2 text-sm text-gray-600">
-            <span>Share link:</span>
-            <code className="bg-gray-200 px-2 py-1 rounded text-xs select-all">
-              {window.location.href}
-            </code>
-            <button
-              onClick={() => navigator.clipboard.writeText(window.location.href)}
-              className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200"
-            >
-              Copy
-            </button>
-          </div>
-        )}
-
+      <div className="max-w-6xl mx-auto p-4 md:p-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div className="lg:col-span-2 space-y-4">
             <LotCard state={state} soldInfo={soldInfo ?? undefined} onDismissSold={handleDismissSold} />

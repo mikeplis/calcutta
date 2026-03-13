@@ -23,9 +23,9 @@ export function PlayerList({ state }: Props) {
   const lowBalanceThreshold = maxStartingBalance * 0.2
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
-      <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Players</h3>
-      <div className="space-y-2">
+    <div className="bg-white rounded-xl shadow-md p-4">
+      <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-3">Players</h3>
+      <div className="divide-y divide-slate-100">
         {state.players.map((player) => {
           const isActive = activePlayer?.id === player.id
           const hasPassed = passedIds.has(player.id)
@@ -44,20 +44,17 @@ export function PlayerList({ state }: Props) {
           }
 
           return (
-            <div
-              key={player.id}
-              className={`rounded-lg border-2 transition-all ${
-                isActive
-                  ? 'border-blue-500 bg-blue-50 shadow-md'
-                  : hasPassed
-                    ? 'border-gray-200 bg-gray-50 opacity-60'
-                    : isCurrentBidder
-                      ? 'border-green-300 bg-green-50'
-                      : 'border-gray-200'
-              }`}
-            >
+            <div key={player.id}>
               <div
-                className={`flex items-center justify-between p-3${player.lotsWon.length > 0 ? ' cursor-pointer' : ''}`}
+                className={`flex items-center justify-between py-3 px-2 rounded-lg transition-colors ${
+                  isActive
+                    ? 'bg-indigo-50 border-l-2 border-indigo-500 -ml-2 pl-4'
+                    : isCurrentBidder
+                      ? 'bg-green-50'
+                      : hasPassed
+                        ? 'opacity-50'
+                        : ''
+                }${player.lotsWon.length > 0 ? ' cursor-pointer' : ''}`}
                 onClick={toggleExpanded}
               >
                 <div className="flex items-center gap-2">
@@ -65,7 +62,7 @@ export function PlayerList({ state }: Props) {
                     {player.name}
                   </span>
                   {isActive && (
-                    <span className="text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full animate-pulse">
+                    <span className="text-xs bg-indigo-600 text-white px-2 py-0.5 rounded-full animate-pulse">
                       BIDDING
                     </span>
                   )}
@@ -87,7 +84,7 @@ export function PlayerList({ state }: Props) {
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2">
-                    <span className={`font-bold ${player.balance < lowBalanceThreshold ? 'text-red-600' : 'text-gray-900'}`}>
+                    <span className={`text-lg font-bold ${player.balance < lowBalanceThreshold ? 'text-red-600' : 'text-slate-800'}`}>
                       ${player.balance}
                     </span>
                     {player.lotsWon.length > 0 && (

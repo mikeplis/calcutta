@@ -60,12 +60,12 @@ export function BidControls({ state, onBid, onPass }: Props) {
   }, [bidAmount, minBid, maxBid, activePlayer.id, isActive, onBid, onPass])
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4" onKeyDown={handleKeyDown}>
+    <div className="bg-indigo-50 rounded-xl shadow-sm p-4" onKeyDown={handleKeyDown}>
       <div className="text-center mb-3">
         <span className="text-sm text-gray-500">
           {isPending ? 'Opening bid by' : "It's"}{' '}
         </span>
-        <span className="font-bold text-lg text-blue-600">{activePlayer.name}</span>
+        <span className="font-bold text-lg text-indigo-600">{activePlayer.name}</span>
         {!isPending && <span className="text-sm text-gray-500">'s turn</span>}
       </div>
 
@@ -78,14 +78,14 @@ export function BidControls({ state, onBid, onPass }: Props) {
             onChange={(e) => setBidInput(e.target.value)}
             min={minBid}
             max={maxBid}
-            className="w-24 px-3 py-2 border border-gray-300 rounded-lg text-center text-lg font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-24 px-3 py-2 border border-gray-300 rounded-lg text-center text-lg font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
         <button
           onClick={() => onBid(activePlayer.id, bidAmount)}
           disabled={bidAmount < minBid || bidAmount > maxBid}
-          className="px-6 py-2 bg-green-600 text-white rounded-lg font-bold hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+          className="px-10 py-3 bg-indigo-600 text-white rounded-xl font-bold text-lg hover:bg-indigo-700 disabled:bg-slate-300 disabled:cursor-not-allowed"
         >
           {isPending ? 'Open' : 'Raise'}
         </button>
@@ -110,7 +110,7 @@ export function BidControls({ state, onBid, onPass }: Props) {
                 key={inc}
                 onClick={() => setBidInput(String(Math.max(target, minBid)))}
                 disabled={target < minBid}
-                className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed font-medium"
+                className="px-4 py-1.5 text-sm bg-white border border-indigo-200 text-indigo-700 rounded-full hover:bg-indigo-50 font-medium disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 ${inc}
               </button>
@@ -123,7 +123,7 @@ export function BidControls({ state, onBid, onPass }: Props) {
               key={inc}
               onClick={() => setBidInput(String(Math.max(target, minBid)))}
               disabled={target < minBid}
-              className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed font-medium"
+              className="px-4 py-1.5 text-sm bg-white border border-indigo-200 text-indigo-700 rounded-full hover:bg-indigo-50 font-medium disabled:opacity-40 disabled:cursor-not-allowed"
             >
               +${inc}
             </button>
