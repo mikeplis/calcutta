@@ -130,9 +130,12 @@ export function AuctionScreen({ onNewAuction }: { onNewAuction: () => void }) {
                 ? <BidControls state={state} onBid={handleBid} onPass={handlePass} />
                 : null
             })()}
+            <div className="lg:hidden">
+              <PlayerList state={state} />
+            </div>
             <LotHistoryPanel state={state} />
           </div>
-          <div>
+          <div className="hidden lg:block">
             <PlayerList state={state} />
           </div>
         </div>
