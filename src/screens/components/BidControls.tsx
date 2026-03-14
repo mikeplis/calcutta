@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import type { AuctionState } from '../../domain/types'
-import { getMinimumBid, getActivePlayerTurn, getCurrentLotState, findEligibleOpener } from '../../domain/logic'
+import { getMinimumBid, getActivePlayerTurn, getCurrentLotState, getPendingTurnPlayer } from '../../domain/logic'
 
 type Props = {
   state: AuctionState
@@ -20,7 +20,7 @@ export function BidControls({ state, onBid, onPass }: Props) {
   // Determine who can act
   let activePlayerId: string | null = null
   if (isPending) {
-    activePlayerId = findEligibleOpener(state)
+    activePlayerId = getPendingTurnPlayer(state)?.id ?? null
   } else if (isActive) {
     const turn = getActivePlayerTurn(state)
     activePlayerId = turn?.id ?? null
@@ -54,7 +54,7 @@ export function BidControls({ state, onBid, onPass }: Props) {
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && bidAmount >= minBid && bidAmount <= maxBid) {
       onBid(activePlayer.id, bidAmount)
-    } else if (e.key === 'Escape' && isActive) {
+    } else if (e.key === 'Escape' && (isPending || isActive)) {
       onPass(activePlayer.id)
     }
   }, [bidAmount, minBid, maxBid, activePlayer.id, isActive, onBid, onPass])
@@ -62,11 +62,9 @@ export function BidControls({ state, onBid, onPass }: Props) {
   return (
     <div className="bg-indigo-50 rounded-xl shadow-sm p-4" onKeyDown={handleKeyDown}>
       <div className="text-center mb-3">
-        <span className="text-sm text-gray-500">
-          {isPending ? 'Opening bid by' : "It's"}{' '}
-        </span>
+        <span className="text-sm text-gray-500">It's </span>
         <span className="font-bold text-lg text-indigo-600">{activePlayer.name}</span>
-        {!isPending && <span className="text-sm text-gray-500">'s turn</span>}
+        <span className="text-sm text-gray-500">'s turn</span>
       </div>
 
       <div className="flex items-center gap-3 justify-center">
@@ -85,15 +83,15 @@ export function BidControls({ state, onBid, onPass }: Props) {
         <button
           onClick={() => onBid(activePlayer.id, bidAmount)}
           disabled={bidAmount < minBid || bidAmount > maxBid}
-          className="px-10 py-3 bg-indigo-600 text-white rounded-xl font-bold text-lg hover:bg-indigo-700 disabled:bg-slate-300 disabled:cursor-not-allowed"
+          className="px-10 py-3 bg-indigo-600 text-white rounded-xl font-bold text-lg hover:bg-indigo-700 disabled:bg-slate-300 disabled:cursor-not-allowed active:scale-95 transition-transform duration-75"
         >
           {isPending ? 'Open' : 'Raise'}
         </button>
 
-        {isActive && (
+        {(isPending || isActive) && (
           <button
             onClick={() => onPass(activePlayer.id)}
-            className="px-6 py-2 bg-red-100 text-red-700 rounded-lg font-bold hover:bg-red-200"
+            className="px-6 py-2 bg-red-100 text-red-700 rounded-lg font-bold hover:bg-red-200 active:scale-95 transition-transform duration-75"
           >
             Pass
           </button>

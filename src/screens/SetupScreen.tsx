@@ -8,6 +8,7 @@ export function SetupScreen({ onStart }: { onStart: () => void }) {
   const [activeTab, setActiveTab] = useState<'players' | 'lots'>('players')
 
   const canStart = players.length >= 2 && lots.length >= 1
+  const [starting, setStarting] = useState(false)
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -61,15 +62,15 @@ export function SetupScreen({ onStart }: { onStart: () => void }) {
               </span>
             </label>
             <button
-              onClick={onStart}
-              disabled={!canStart}
+              onClick={() => { setStarting(true); onStart() }}
+              disabled={!canStart || starting}
               className={`w-full sm:w-auto px-10 py-3 rounded-lg font-bold text-lg transition-colors ${
-                canStart
+                canStart && !starting
                   ? 'bg-emerald-600 text-white hover:bg-emerald-700'
                   : 'bg-slate-300 text-slate-500 cursor-not-allowed'
               }`}
             >
-              Start Auction
+              {starting ? 'Starting…' : 'Start Auction'}
             </button>
           </div>
           {!canStart && !testMode && (
