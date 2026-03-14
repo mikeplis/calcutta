@@ -58,3 +58,4 @@ export type AuctionAction =
   | { type: 'FORCE_ADVANCE' }
   | { type: 'PAUSE' }
   | { type: 'RESUME' }
+  | { type: 'FORCE_SELL'; winnerId: string; amount: number }

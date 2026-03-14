@@ -6,7 +6,9 @@ function renderControls(overrides?: Partial<Parameters<typeof AdminControls>[0]>
   const props = {
     onUndo: vi.fn(),
     onNewAuction: vi.fn(),
+    onSkipAll: vi.fn(),
     canUndo: true,
+    testMode: false,
     ...overrides,
   }
   const result = render(<AdminControls {...props} />)

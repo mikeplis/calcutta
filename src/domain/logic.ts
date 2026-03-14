@@ -359,6 +359,45 @@ export function applyAction(state: AuctionState, action: AuctionAction): Auction
       }
     }
 
+    case 'FORCE_SELL': {
+      if (state.phase !== 'active') return state
+      const lot = getCurrentLot(state)
+      if (!lot) return state
+
+      const winner = getPlayerById(state, action.winnerId)
+      if (!winner || winner.balance < action.amount || action.amount < 0) return state
+
+      const stateForHistory = { ...state, stateHistory: [] }
+
+      const newPlayers = state.players.map((p) =>
+        p.id === action.winnerId
+          ? { ...p, balance: p.balance - action.amount, lotsWon: [...p.lotsWon, lot.id] }
+          : p
+      )
+
+      const newLotStates = {
+        ...state.lotStates,
+        [lot.id]: { status: 'sold' as const, winnerId: action.winnerId, finalBid: action.amount },
+      }
+
+      const nextLotIndex = state.currentLotIndex + 1
+      const isComplete = nextLotIndex >= state.lots.length
+      const stateWithUpdatedBalances = { ...state, players: newPlayers }
+      const nextOpener = isComplete
+        ? action.winnerId
+        : findNextOpener(stateWithUpdatedBalances, action.winnerId)
+
+      return {
+        ...state,
+        players: newPlayers,
+        lotStates: newLotStates,
+        currentLotIndex: nextLotIndex,
+        phase: isComplete ? 'complete' : 'active',
+        openerPlayerId: nextOpener,
+        stateHistory: [...state.stateHistory, stateForHistory].slice(-MAX_UNDO_DEPTH),
+      }
+    }
+
     case 'PAUSE': {
       return { ...state, paused: true }
     }
@@ -366,6 +405,7 @@ export function applyAction(state: AuctionState, action: AuctionAction): Auction
     case 'RESUME': {
       return { ...state, paused: false }
     }
+
 
     default:
       return state

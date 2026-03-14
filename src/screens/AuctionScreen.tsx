@@ -58,6 +58,14 @@ export function AuctionScreen({ onNewAuction }: { onNewAuction: () => void }) {
   }
   prevLotStatesRef.current = state.lotStates
 
+  const handleSimulate = async () => {
+    const remainingLots = state.lots.slice(state.currentLotIndex)
+    for (const _lot of remainingLots) {
+      const winner = state.players[Math.floor(Math.random() * state.players.length)]
+      await dispatch({ type: 'FORCE_SELL', winnerId: winner.id, amount: 0 })
+    }
+  }
+
   const handleBid = (playerId: string, amount: number) => {
     dispatch({ type: 'PLACE_BID', playerId, amount })
   }
@@ -93,6 +101,8 @@ export function AuctionScreen({ onNewAuction }: { onNewAuction: () => void }) {
               canUndo={state.stateHistory.length > 0}
               onUndo={() => dispatch({ type: 'UNDO' })}
               onNewAuction={onNewAuction}
+              onSkipAll={handleSimulate}
+              testMode={state.testMode}
             />
           </div>
         )}
