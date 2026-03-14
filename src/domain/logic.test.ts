@@ -11,6 +11,7 @@ import {
   applyAction,
   MAX_UNDO_DEPTH,
   findEligibleOpener,
+  getPendingTurnPlayer,
 } from './logic'
 import { makePlayer, makeLot, makeBaseState } from '../test-helpers'
 
@@ -393,16 +394,75 @@ describe('Auction completion', () => {
   })
 })
 
-describe('Opener must bid rule', () => {
-  it('opener cannot pass on opening — only bid action is accepted from pending', () => {
-    // The opener's action comes from PLACE_BID on a pending lot.
-    // There's no mechanism for the opener to "pass" from pending state,
-    // because PASS only works on active lots.
-    let state = startAuction(makeBaseState())
-
-    // Trying to pass before the lot is active — should have no effect
-    const result = pass(state, 'p1')
+describe('Passing in pending state', () => {
+  it('opener can pass — lot stays pending, turn advances to next player', () => {
+    const state = startAuction(makeBaseState())
+    const result = pass(state, 'p1') // p1 is opener
     expect(result.lotStates['lot1'].status).toBe('pending')
+    const lotState = result.lotStates['lot1']
+    if (lotState.status === 'pending') {
+      expect(lotState.currentTurnPlayerId).toBe('p2')
+    }
+  })
+
+  it('passed player in pending CAN still bid when turn comes back to them', () => {
+    let state = startAuction(makeBaseState())
+    state = pass(state, 'p1') // p1 passes, turn goes to p2
+    state = pass(state, 'p2') // p2 passes, turn goes to p3
+    state = pass(state, 'p3') // p3 passes, turn goes back to p1
+    // p1 can now bid (not locked out)
+    const result = placeBid(state, 'p1', 10)
+    expect(result.lotStates['lot1'].status).toBe('active')
+  })
+
+  it('all players pass in pending — rotation wraps, lot stays pending', () => {
+    let state = startAuction(makeBaseState())
+    state = pass(state, 'p1')
+    state = pass(state, 'p2')
+    state = pass(state, 'p3') // wraps back to p1
+    expect(state.lotStates['lot1'].status).toBe('pending')
+    const lotState = state.lotStates['lot1']
+    if (lotState.status === 'pending') {
+      expect(lotState.currentTurnPlayerId).toBe('p1')
+    }
+  })
+
+  it('player with zero balance is skipped when advancing pending turn', () => {
+    const state = startAuction(
+      makeBaseState({
+        players: [
+          makePlayer({ id: 'p1', name: 'Alice', balance: 1000 }),
+          makePlayer({ id: 'p2', name: 'Bob', balance: 0 }),
+          makePlayer({ id: 'p3', name: 'Charlie', balance: 1000 }),
+        ],
+      })
+    )
+    // p1 passes; p2 has $0 so should be skipped; turn goes to p3
+    const result = pass(state, 'p1')
+    const lotState = result.lotStates['lot1']
+    if (lotState.status === 'pending') {
+      expect(lotState.currentTurnPlayerId).toBe('p3')
+    }
+  })
+
+  it('non-turn player cannot pass in pending', () => {
+    const state = startAuction(makeBaseState())
+    // p2 tries to pass but it's p1's turn
+    const result = pass(state, 'p2')
+    const lotState = result.lotStates['lot1']
+    if (lotState.status === 'pending') {
+      expect(lotState.currentTurnPlayerId).toBeUndefined() // unchanged
+    }
+  })
+
+  it('after first bid placed (active), pass still locks player out', () => {
+    let state = startAuction(makeBaseState())
+    state = placeBid(state, 'p1', 10)
+    state = pass(state, 'p2') // p2 is locked out
+    const lotState = state.lotStates['lot1']
+    if (lotState.status === 'active') {
+      expect(lotState.passedPlayerIds).toContain('p2')
+    }
   })
 })
 
@@ -690,6 +750,37 @@ describe('stateHistory cap', () => {
     // The history entry should have an empty stateHistory
     expect(state.stateHistory.length).toBe(1)
     expect(state.stateHistory[0].stateHistory).toEqual([])
+  })
+})
+
+describe('getPendingTurnPlayer', () => {
+  it('returns the eligible opener when no currentTurnPlayerId is set', () => {
+    const state = makeBaseState({ phase: 'active', openerPlayerId: 'p1' })
+    expect(getPendingTurnPlayer(state)?.id).toBe('p1')
+  })
+
+  it('returns the player set by currentTurnPlayerId', () => {
+    const state = makeBaseState({
+      phase: 'active',
+      lotStates: {
+        lot1: { status: 'pending', currentTurnPlayerId: 'p2' },
+        lot2: { status: 'pending' },
+        lot3: { status: 'pending' },
+      },
+    })
+    expect(getPendingTurnPlayer(state)?.id).toBe('p2')
+  })
+
+  it('returns null when lot is not pending', () => {
+    const state = makeBaseState({
+      phase: 'active',
+      lotStates: {
+        lot1: { status: 'active', currentBid: { playerId: 'p1', amount: 10, timestamp: 0 }, passedPlayerIds: [], openerId: 'p1' },
+        lot2: { status: 'pending' },
+        lot3: { status: 'pending' },
+      },
+    })
+    expect(getPendingTurnPlayer(state)).toBeNull()
   })
 })
 

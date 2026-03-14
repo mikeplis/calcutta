@@ -7,7 +7,9 @@ function renderControls(overrides?: Partial<Parameters<typeof AdminControls>[0]>
     onUndo: vi.fn(),
     onNewAuction: vi.fn(),
     onSkipAll: vi.fn(),
+    onSkipLot: vi.fn(),
     canUndo: true,
+    canSkipLot: true,
     testMode: false,
     ...overrides,
   }
@@ -27,6 +29,31 @@ describe('AdminControls', () => {
     expect(btn).toBeEnabled()
     fireEvent.click(btn)
     expect(props.onUndo).toHaveBeenCalledOnce()
+  })
+
+  describe('Skip Lot button', () => {
+    it('shows confirmation on click, calls onSkipLot on confirm', () => {
+      const { getByText, queryByText, props } = renderControls({ canSkipLot: true })
+      fireEvent.click(getByText('Skip Lot'))
+      expect(getByText('Yes, skip')).toBeInTheDocument()
+
+      fireEvent.click(getByText('Yes, skip'))
+      expect(props.onSkipLot).toHaveBeenCalledOnce()
+      expect(queryByText('Yes, skip')).not.toBeInTheDocument()
+    })
+
+    it('hides confirmation on Cancel', () => {
+      const { getByText, queryByText } = renderControls({ canSkipLot: true })
+      fireEvent.click(getByText('Skip Lot'))
+      fireEvent.click(getByText('Cancel'))
+      expect(queryByText('Yes, skip')).not.toBeInTheDocument()
+      expect(getByText('Skip Lot')).toBeInTheDocument()
+    })
+
+    it('is disabled when canSkipLot is false', () => {
+      const { getByText } = renderControls({ canSkipLot: false })
+      expect(getByText('Skip Lot')).toBeDisabled()
+    })
   })
 
   describe('New Auction confirmation', () => {

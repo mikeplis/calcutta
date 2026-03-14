@@ -88,8 +88,8 @@ export function isValidBid(state: AuctionState, playerId: string, amount: number
   if (!player) return false
 
   if (lotState.status === 'pending') {
-    // Only the opener can place the opening bid
-    if (playerId !== state.openerPlayerId) return false
+    const turnPlayer = getPendingTurnPlayer(state)
+    if (!turnPlayer || playerId !== turnPlayer.id) return false
     return amount >= 1 && amount <= player.balance
   }
 
@@ -174,6 +174,14 @@ function resolveLot(state: AuctionState): AuctionState {
   }
 }
 
+export function getPendingTurnPlayer(state: AuctionState): Player | null {
+  const lotState = getCurrentLotState(state)
+  if (!lotState || lotState.status !== 'pending') return null
+  const turnPlayerId = lotState.currentTurnPlayerId ?? findEligibleOpener(state)
+  if (!turnPlayerId) return null
+  return getPlayerById(state, turnPlayerId) ?? null
+}
+
 export function findEligibleOpener(state: AuctionState): string | null {
   const openerIndex = state.players.findIndex((p) => p.id === state.openerPlayerId)
   const playerCount = state.players.length
@@ -223,8 +231,8 @@ export function applyAction(state: AuctionState, action: AuctionAction): Auction
 
       if (lotState.status === 'pending') {
         // Opening bid
-        const actualOpener = findEligibleOpener(state)
-        if (!actualOpener || action.playerId !== actualOpener) return state
+        const turnPlayer = getPendingTurnPlayer(state)
+        if (!turnPlayer || action.playerId !== turnPlayer.id) return state
         if (action.amount < 1 || action.amount > player.balance) return state
 
         const bid = { playerId: action.playerId, amount: action.amount, timestamp: Date.now() }
@@ -241,7 +249,7 @@ export function applyAction(state: AuctionState, action: AuctionAction): Auction
         const newState: AuctionState = {
           ...state,
           lotStates: newLotStates,
-          openerPlayerId: actualOpener,
+          openerPlayerId: turnPlayer.id,
           stateHistory: [...state.stateHistory, stateForHistory].slice(-MAX_UNDO_DEPTH),
         }
 
@@ -284,16 +292,37 @@ export function applyAction(state: AuctionState, action: AuctionAction): Auction
       const lot = getCurrentLot(state)
       if (!lot) return state
       const lotState = getCurrentLotState(state)
-      if (!lotState || lotState.status !== 'active') return state
+      if (!lotState) return state
 
       const player = getPlayerById(state, action.playerId)
       if (!player) return state
 
-      // Opener cannot pass on their first action (if they're the current turn and haven't bid yet)
-      // Actually, the opener places the opening bid from 'pending' state, so if we're in 'active',
-      // the opener has already bid. But if the opener is also the next bidder in rotation,
-      // they CAN pass on subsequent rounds.
-      // The rule is: opener must place the opening bid (from pending). After that, they can pass like anyone.
+      if (lotState.status === 'pending') {
+        const turnPlayer = getPendingTurnPlayer(state)
+        if (!turnPlayer || action.playerId !== turnPlayer.id) return state
+
+        // Find next player clockwise with enough balance for a $1 bid
+        const currentIndex = state.players.findIndex((p) => p.id === turnPlayer.id)
+        let nextPlayer: Player | null = null
+        for (let i = 1; i < state.players.length; i++) {
+          const candidate = state.players[(currentIndex + i) % state.players.length]
+          if (candidate.balance >= 1) { nextPlayer = candidate; break }
+        }
+        if (!nextPlayer) return state // no one can afford a bid — admin must skip
+
+        const stateForHistory = { ...state, stateHistory: [] }
+        const newLotStates = {
+          ...state.lotStates,
+          [lot.id]: { status: 'pending' as const, currentTurnPlayerId: nextPlayer.id },
+        }
+        return {
+          ...state,
+          lotStates: newLotStates,
+          stateHistory: [...state.stateHistory, stateForHistory].slice(-MAX_UNDO_DEPTH),
+        }
+      }
+
+      if (lotState.status !== 'active') return state
 
       // Verify it's this player's turn
       const activePlayer = getActivePlayerTurn(state)

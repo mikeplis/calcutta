@@ -33,14 +33,14 @@ function renderBidControls(state: AuctionState, overrides?: { onBid?: () => void
 
 describe('BidControls', () => {
   describe('pending state', () => {
-    it('shows "Opening bid by" and "Open" button, no Pass button', () => {
+    it('shows "It\'s {name}\'s turn", "Open" button, and Pass button', () => {
       const state = makeBaseState({ phase: 'active' }) // lot1 is pending, openerPlayerId=p1
-      const { getByText, queryByText } = renderBidControls(state)
+      const { getByText } = renderBidControls(state)
 
-      expect(getByText('Opening bid by')).toBeInTheDocument()
+      expect(getByText("It's")).toBeInTheDocument()
       expect(getByText('Alice')).toBeInTheDocument()
       expect(getByText('Open')).toBeInTheDocument()
-      expect(queryByText('Pass')).not.toBeInTheDocument()
+      expect(getByText('Pass')).toBeInTheDocument()
     })
   })
 
@@ -179,13 +179,13 @@ describe('BidControls', () => {
       expect(onPass).toHaveBeenCalledOnce()
     })
 
-    it('Escape does not call onPass in pending state', () => {
+    it('Escape calls onPass in pending state', () => {
       const state = makeBaseState({ phase: 'active' })
       const onPass = vi.fn()
       const { container } = renderBidControls(state, { onPass })
 
       fireEvent.keyDown(container.firstChild!, { key: 'Escape' })
-      expect(onPass).not.toHaveBeenCalled()
+      expect(onPass).toHaveBeenCalledOnce()
     })
   })
 })

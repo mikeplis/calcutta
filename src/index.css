@@ -5,6 +5,295 @@
   --animate-fade-out: fade-out 300ms ease-in forwards;
   --animate-fade-in-up: fade-in-up 300ms ease-out;
   --animate-fade-out-down: fade-out-down 300ms ease-in forwards;
+  --animate-button-pop: button-pop 450ms cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+  --animate-button-shake: button-shake 450ms cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+  --animate-button-slam: button-slam 380ms cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+  --animate-button-punch: button-punch 400ms ease-in-out forwards;
+  --animate-button-flip: button-flip 500ms ease-in-out forwards;
+  --animate-button-jelly: button-jelly 600ms ease forwards;
+  --animate-button-rubber: button-rubber 500ms ease forwards;
+  --animate-button-wobble: button-wobble 500ms ease-in-out forwards;
+  --animate-button-flash: button-flash 400ms ease-out forwards;
+  --animate-button-slam-down: button-slam-down 380ms cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+  --animate-button-crumple: button-crumple 450ms ease forwards;
+  --animate-button-spin-out: button-spin-out 450ms ease forwards;
+  /* new open animations */
+  --animate-button-heartbeat: button-heartbeat 550ms ease-in-out forwards;
+  --animate-button-spin: button-spin 500ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  --animate-button-tada: button-tada 600ms ease-in-out forwards;
+  --animate-button-spring: button-spring 500ms cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+  --animate-button-boing: button-boing 550ms ease forwards;
+  --animate-button-twitch: button-twitch 400ms linear forwards;
+  --animate-button-jackpot: button-jackpot 550ms ease-in-out forwards;
+  --animate-button-karate: button-karate 450ms ease forwards;
+  /* new pass animations */
+  --animate-button-droop: button-droop 500ms cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+  --animate-button-flinch: button-flinch 400ms ease forwards;
+  --animate-button-deflate: button-deflate 500ms ease forwards;
+  --animate-button-toss: button-toss 480ms ease forwards;
+  --animate-button-melt: button-melt 500ms ease forwards;
+  --animate-button-recoil: button-recoil 420ms cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+  --animate-button-bounce-off: button-bounce-off 450ms ease forwards;
+  --animate-button-ghost: button-ghost 500ms ease forwards;
+  --animate-button-tick: button-tick 220ms ease forwards;
+}
+
+@keyframes button-pop {
+  0%   { transform: scale(1); }
+  20%  { transform: scale(0.82); }
+  55%  { transform: scale(1.22) rotate(-2deg); }
+  75%  { transform: scale(0.95) rotate(1deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+@keyframes button-shake {
+  0%   { transform: translateX(0) rotate(0deg); }
+  18%  { transform: translateX(-7px) rotate(-4deg); }
+  36%  { transform: translateX(7px) rotate(4deg); }
+  54%  { transform: translateX(-5px) rotate(-2deg); }
+  72%  { transform: translateX(4px) rotate(2deg); }
+  86%  { transform: translateX(-2px) rotate(-1deg); }
+  100% { transform: translateX(0) rotate(0deg); }
+}
+
+@keyframes button-slam {
+  0%   { transform: scale(1); }
+  10%  { transform: scale(0.7) translateY(4px); }
+  55%  { transform: scale(1.1) translateY(-2px); }
+  78%  { transform: scale(0.98); }
+  100% { transform: scale(1); }
+}
+
+@keyframes button-punch {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.18); }
+  55%  { transform: scale(0.82); }
+  78%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+@keyframes button-flip {
+  0%   { transform: perspective(600px) rotateY(0deg); }
+  40%  { transform: perspective(600px) rotateY(-100deg) scale(0.85); }
+  60%  { transform: perspective(600px) rotateY(-260deg) scale(0.85); }
+  100% { transform: perspective(600px) rotateY(-360deg); }
+}
+
+@keyframes button-jelly {
+  0%   { transform: scale(1); }
+  18%  { transform: scale(0.78); }
+  38%  { transform: scale(1.28); }
+  52%  { transform: scale(0.88); }
+  65%  { transform: scale(1.12); }
+  78%  { transform: scale(0.96); }
+  90%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+@keyframes button-rubber {
+  0%   { transform: scaleX(1) scaleY(1); }
+  25%  { transform: scaleX(1.4) scaleY(0.65); }
+  50%  { transform: scaleX(0.82) scaleY(1.2); }
+  70%  { transform: scaleX(1.12) scaleY(0.92); }
+  85%  { transform: scaleX(0.96) scaleY(1.04); }
+  100% { transform: scaleX(1) scaleY(1); }
+}
+
+@keyframes button-wobble {
+  0%   { transform: rotate(0deg); }
+  20%  { transform: rotate(9deg); }
+  40%  { transform: rotate(-7deg); }
+  60%  { transform: rotate(5deg); }
+  80%  { transform: rotate(-2deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes button-flash {
+  0%   { transform: scale(1); filter: brightness(1); }
+  15%  { transform: scale(0.88); filter: brightness(2.5); }
+  40%  { transform: scale(1.2); filter: brightness(1.4); }
+  70%  { transform: scale(0.97); filter: brightness(1); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+@keyframes button-slam-down {
+  0%   { transform: translateY(0); }
+  25%  { transform: translateY(8px); }
+  55%  { transform: translateY(-4px); }
+  75%  { transform: translateY(2px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes button-crumple {
+  0%   { transform: scaleX(1) scaleY(1); }
+  30%  { transform: scaleX(0.7) scaleY(1.25); }
+  55%  { transform: scaleX(1.08) scaleY(0.9); }
+  78%  { transform: scaleX(0.97) scaleY(1.03); }
+  100% { transform: scaleX(1) scaleY(1); }
+}
+
+@keyframes button-spin-out {
+  0%   { transform: translateX(0) rotate(0deg); }
+  30%  { transform: translateX(8px) rotate(14deg); }
+  58%  { transform: translateX(-4px) rotate(-5deg); }
+  78%  { transform: translateX(3px) rotate(2deg); }
+  100% { transform: translateX(0) rotate(0deg); }
+}
+
+@keyframes button-heartbeat {
+  0%   { transform: scale(1); }
+  15%  { transform: scale(1.25); }
+  30%  { transform: scale(1); }
+  45%  { transform: scale(1.35); }
+  65%  { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes button-spin {
+  0%   { transform: rotate(0deg) scale(1); }
+  40%  { transform: rotate(200deg) scale(0.8); }
+  70%  { transform: rotate(340deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes button-tada {
+  0%   { transform: scale(1) rotate(0deg); }
+  10%  { transform: scale(0.9) rotate(-3deg); }
+  25%  { transform: scale(1.15) rotate(3deg); }
+  40%  { transform: scale(1.15) rotate(-3deg); }
+  55%  { transform: scale(1.15) rotate(3deg); }
+  70%  { transform: scale(1.15) rotate(-2deg); }
+  85%  { transform: scale(1.05) rotate(1deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+@keyframes button-spring {
+  0%   { transform: scale(1) translateY(0); }
+  15%  { transform: scale(0.72) translateY(6px); }
+  48%  { transform: scale(1.38) translateY(-10px); }
+  65%  { transform: scale(0.9) translateY(3px); }
+  82%  { transform: scale(1.1) translateY(-3px); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+@keyframes button-boing {
+  0%   { transform: scaleX(1) scaleY(1); }
+  18%  { transform: scaleX(1.5) scaleY(0.55); }
+  36%  { transform: scaleX(0.68) scaleY(1.45); }
+  54%  { transform: scaleX(1.22) scaleY(0.82); }
+  72%  { transform: scaleX(0.9) scaleY(1.12); }
+  88%  { transform: scaleX(1.05) scaleY(0.97); }
+  100% { transform: scaleX(1) scaleY(1); }
+}
+
+@keyframes button-twitch {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  8%   { transform: translate(-3px, 2px) rotate(-2deg); }
+  17%  { transform: translate(3px, -2px) rotate(2deg); }
+  25%  { transform: translate(-2px, 3px) rotate(-1deg); }
+  33%  { transform: translate(4px, -1px) rotate(2.5deg); }
+  42%  { transform: translate(-3px, 2px) rotate(-2deg); }
+  50%  { transform: translate(3px, 1px) rotate(1deg); }
+  58%  { transform: translate(-2px, -2px) rotate(-1.5deg); }
+  67%  { transform: translate(2px, 2px) rotate(1deg); }
+  75%  { transform: translate(-1px, 1px) rotate(-0.5deg); }
+  83%  { transform: translate(1px, -1px) rotate(0.5deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes button-jackpot {
+  0%   { transform: scale(1); }
+  10%  { transform: scale(1.18); }
+  22%  { transform: scale(0.9); }
+  34%  { transform: scale(1.24); }
+  46%  { transform: scale(0.88); }
+  58%  { transform: scale(1.3); }
+  72%  { transform: scale(0.92); }
+  84%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+@keyframes button-karate {
+  0%   { transform: translateX(0) rotate(0deg) scale(1); }
+  18%  { transform: translateX(-14px) rotate(-6deg) scale(0.93); }
+  38%  { transform: translateX(10px) rotate(4deg) scale(1.06); }
+  58%  { transform: translateX(-5px) rotate(-2deg) scale(0.98); }
+  75%  { transform: translateX(3px) rotate(1deg); }
+  100% { transform: translateX(0) rotate(0deg) scale(1); }
+}
+
+@keyframes button-droop {
+  0%   { transform: translateY(0) scaleY(1) scaleX(1); }
+  35%  { transform: translateY(12px) scaleY(0.78) scaleX(1.15); }
+  60%  { transform: translateY(-4px) scaleY(1.08) scaleX(0.97); }
+  80%  { transform: translateY(2px) scaleY(0.98); }
+  100% { transform: translateY(0) scaleY(1) scaleX(1); }
+}
+
+@keyframes button-flinch {
+  0%   { transform: translateX(0) scale(1); }
+  18%  { transform: translateX(18px) scale(0.88); }
+  42%  { transform: translateX(-8px) scale(1.04); }
+  62%  { transform: translateX(4px) scale(0.99); }
+  80%  { transform: translateX(-2px); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+@keyframes button-deflate {
+  0%   { transform: scaleY(1) scaleX(1); }
+  30%  { transform: scaleY(0.5) scaleX(1.45); }
+  55%  { transform: scaleY(1.15) scaleX(0.9); }
+  75%  { transform: scaleY(0.95) scaleX(1.03); }
+  100% { transform: scaleY(1) scaleX(1); }
+}
+
+@keyframes button-toss {
+  0%   { transform: translateY(0) rotate(0deg) scale(1); }
+  28%  { transform: translateY(-14px) rotate(18deg) scale(0.88); }
+  55%  { transform: translateY(4px) rotate(-6deg) scale(1.04); }
+  75%  { transform: translateY(-2px) rotate(2deg); }
+  100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+@keyframes button-melt {
+  0%   { transform: scaleX(1) scaleY(1) translateY(0); }
+  38%  { transform: scaleX(1.6) scaleY(0.48) translateY(10px); }
+  60%  { transform: scaleX(0.88) scaleY(1.14) translateY(-3px); }
+  80%  { transform: scaleX(1.05) scaleY(0.96) translateY(1px); }
+  100% { transform: scaleX(1) scaleY(1) translateY(0); }
+}
+
+@keyframes button-recoil {
+  0%   { transform: scale(1); }
+  8%   { transform: scale(0.5) translateY(10px); }
+  45%  { transform: scale(1.08) translateY(-3px); }
+  70%  { transform: scale(0.97); }
+  100% { transform: scale(1); }
+}
+
+@keyframes button-bounce-off {
+  0%   { transform: translateX(0); }
+  22%  { transform: translateX(-22px); }
+  45%  { transform: translateX(11px); }
+  62%  { transform: translateX(-6px); }
+  76%  { transform: translateX(3px); }
+  88%  { transform: translateX(-1px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes button-tick {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(0.82); }
+  65%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+@keyframes button-ghost {
+  0%   { transform: scale(1) rotate(0deg); opacity: 1; }
+  28%  { transform: scale(0.05) rotate(90deg); opacity: 0; }
+  55%  { transform: scale(1.18) rotate(-8deg); opacity: 1; }
+  75%  { transform: scale(0.95) rotate(3deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
 }
 
 @keyframes fade-in-up {

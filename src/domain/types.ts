@@ -29,7 +29,7 @@ export type Bid = {
 }
 
 export type LotAuctionState =
-  | { status: 'pending' }
+  | { status: 'pending'; currentTurnPlayerId?: string }
   | { status: 'active'; currentBid: Bid; passedPlayerIds: string[]; openerId: string }
   | { status: 'sold'; winnerId: string; finalBid: number }
   | { status: 'skipped' }

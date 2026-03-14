@@ -4,12 +4,14 @@ type Props = {
   onUndo: () => void
   onNewAuction: () => void
   onSkipAll: () => void
+  onSkipLot: () => void
   canUndo: boolean
+  canSkipLot: boolean
   testMode: boolean
 }
 
-export function AdminControls({ onUndo, onNewAuction, onSkipAll, canUndo, testMode }: Props) {
-  const [confirming, setConfirming] = useState<'new' | 'skipAll' | null>(null)
+export function AdminControls({ onUndo, onNewAuction, onSkipAll, onSkipLot, canUndo, canSkipLot, testMode }: Props) {
+  const [confirming, setConfirming] = useState<'new' | 'skipAll' | 'skipLot' | null>(null)
 
   return (
     <div className="flex items-center gap-2">
@@ -20,7 +22,23 @@ export function AdminControls({ onUndo, onNewAuction, onSkipAll, canUndo, testMo
       >
         Undo
       </button>
-      {confirming === 'skipAll' ? (
+      {confirming === 'skipLot' ? (
+        <>
+          <span className="text-sm text-yellow-400 font-medium">Skip this lot?</span>
+          <button
+            onClick={() => { onSkipLot(); setConfirming(null) }}
+            className="px-3 py-1.5 text-sm bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 font-medium"
+          >
+            Yes, skip
+          </button>
+          <button
+            onClick={() => setConfirming(null)}
+            className="px-3 py-1.5 text-sm bg-slate-700 text-slate-200 rounded-lg hover:bg-slate-600 font-medium"
+          >
+            Cancel
+          </button>
+        </>
+      ) : confirming === 'skipAll' ? (
         <>
           <span className="text-sm text-yellow-400 font-medium">Randomly assign remaining lots?</span>
           <button
@@ -54,6 +72,13 @@ export function AdminControls({ onUndo, onNewAuction, onSkipAll, canUndo, testMo
         </>
       ) : (
         <>
+          <button
+            onClick={() => setConfirming('skipLot')}
+            disabled={!canSkipLot}
+            className="px-3 py-1.5 text-sm bg-yellow-600 hover:bg-yellow-500 text-white rounded-lg disabled:opacity-40 disabled:cursor-not-allowed font-medium"
+          >
+            Skip Lot
+          </button>
           {testMode && (
             <button
               onClick={() => setConfirming('skipAll')}

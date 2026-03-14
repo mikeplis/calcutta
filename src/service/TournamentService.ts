@@ -1,6 +1,6 @@
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
-import type { TournamentResults, TeamRoundResult } from '../domain/tournamentTypes'
+import type { TournamentResults, TeamRoundResult, RoundOpponent } from '../domain/tournamentTypes'
 
 const CACHE_TTL_MS = 5 * 60 * 1000
 const NCAA_API_BASE = import.meta.env.DEV
@@ -85,6 +85,7 @@ async function fetchFromNcaaApi(year: number): Promise<TournamentResults> {
   }))
   const visited = new Set<string>()
   const roundsByTeam = new Map<string, number[]>()
+  const opponentsByTeam = new Map<string, RoundOpponent[]>()
 
   while (queue.length > 0) {
     const { game, round } = queue.shift()!
@@ -98,10 +99,15 @@ async function fetchFromNcaaApi(year: number): Promise<TournamentResults> {
     // Record winner if game is finished
     if (game.gameState === 'F') {
       const winner = game.teams.find((t) => t.winner === true || t.isWinner === true)
+      const loser = game.teams.find((t) => t !== winner)
       if (winner?.nameShort && winner.seed != null) {
         const key = `${winner.nameShort}:${winner.seed}`
         const existing = roundsByTeam.get(key) ?? []
         roundsByTeam.set(key, [...existing, round])
+        if (loser?.nameShort && loser.seed != null) {
+          const opps = opponentsByTeam.get(key) ?? []
+          opponentsByTeam.set(key, [...opps, { round, opponentName: loser.nameShort, opponentSeed: loser.seed }])
+        }
       }
     }
 
@@ -125,7 +131,8 @@ async function fetchFromNcaaApi(year: number): Promise<TournamentResults> {
     const name = key.slice(0, colonIdx)
     const seed = parseInt(key.slice(colonIdx + 1), 10)
     const isChampion = roundsWon.includes(6)
-    teams.push({ name, seed, roundsWon, isChampion })
+    const roundOpponents = opponentsByTeam.get(key) ?? []
+    teams.push({ name, seed, roundsWon, isChampion, roundOpponents })
   }
 
   return {

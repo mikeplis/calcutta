@@ -6,7 +6,7 @@ import { PlayerList } from './components/PlayerList'
 import { AdminControls } from './components/AdminControls'
 import { LotHistoryPanel } from './components/LotHistoryPanel'
 import type { LotAuctionState } from '../domain/types'
-import { getActivePlayerTurn, getCurrentLotState, findEligibleOpener } from '../domain/logic'
+import { getActivePlayerTurn, getCurrentLotState, getPendingTurnPlayer } from '../domain/logic'
 
 type SoldInfo = { winner: string; amount: number; lotLabel: string; seedLabel: string }
 
@@ -62,7 +62,7 @@ export function AuctionScreen({ onNewAuction }: { onNewAuction: () => void }) {
     const remainingLots = state.lots.slice(state.currentLotIndex)
     for (const _lot of remainingLots) {
       const winner = state.players[Math.floor(Math.random() * state.players.length)]
-      await dispatch({ type: 'FORCE_SELL', winnerId: winner.id, amount: 0 })
+      await dispatch({ type: 'FORCE_SELL', winnerId: winner.id, amount: Math.floor(Math.random() * 3) + 1 })
     }
   }
 
@@ -103,6 +103,8 @@ export function AuctionScreen({ onNewAuction }: { onNewAuction: () => void }) {
               onNewAuction={onNewAuction}
               onSkipAll={handleSimulate}
               testMode={state.testMode}
+              onSkipLot={() => dispatch({ type: 'FORCE_ADVANCE' })}
+              canSkipLot={state.phase === 'active' && getCurrentLotState(state)?.status === 'pending'}
             />
           </div>
         )}
@@ -117,7 +119,7 @@ export function AuctionScreen({ onNewAuction }: { onNewAuction: () => void }) {
               const lotState = getCurrentLotState(state)
               let activePlayerId: string | null = null
               if (lotState?.status === 'pending') {
-                activePlayerId = findEligibleOpener(state)
+                activePlayerId = getPendingTurnPlayer(state)?.id ?? null
               } else if (lotState?.status === 'active') {
                 activePlayerId = getActivePlayerTurn(state)?.id ?? null
               }

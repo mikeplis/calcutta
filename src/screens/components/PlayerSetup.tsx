@@ -26,7 +26,7 @@ export function PlayerSetup() {
       <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
         <h2 className="text-xl font-semibold text-gray-900">Players</h2>
         <div className="flex items-center gap-2">
-          <label className="text-sm text-gray-600">Default balance:</label>
+          <label className="text-sm text-gray-600">Balance:</label>
           <input
             type="number"
             value={defaultBalance}

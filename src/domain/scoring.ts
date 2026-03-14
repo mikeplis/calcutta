@@ -60,8 +60,7 @@ export function getPointsLeaderboard(
       if (!lot) continue
       for (const team of lot.teams) {
         const result = resultMap.get(teamKey(team.name, team.seed))
-        if (!result) continue
-        const teamPoints = result.roundsWon.reduce((sum, round) => sum + team.seed * round, 0)
+        const teamPoints = result ? result.roundsWon.reduce((sum, round) => sum + team.seed * round, 0) : 0
         breakdown.push({ teamName: team.name, seed: team.seed, points: teamPoints })
         totalPoints += teamPoints
       }

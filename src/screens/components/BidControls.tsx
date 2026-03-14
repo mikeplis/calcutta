@@ -8,6 +8,20 @@ type Props = {
   onPass: (playerId: string) => void
 }
 
+function QuickButton({ onClick, disabled, children }: { onClick: () => void; disabled: boolean; children: React.ReactNode }) {
+  const [playing, setPlaying] = useState(false)
+  return (
+    <button
+      onClick={() => { setPlaying(true); onClick() }}
+      onAnimationEnd={() => setPlaying(false)}
+      disabled={disabled}
+      className={`px-4 py-1.5 text-sm bg-white border border-indigo-200 text-indigo-700 rounded-full hover:bg-indigo-50 font-medium disabled:opacity-40 disabled:cursor-not-allowed ${playing ? 'animate-button-tick' : ''}`}
+    >
+      {children}
+    </button>
+  )
+}
+
 export function BidControls({ state, onBid, onPass }: Props) {
   const lotState = getCurrentLotState(state)
   const minBid = getMinimumBid(state)
@@ -51,10 +65,15 @@ export function BidControls({ state, onBid, onPass }: Props) {
   const maxBid = activePlayer.balance
   const quickIncrements = [1, 5, 10, 25]
 
+  const [bidAnim, setBidAnim] = useState(false)
+  const [passAnim, setPassAnim] = useState(false)
+
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && bidAmount >= minBid && bidAmount <= maxBid) {
+      setBidAnim(true)
       onBid(activePlayer.id, bidAmount)
     } else if (e.key === 'Escape' && (isPending || isActive)) {
+      setPassAnim(true)
       onPass(activePlayer.id)
     }
   }, [bidAmount, minBid, maxBid, activePlayer.id, isActive, onBid, onPass])
@@ -81,17 +100,19 @@ export function BidControls({ state, onBid, onPass }: Props) {
         </div>
 
         <button
-          onClick={() => onBid(activePlayer.id, bidAmount)}
+          onClick={() => { setBidAnim(true); onBid(activePlayer.id, bidAmount) }}
+          onAnimationEnd={() => setBidAnim(false)}
           disabled={bidAmount < minBid || bidAmount > maxBid}
-          className="px-10 py-3 bg-indigo-600 text-white rounded-xl font-bold text-lg hover:bg-indigo-700 disabled:bg-slate-300 disabled:cursor-not-allowed active:scale-95 transition-transform duration-75"
+          className={`px-10 py-3 bg-indigo-600 text-white rounded-xl font-bold text-lg hover:bg-indigo-700 disabled:bg-slate-300 disabled:cursor-not-allowed ${bidAnim ? 'animate-button-flash' : ''}`}
         >
           {isPending ? 'Open' : 'Raise'}
         </button>
 
         {(isPending || isActive) && (
           <button
-            onClick={() => onPass(activePlayer.id)}
-            className="px-6 py-2 bg-red-100 text-red-700 rounded-lg font-bold hover:bg-red-200 active:scale-95 transition-transform duration-75"
+            onClick={() => { setPassAnim(true); onPass(activePlayer.id) }}
+            onAnimationEnd={() => setPassAnim(false)}
+            className={`px-6 py-2 bg-red-100 text-red-700 rounded-lg font-bold hover:bg-red-200 ${passAnim ? 'animate-button-droop' : ''}`}
           >
             Pass
           </button>
@@ -101,30 +122,26 @@ export function BidControls({ state, onBid, onPass }: Props) {
       <div className="flex items-center gap-2 justify-center mt-2">
         {quickIncrements.map((inc) => {
           if (isPending) {
-            // Opening bid: set to exact amount
             const target = Math.min(inc, maxBid)
             return (
-              <button
+              <QuickButton
                 key={inc}
                 onClick={() => setBidInput(String(Math.max(target, minBid)))}
                 disabled={target < minBid}
-                className="px-4 py-1.5 text-sm bg-white border border-indigo-200 text-indigo-700 rounded-full hover:bg-indigo-50 font-medium disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 ${inc}
-              </button>
+              </QuickButton>
             )
           }
-          // Active bidding: increment from current amount
           const target = Math.min(bidAmount + inc, maxBid)
           return (
-            <button
+            <QuickButton
               key={inc}
               onClick={() => setBidInput(String(Math.max(target, minBid)))}
               disabled={target < minBid}
-              className="px-4 py-1.5 text-sm bg-white border border-indigo-200 text-indigo-700 rounded-full hover:bg-indigo-50 font-medium disabled:opacity-40 disabled:cursor-not-allowed"
             >
               +${inc}
-            </button>
+            </QuickButton>
           )
         })}
       </div>

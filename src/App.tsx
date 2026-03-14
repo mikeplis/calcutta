@@ -7,6 +7,7 @@ import { SetupScreen } from './screens/SetupScreen'
 import { AuctionScreen } from './screens/AuctionScreen'
 import { SummaryScreen } from './screens/SummaryScreen'
 import { PlayerSelectScreen } from './screens/PlayerSelectScreen'
+import { AnimationPlayground } from './screens/AnimationPlayground'
 import { useAuction } from './hooks/useAuction'
 import { ErrorBoundary } from './screens/components/ErrorBoundary'
 import type { AuctionState, LotAuctionState } from './domain/types'
@@ -194,6 +195,7 @@ function AppRoutes() {
           )
         }
       />
+      <Route path="/animations" element={<AnimationPlayground />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
     </ErrorBoundary>
