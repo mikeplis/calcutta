@@ -17,6 +17,8 @@ type BracketTeam = {
 
 type BracketGame = {
   sectionId: number
+  bracketPositionId?: string
+  victorBracketPositionId?: string | null
   teams: BracketTeam[]
 }
 
@@ -40,6 +42,7 @@ type Team = {
   conference?: string
   kenpomRank?: number
   kenpomAdjEM?: number
+  isPlayIn?: boolean
 }
 
 type Lot = {
@@ -73,17 +76,35 @@ function extractTeams(bracketData: { championships: [{ games: BracketGame[]; reg
   const champ = bracketData.championships[0]
   const games = champ.games
 
-  // Build section-to-region map from the API's regions array
+  // Build section-to-region map from the API's regions array.
+  // Normalize titles to title-case (the API uses inconsistent casing/spacing across years).
+  const KNOWN_REGIONS: Record<string, string> = {
+    east: 'East', west: 'West', south: 'South', midwest: 'Midwest',
+  }
   const sectionToRegion: Record<number, string> = {}
   for (const r of champ.regions) {
-    if (r.title) sectionToRegion[r.sectionId] = r.title
+    const normalized = KNOWN_REGIONS[r.title.trim().toLowerCase()]
+    if (normalized) sectionToRegion[r.sectionId] = normalized
   }
 
-  // First round games in sections 2-5: seeds sum to 17 (1v16, 2v15, etc.)
+  // Play-in games live in section 1. Build a map:
+  // first-round bracketPositionId → play-in team candidates
+  const playInByDestination = new Map<string, BracketTeam[]>()
+  for (const game of games) {
+    if (game.sectionId !== 1) continue
+    if (game.victorBracketPositionId && game.teams.length >= 1) {
+      playInByDestination.set(game.victorBracketPositionId, game.teams)
+    }
+  }
+
+  // First round games in sections 2-5: seeds sum to 17 (1v16, 2v15, etc.).
+  // Also include partial games with only one team (play-in slot not yet resolved).
   const firstRoundGames = games.filter((g: BracketGame) => {
     if (g.sectionId < 2 || g.sectionId > 5) return false
     const seeds = g.teams.map((t) => t.seed)
-    return seeds.length === 2 && seeds[0] + seeds[1] === 17
+    if (seeds.length === 2 && seeds[0] + seeds[1] === 17) return true
+    if (seeds.length === 1 && seeds[0] >= 1 && seeds[0] <= 16) return true
+    return false
   })
 
   const teams: Team[] = []
@@ -97,17 +118,39 @@ function extractTeams(bracketData: { championships: [{ games: BracketGame[]; reg
         logoUrl: t.logoUrl ? `${LOGO_BASE}${t.logoUrl}` : undefined,
       })
     }
+    if (game.teams.length === 1 && game.bracketPositionId) {
+      const missingSeed = 17 - game.teams[0].seed
+      const playInTeams = playInByDestination.get(game.bracketPositionId)
+      if (playInTeams && playInTeams.length > 0) {
+        for (const pt of playInTeams) {
+          teams.push({
+            name: pt.nameShort,
+            seed: missingSeed,
+            region,
+            logoUrl: pt.logoUrl ? `${LOGO_BASE}${pt.logoUrl}` : undefined,
+            isPlayIn: true,
+          })
+        }
+      } else {
+        teams.push({ name: 'TBD (Play-In)', seed: missingSeed, region })
+      }
+    }
   }
 
   return teams
 }
 
-// KenPom team name → bracket short name
+// Bracket short name → KenPom name (for teams whose names differ between the two sources)
 const KENPOM_ALIASES: Record<string, string> = {
   'Ole Miss': 'Mississippi',
   'UConn': 'Connecticut',
   'Omaha': 'Nebraska Omaha',
   'SIU Edwardsville': 'SIUE',
+  'NC State': 'N.C. State',
+  'Miami (FL)': 'Miami FL',
+  'Miami (Ohio)': 'Miami OH',
+  'Queens (N.C.)': 'Queens',
+  'Long Island': 'LIU'
 }
 
 async function fetchKenpom(): Promise<Map<string, { rank: number; adjEM: number }>> {
@@ -176,42 +219,43 @@ function buildLots(teams: Team[]): Lot[] {
 
   for (const region of regions) {
     const regionTeams = teams.filter((t) => t.region === region)
-    const bySeed = new Map<number, Team>()
+
+    // Build map: seed → Team[] (multiple teams per seed for play-in slots)
+    const bySeed = new Map<number, Team[]>()
     for (const t of regionTeams) {
-      bySeed.set(t.seed, t)
+      const existing = bySeed.get(t.seed) ?? []
+      bySeed.set(t.seed, [...existing, t])
     }
 
+    const slot = (seed: number): Team[] => bySeed.get(seed) ?? []
+    const slotLabel = (seed: number): string => slot(seed).map((t) => t.name).join(' or ')
+
     // 14/15/16 bundle
-    const seed14 = bySeed.get(14)
-    const seed15 = bySeed.get(15)
-    const seed16 = bySeed.get(16)
-    if (seed14 && seed15 && seed16) {
+    if (slot(14).length > 0 && slot(15).length > 0 && slot(16).length > 0) {
       lots.push({
         id: `${region.toLowerCase()}-14-15-16-seeds`,
-        label: `${seed16.name} / ${seed15.name} / ${seed14.name}`,
-        teams: [seed16, seed15, seed14],
+        label: `${slotLabel(16)} / ${slotLabel(15)} / ${slotLabel(14)}`,
+        teams: [...slot(16), ...slot(15), ...slot(14)],
       })
     }
 
     // 12/13 bundle
-    const seed12 = bySeed.get(12)
-    const seed13 = bySeed.get(13)
-    if (seed12 && seed13) {
+    if (slot(12).length > 0 && slot(13).length > 0) {
       lots.push({
         id: `${region.toLowerCase()}-12-13-seeds`,
-        label: `${seed13.name} / ${seed12.name}`,
-        teams: [seed13, seed12],
+        label: `${slotLabel(13)} / ${slotLabel(12)}`,
+        teams: [...slot(13), ...slot(12)],
       })
     }
 
     // Individual seeds 11 down to 1
     for (let seed = 11; seed >= 1; seed--) {
-      const team = bySeed.get(seed)
-      if (team) {
+      const seedTeams = slot(seed)
+      if (seedTeams.length > 0) {
         lots.push({
           id: `${region.toLowerCase()}-seed-${seed}`,
-          label: team.name,
-          teams: [team],
+          label: slotLabel(seed),
+          teams: seedTeams,
         })
       }
     }

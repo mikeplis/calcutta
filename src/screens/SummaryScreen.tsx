@@ -6,7 +6,7 @@ import type { TeamRoundResult } from '../domain/tournamentTypes'
 
 export function SummaryScreen({ onNewAuction }: { onNewAuction: () => void }) {
   const { state, isAdmin } = useAuction()
-  const year = 2025
+  const year = new Date().getFullYear()
   const { results, loading: resultsLoading, error: resultsError, refresh } = useTournamentResults(year)
   const [expandedPlayers, setExpandedPlayers] = useState<Set<string>>(new Set())
   const [resultsCollapsed, setResultsCollapsed] = useState(false)

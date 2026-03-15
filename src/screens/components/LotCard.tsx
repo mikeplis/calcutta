@@ -90,9 +90,21 @@ export function LotCard({ state, soldInfo, onDismissSold }: Props) {
             <div className="mb-4 space-y-2">
               {lot.teams.map((team, i) => {
                 const probs = SEED_PROBS[team.seed]
+                const prevTeam = i > 0 ? lot.teams[i - 1] : null
+                const isPlayInPair = team.isPlayIn && prevTeam?.isPlayIn && team.seed === prevTeam.seed
                 return (
                   <Fragment key={i}>
-                    {i > 0 && <div className="border-t border-gray-100" />}
+                    {i > 0 && (
+                      isPlayInPair ? (
+                        <div className="flex items-center gap-2 py-0.5">
+                          <div className="flex-1 border-t border-dashed border-amber-200" />
+                          <span className="text-xs font-bold text-amber-600 uppercase tracking-wide">or</span>
+                          <div className="flex-1 border-t border-dashed border-amber-200" />
+                        </div>
+                      ) : (
+                        <div className="border-t border-gray-100" />
+                      )
+                    )}
                     {/* Identity row */}
                     <div className="flex items-center gap-2 min-w-0 pt-1">
                       {team.logoUrl && (
@@ -104,6 +116,11 @@ export function LotCard({ state, soldInfo, onDismissSold }: Props) {
                       {team.conference && <span className="text-sm text-gray-400 flex-shrink-0">{team.conference}</span>}
                       {!team.record && !team.conference && (
                         <span className="text-sm text-gray-500">{team.region}</span>
+                      )}
+                      {team.isPlayIn && (
+                        <span className="ml-auto text-xs font-semibold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded flex-shrink-0">
+                          Play-In
+                        </span>
                       )}
                     </div>
                     {/* Stat row — always below identity, aligned via grid */}

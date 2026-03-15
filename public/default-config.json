@@ -3,223 +3,217 @@
   "lots": [
     {
       "id": "east-14-15-16-seeds",
-      "label": "Mount St. Mary's / Robert Morris / Montana",
+      "label": "Siena / Furman / North Dakota St.",
       "teams": [
         {
-          "name": "Mount St. Mary's",
+          "name": "Siena",
           "seed": 16,
           "region": "East",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/mt-st-marys.70.png",
-          "record": "15-17",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/s/siena.70.png",
+          "record": "23-11",
           "conference": "MAAC",
-          "kenpomRank": 278,
-          "kenpomAdjEM": -9.6
+          "kenpomRank": 192,
+          "kenpomAdjEM": -2.1
         },
         {
-          "name": "Robert Morris",
+          "name": "Furman",
           "seed": 15,
           "region": "East",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/r/robert-morris.70.png",
-          "record": "22-11",
-          "conference": "Horizon",
-          "kenpomRank": 144,
-          "kenpomAdjEM": 1.66
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/f/furman.70.png",
+          "record": "22-12",
+          "conference": "SoCon",
+          "kenpomRank": 191,
+          "kenpomAdjEM": -1.98
         },
         {
-          "name": "Montana",
+          "name": "North Dakota St.",
           "seed": 14,
           "region": "East",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/montana.70.png",
-          "record": "18-16",
-          "conference": "Big Sky",
-          "kenpomRank": 181,
-          "kenpomAdjEM": -1.24
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/n/north-dakota-st.70.png",
+          "record": "27-7",
+          "conference": "Summit League",
+          "kenpomRank": 113,
+          "kenpomAdjEM": 5.13
         }
       ]
     },
     {
       "id": "east-12-13-seeds",
-      "label": "Akron / Liberty",
+      "label": "Cal Baptist / Northern Iowa",
       "teams": [
         {
-          "name": "Akron",
+          "name": "Cal Baptist",
           "seed": 13,
           "region": "East",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/a/akron.70.png",
-          "record": "29-5",
-          "conference": "MAC",
-          "kenpomRank": 60,
-          "kenpomAdjEM": 13.48
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/c/california-baptist.70.png",
+          "kenpomRank": 106,
+          "kenpomAdjEM": 5.99
         },
         {
-          "name": "Liberty",
+          "name": "Northern Iowa",
           "seed": 12,
           "region": "East",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/l/liberty.70.png",
-          "record": "25-7",
-          "conference": "CUSA",
-          "kenpomRank": 116,
-          "kenpomAdjEM": 4.66
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/u/uni.70.png",
+          "kenpomRank": 72,
+          "kenpomAdjEM": 11.81
         }
       ]
     },
     {
       "id": "east-seed-11",
-      "label": "VCU",
+      "label": "South Florida",
       "teams": [
         {
-          "name": "VCU",
+          "name": "South Florida",
           "seed": 11,
           "region": "East",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/v/vcu.70.png",
-          "record": "26-7",
-          "conference": "Atlantic 10",
-          "kenpomRank": 45,
-          "kenpomAdjEM": 16.86
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/s/south-fla.70.png",
+          "kenpomRank": 47,
+          "kenpomAdjEM": 16.39
         }
       ]
     },
     {
       "id": "east-seed-10",
-      "label": "Vanderbilt",
+      "label": "UCF",
       "teams": [
         {
-          "name": "Vanderbilt",
+          "name": "UCF",
           "seed": 10,
           "region": "East",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/v/vanderbilt.70.png",
-          "record": "26-7",
-          "conference": "SEC",
-          "kenpomRank": 13,
-          "kenpomAdjEM": 26.47
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/u/ucf.70.png",
+          "record": "21-11",
+          "conference": "Big 12",
+          "kenpomRank": 54,
+          "kenpomAdjEM": 15.04
         }
       ]
     },
     {
       "id": "east-seed-9",
-      "label": "Baylor",
+      "label": "TCU",
       "teams": [
         {
-          "name": "Baylor",
+          "name": "TCU",
           "seed": 9,
           "region": "East",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/b/baylor.70.png",
-          "record": "16-16",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/t/tcu.70.png",
+          "record": "22-11",
           "conference": "Big 12",
-          "kenpomRank": 48,
-          "kenpomAdjEM": 15.95
+          "kenpomRank": 43,
+          "kenpomAdjEM": 17.59
         }
       ]
     },
     {
       "id": "east-seed-8",
-      "label": "Mississippi St.",
+      "label": "Ohio St.",
       "teams": [
         {
-          "name": "Mississippi St.",
+          "name": "Ohio St.",
           "seed": 8,
           "region": "East",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/mississippi-st.70.png",
-          "record": "13-19",
-          "conference": "SEC",
-          "kenpomRank": 99,
-          "kenpomAdjEM": 7.35
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/o/ohio-st.70.png",
+          "record": "21-12",
+          "conference": "Big Ten",
+          "kenpomRank": 26,
+          "kenpomAdjEM": 22.24
         }
       ]
     },
     {
       "id": "east-seed-7",
-      "label": "Saint Mary's",
+      "label": "UCLA",
       "teams": [
         {
-          "name": "Saint Mary's",
+          "name": "UCLA",
           "seed": 7,
           "region": "East",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/s/st-marys-ca.70.png",
-          "record": "27-5",
-          "conference": "WCC",
-          "kenpomRank": 22,
-          "kenpomAdjEM": 23.07
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/u/ucla.70.png",
+          "record": "23-11",
+          "conference": "Big Ten",
+          "kenpomRank": 27,
+          "kenpomAdjEM": 21.67
         }
       ]
     },
     {
       "id": "east-seed-6",
-      "label": "BYU",
+      "label": "Louisville",
       "teams": [
         {
-          "name": "BYU",
+          "name": "Louisville",
           "seed": 6,
           "region": "East",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/b/byu.70.png",
-          "record": "23-11",
-          "conference": "Big 12",
-          "kenpomRank": 25,
-          "kenpomAdjEM": 22.49
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/l/louisville.70.png",
+          "record": "23-10",
+          "conference": "ACC",
+          "kenpomRank": 19,
+          "kenpomAdjEM": 25.42
         }
       ]
     },
     {
       "id": "east-seed-5",
-      "label": "Oregon",
+      "label": "St. John's",
       "teams": [
         {
-          "name": "Oregon",
+          "name": "St. John's",
           "seed": 5,
           "region": "East",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/o/oregon.70.png",
-          "record": "12-20",
-          "conference": "Big Ten",
-          "kenpomRank": 102,
-          "kenpomAdjEM": 6.99
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/s/st-johns-ny.70.png",
+          "record": "28-6",
+          "conference": "Big East",
+          "kenpomRank": 17,
+          "kenpomAdjEM": 25.91
         }
       ]
     },
     {
       "id": "east-seed-4",
-      "label": "Arizona",
+      "label": "Kansas",
       "teams": [
         {
-          "name": "Arizona",
+          "name": "Kansas",
           "seed": 4,
           "region": "East",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/a/arizona.70.png",
-          "record": "32-2",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/k/kansas.70.png",
+          "record": "23-10",
           "conference": "Big 12",
-          "kenpomRank": 3,
-          "kenpomAdjEM": 37.33
+          "kenpomRank": 21,
+          "kenpomAdjEM": 24.44
         }
       ]
     },
     {
       "id": "east-seed-3",
-      "label": "Wisconsin",
+      "label": "Michigan St.",
       "teams": [
         {
-          "name": "Wisconsin",
+          "name": "Michigan St.",
           "seed": 3,
           "region": "East",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/w/wisconsin.70.png",
-          "record": "24-10",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/michigan-st.70.png",
+          "record": "25-7",
           "conference": "Big Ten",
-          "kenpomRank": 23,
-          "kenpomAdjEM": 22.6
+          "kenpomRank": 9,
+          "kenpomAdjEM": 28.31
         }
       ]
     },
     {
       "id": "east-seed-2",
-      "label": "Alabama",
+      "label": "UConn",
       "teams": [
         {
-          "name": "Alabama",
+          "name": "UConn",
           "seed": 2,
           "region": "East",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/a/alabama.70.png",
-          "record": "23-9",
-          "conference": "SEC",
-          "kenpomRank": 15,
-          "kenpomAdjEM": 26.15
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/u/uconn.70.png",
+          "record": "29-5",
+          "conference": "Big East",
+          "kenpomRank": 11,
+          "kenpomAdjEM": 27.87
         }
       ]
     },
@@ -235,721 +229,761 @@
           "record": "32-2",
           "conference": "ACC",
           "kenpomRank": 1,
-          "kenpomAdjEM": 40.62
+          "kenpomAdjEM": 38.9
         }
       ]
     },
     {
       "id": "west-14-15-16-seeds",
-      "label": "Norfolk St. / Omaha / UNC Wilmington",
+      "label": "Long Island / Queens (N.C.) / Kennesaw St.",
       "teams": [
         {
-          "name": "Norfolk St.",
+          "name": "Long Island",
           "seed": 16,
           "region": "West",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/n/norfolk-st.70.png",
-          "record": "15-17",
-          "conference": "MEAC",
-          "kenpomRank": 320,
-          "kenpomAdjEM": -14.59
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/l/long-island.70.png",
+          "kenpomRank": 216,
+          "kenpomAdjEM": -3.95
         },
         {
-          "name": "Omaha",
+          "name": "Queens (N.C.)",
           "seed": 15,
           "region": "West",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/n/neb-omaha.70.png",
-          "record": "16-17",
-          "conference": "Summit League",
-          "kenpomRank": 262,
-          "kenpomAdjEM": -8.03
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/q/queens-nc.70.png",
+          "kenpomRank": 181,
+          "kenpomAdjEM": -1.44
         },
         {
-          "name": "UNC Wilmington",
+          "name": "Kennesaw St.",
           "seed": 14,
           "region": "West",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/u/unc-wilmington.70.png",
-          "record": "26-6",
-          "conference": "CAA",
-          "kenpomRank": 110,
-          "kenpomAdjEM": 5.82
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/k/kennesaw-st.70.png",
+          "record": "21-13",
+          "conference": "CUSA",
+          "kenpomRank": 163,
+          "kenpomAdjEM": 0.57
         }
       ]
     },
     {
       "id": "west-12-13-seeds",
-      "label": "Grand Canyon / Colorado St.",
+      "label": "Hawaii / High Point",
       "teams": [
         {
-          "name": "Grand Canyon",
+          "name": "Hawaii",
           "seed": 13,
           "region": "West",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/g/grand-canyon.70.png",
-          "record": "20-12",
-          "conference": "Mountain West",
-          "kenpomRank": 59,
-          "kenpomAdjEM": 13.54
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/h/hawaii.70.png",
+          "record": "24-8",
+          "conference": "Big West",
+          "kenpomRank": 108,
+          "kenpomAdjEM": 5.97
         },
         {
-          "name": "Colorado St.",
+          "name": "High Point",
           "seed": 12,
           "region": "West",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/c/colorado-st.70.png",
-          "record": "21-12",
-          "conference": "Mountain West",
-          "kenpomRank": 86,
-          "kenpomAdjEM": 9.63
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/h/high-point.70.png",
+          "record": "30-4",
+          "conference": "Big South",
+          "kenpomRank": 92,
+          "kenpomAdjEM": 8.4
         }
       ]
     },
     {
       "id": "west-seed-11",
-      "label": "Drake",
+      "label": "Texas or NC State",
       "teams": [
         {
-          "name": "Drake",
+          "name": "Texas",
           "seed": 11,
           "region": "West",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/d/drake.70.png",
-          "record": "14-20",
-          "conference": "MVC",
-          "kenpomRank": 196,
-          "kenpomAdjEM": -2.61
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/t/texas.70.png",
+          "isPlayIn": true,
+          "record": "18-14",
+          "conference": "SEC",
+          "kenpomRank": 37,
+          "kenpomAdjEM": 19.03
+        },
+        {
+          "name": "NC State",
+          "seed": 11,
+          "region": "West",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/n/north-carolina-st.70.png",
+          "isPlayIn": true,
+          "record": "20-13",
+          "conference": "ACC",
+          "kenpomRank": 34,
+          "kenpomAdjEM": 19.6
         }
       ]
     },
     {
       "id": "west-seed-10",
-      "label": "Arkansas",
+      "label": "Missouri",
       "teams": [
         {
-          "name": "Arkansas",
+          "name": "Missouri",
           "seed": 10,
           "region": "West",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/a/arkansas.70.png",
-          "record": "25-8",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/missouri.70.png",
+          "record": "20-12",
           "conference": "SEC",
-          "kenpomRank": 18,
-          "kenpomAdjEM": 25.97
+          "kenpomRank": 52,
+          "kenpomAdjEM": 15.39
         }
       ]
     },
     {
       "id": "west-seed-9",
-      "label": "Oklahoma",
+      "label": "Utah St.",
       "teams": [
         {
-          "name": "Oklahoma",
+          "name": "Utah St.",
           "seed": 9,
           "region": "West",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/o/oklahoma.70.png",
-          "record": "19-15",
-          "conference": "SEC",
-          "kenpomRank": 46,
-          "kenpomAdjEM": 16.81
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/u/utah-st.70.png",
+          "record": "28-6",
+          "conference": "Mountain West",
+          "kenpomRank": 30,
+          "kenpomAdjEM": 20.76
         }
       ]
     },
     {
       "id": "west-seed-8",
-      "label": "UConn",
+      "label": "Villanova",
       "teams": [
         {
-          "name": "UConn",
+          "name": "Villanova",
           "seed": 8,
           "region": "West",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/u/uconn.70.png",
-          "record": "29-5",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/v/villanova.70.png",
+          "record": "24-8",
           "conference": "Big East",
-          "kenpomRank": 10,
-          "kenpomAdjEM": 28.28
+          "kenpomRank": 33,
+          "kenpomAdjEM": 19.97
         }
       ]
     },
     {
       "id": "west-seed-7",
-      "label": "Kansas",
+      "label": "Miami (FL)",
       "teams": [
         {
-          "name": "Kansas",
+          "name": "Miami (FL)",
           "seed": 7,
           "region": "West",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/k/kansas.70.png",
-          "record": "23-10",
-          "conference": "Big 12",
-          "kenpomRank": 19,
-          "kenpomAdjEM": 25.46
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/miami-fl.70.png",
+          "record": "25-8",
+          "conference": "ACC",
+          "kenpomRank": 31,
+          "kenpomAdjEM": 20.68
         }
       ]
     },
     {
       "id": "west-seed-6",
-      "label": "Missouri",
+      "label": "BYU",
       "teams": [
         {
-          "name": "Missouri",
+          "name": "BYU",
           "seed": 6,
           "region": "West",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/missouri.70.png",
-          "record": "20-12",
-          "conference": "SEC",
-          "kenpomRank": 50,
-          "kenpomAdjEM": 15.51
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/b/byu.70.png",
+          "record": "23-11",
+          "conference": "Big 12",
+          "kenpomRank": 23,
+          "kenpomAdjEM": 23.25
         }
       ]
     },
     {
       "id": "west-seed-5",
-      "label": "Memphis",
+      "label": "Wisconsin",
       "teams": [
         {
-          "name": "Memphis",
+          "name": "Wisconsin",
           "seed": 5,
           "region": "West",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/memphis.70.png",
-          "record": "13-19",
-          "conference": "American",
-          "kenpomRank": 130,
-          "kenpomAdjEM": 3.22
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/w/wisconsin.70.png",
+          "record": "24-10",
+          "conference": "Big Ten",
+          "kenpomRank": 22,
+          "kenpomAdjEM": 23.39
         }
       ]
     },
     {
       "id": "west-seed-4",
-      "label": "Maryland",
+      "label": "Arkansas",
       "teams": [
         {
-          "name": "Maryland",
+          "name": "Arkansas",
           "seed": 4,
           "region": "West",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/maryland.70.png",
-          "record": "12-21",
-          "conference": "Big Ten",
-          "kenpomRank": 121,
-          "kenpomAdjEM": 4.19
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/a/arkansas.70.png",
+          "record": "25-8",
+          "conference": "SEC",
+          "kenpomRank": 15,
+          "kenpomAdjEM": 26.05
         }
       ]
     },
     {
       "id": "west-seed-3",
-      "label": "Texas Tech",
+      "label": "Gonzaga",
       "teams": [
         {
-          "name": "Texas Tech",
+          "name": "Gonzaga",
           "seed": 3,
           "region": "West",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/t/texas-tech.70.png",
-          "record": "22-10",
-          "conference": "Big 12",
-          "kenpomRank": 17,
-          "kenpomAdjEM": 26.09
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/g/gonzaga.70.png",
+          "record": "30-3",
+          "conference": "WCC",
+          "kenpomRank": 10,
+          "kenpomAdjEM": 28.1
         }
       ]
     },
     {
       "id": "west-seed-2",
-      "label": "St. John's",
+      "label": "Purdue",
       "teams": [
         {
-          "name": "St. John's",
+          "name": "Purdue",
           "seed": 2,
           "region": "West",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/s/st-johns-ny.70.png",
-          "record": "28-6",
-          "conference": "Big East",
-          "kenpomRank": 21,
-          "kenpomAdjEM": 24.48
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/p/purdue.70.png",
+          "record": "26-8",
+          "conference": "Big Ten",
+          "kenpomRank": 8,
+          "kenpomAdjEM": 31.2
         }
       ]
     },
     {
       "id": "west-seed-1",
-      "label": "Florida",
+      "label": "Arizona",
       "teams": [
         {
-          "name": "Florida",
+          "name": "Arizona",
           "seed": 1,
           "region": "West",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/f/florida.70.png",
-          "record": "26-7",
-          "conference": "SEC",
-          "kenpomRank": 4,
-          "kenpomAdjEM": 35.34
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/a/arizona.70.png",
+          "record": "32-2",
+          "conference": "Big 12",
+          "kenpomRank": 2,
+          "kenpomAdjEM": 37.66
         }
       ]
     },
     {
       "id": "south-14-15-16-seeds",
-      "label": "Alabama St. / Bryant / Lipscomb",
+      "label": "Prairie View A&M or Lehigh / Idaho / Penn",
       "teams": [
         {
-          "name": "Alabama St.",
+          "name": "Prairie View A&M",
           "seed": 16,
           "region": "South",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/a/alabama-st.70.png",
-          "record": "10-22",
-          "conference": "SWAC",
-          "kenpomRank": 318,
-          "kenpomAdjEM": -14.4
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/p/prairie-view.70.png",
+          "isPlayIn": true,
+          "kenpomRank": 288,
+          "kenpomAdjEM": -10.69
         },
         {
-          "name": "Bryant",
+          "name": "Lehigh",
+          "seed": 16,
+          "region": "South",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/l/lehigh.70.png",
+          "isPlayIn": true,
+          "record": "18-16",
+          "conference": "Patriot",
+          "kenpomRank": 284,
+          "kenpomAdjEM": -10.37
+        },
+        {
+          "name": "Idaho",
           "seed": 15,
           "region": "South",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/b/bryant.70.png",
-          "record": "9-22",
-          "conference": "America East",
-          "kenpomRank": 355,
-          "kenpomAdjEM": -22.98
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/i/idaho.70.png",
+          "record": "21-14",
+          "conference": "Big Sky",
+          "kenpomRank": 145,
+          "kenpomAdjEM": 1.53
         },
         {
-          "name": "Lipscomb",
+          "name": "Penn",
           "seed": 14,
           "region": "South",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/l/lipscomb.70.png",
-          "record": "19-13",
-          "conference": "ASUN",
-          "kenpomRank": 198,
-          "kenpomAdjEM": -2.82
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/p/penn.70.png",
+          "record": "17-11",
+          "conference": "Ivy League",
+          "kenpomRank": 150,
+          "kenpomAdjEM": 1.47
         }
       ]
     },
     {
       "id": "south-12-13-seeds",
-      "label": "Yale / UC San Diego",
+      "label": "Troy / McNeese",
       "teams": [
         {
-          "name": "Yale",
+          "name": "Troy",
           "seed": 13,
           "region": "South",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/y/yale.70.png",
-          "record": "24-5",
-          "conference": "Ivy League",
-          "kenpomRank": 78,
-          "kenpomAdjEM": 10.78
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/t/troy.70.png",
+          "record": "22-11",
+          "conference": "Sun Belt",
+          "kenpomRank": 143,
+          "kenpomAdjEM": 1.72
         },
         {
-          "name": "UC San Diego",
+          "name": "McNeese",
           "seed": 12,
           "region": "South",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/u/uc-san-diego.70.png",
-          "record": "23-11",
-          "conference": "Big West",
-          "kenpomRank": 113,
-          "kenpomAdjEM": 5.29
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/mcneese.70.png",
+          "record": "28-5",
+          "conference": "Southland",
+          "kenpomRank": 68,
+          "kenpomAdjEM": 12.48
         }
       ]
     },
     {
       "id": "south-seed-11",
-      "label": "North Carolina",
+      "label": "VCU",
       "teams": [
         {
-          "name": "North Carolina",
+          "name": "VCU",
           "seed": 11,
           "region": "South",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/n/north-carolina.70.png",
-          "record": "24-8",
-          "conference": "ACC",
-          "kenpomRank": 31,
-          "kenpomAdjEM": 21.05
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/v/vcu.70.png",
+          "record": "26-7",
+          "conference": "Atlantic 10",
+          "kenpomRank": 45,
+          "kenpomAdjEM": 17.21
         }
       ]
     },
     {
       "id": "south-seed-10",
-      "label": "New Mexico",
+      "label": "Texas A&M",
       "teams": [
         {
-          "name": "New Mexico",
+          "name": "Texas A&M",
           "seed": 10,
           "region": "South",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/n/new-mexico.70.png",
-          "record": "23-10",
-          "conference": "Mountain West",
-          "kenpomRank": 49,
-          "kenpomAdjEM": 15.87
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/t/texas-am.70.png",
+          "record": "21-11",
+          "conference": "SEC",
+          "kenpomRank": 39,
+          "kenpomAdjEM": 18.67
         }
       ]
     },
     {
       "id": "south-seed-9",
-      "label": "Creighton",
+      "label": "Iowa",
       "teams": [
         {
-          "name": "Creighton",
+          "name": "Iowa",
           "seed": 9,
           "region": "South",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/c/creighton.70.png",
-          "record": "15-17",
-          "conference": "Big East",
-          "kenpomRank": 75,
-          "kenpomAdjEM": 11.37
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/i/iowa.70.png",
+          "record": "21-12",
+          "conference": "Big Ten",
+          "kenpomRank": 25,
+          "kenpomAdjEM": 22.44
         }
       ]
     },
     {
       "id": "south-seed-8",
-      "label": "Louisville",
+      "label": "Clemson",
       "teams": [
         {
-          "name": "Louisville",
+          "name": "Clemson",
           "seed": 8,
           "region": "South",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/l/louisville.70.png",
-          "record": "23-10",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/c/clemson.70.png",
+          "record": "24-10",
           "conference": "ACC",
+          "kenpomRank": 36,
+          "kenpomAdjEM": 19.24
+        }
+      ]
+    },
+    {
+      "id": "south-seed-7",
+      "label": "Saint Mary's",
+      "teams": [
+        {
+          "name": "Saint Mary's",
+          "seed": 7,
+          "region": "South",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/s/st-marys-ca.70.png",
+          "record": "27-5",
+          "conference": "WCC",
+          "kenpomRank": 24,
+          "kenpomAdjEM": 23.07
+        }
+      ]
+    },
+    {
+      "id": "south-seed-6",
+      "label": "North Carolina",
+      "teams": [
+        {
+          "name": "North Carolina",
+          "seed": 6,
+          "region": "South",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/n/north-carolina.70.png",
+          "record": "24-8",
+          "conference": "ACC",
+          "kenpomRank": 29,
+          "kenpomAdjEM": 20.84
+        }
+      ]
+    },
+    {
+      "id": "south-seed-5",
+      "label": "Vanderbilt",
+      "teams": [
+        {
+          "name": "Vanderbilt",
+          "seed": 5,
+          "region": "South",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/v/vanderbilt.70.png",
+          "record": "26-7",
+          "conference": "SEC",
+          "kenpomRank": 12,
+          "kenpomAdjEM": 27.51
+        }
+      ]
+    },
+    {
+      "id": "south-seed-4",
+      "label": "Nebraska",
+      "teams": [
+        {
+          "name": "Nebraska",
+          "seed": 4,
+          "region": "South",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/n/nebraska.70.png",
+          "record": "26-6",
+          "conference": "Big Ten",
           "kenpomRank": 14,
           "kenpomAdjEM": 26.16
         }
       ]
     },
     {
-      "id": "south-seed-7",
-      "label": "Marquette",
-      "teams": [
-        {
-          "name": "Marquette",
-          "seed": 7,
-          "region": "South",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/marquette.70.png",
-          "record": "12-20",
-          "conference": "Big East",
-          "kenpomRank": 85,
-          "kenpomAdjEM": 9.72
-        }
-      ]
-    },
-    {
-      "id": "south-seed-6",
-      "label": "Ole Miss",
-      "teams": [
-        {
-          "name": "Ole Miss",
-          "seed": 6,
-          "region": "South",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/o/ole-miss.70.png",
-          "record": "15-20",
-          "conference": "SEC",
-          "kenpomRank": 80,
-          "kenpomAdjEM": 10.28
-        }
-      ]
-    },
-    {
-      "id": "south-seed-5",
-      "label": "Michigan",
-      "teams": [
-        {
-          "name": "Michigan",
-          "seed": 5,
-          "region": "South",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/michigan.70.png",
-          "record": "31-2",
-          "conference": "Big Ten",
-          "kenpomRank": 2,
-          "kenpomAdjEM": 39.33
-        }
-      ]
-    },
-    {
-      "id": "south-seed-4",
-      "label": "Texas A&M",
-      "teams": [
-        {
-          "name": "Texas A&M",
-          "seed": 4,
-          "region": "South",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/t/texas-am.70.png",
-          "record": "21-11",
-          "conference": "SEC",
-          "kenpomRank": 34,
-          "kenpomAdjEM": 19.85
-        }
-      ]
-    },
-    {
       "id": "south-seed-3",
-      "label": "Iowa St.",
+      "label": "Illinois",
       "teams": [
         {
-          "name": "Iowa St.",
+          "name": "Illinois",
           "seed": 3,
           "region": "South",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/i/iowa-st.70.png",
-          "record": "27-7",
-          "conference": "Big 12",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/i/illinois.70.png",
+          "record": "24-8",
+          "conference": "Big Ten",
           "kenpomRank": 7,
-          "kenpomAdjEM": 31.19
+          "kenpomAdjEM": 32.1
         }
       ]
     },
     {
       "id": "south-seed-2",
-      "label": "Michigan St.",
+      "label": "Houston",
       "teams": [
         {
-          "name": "Michigan St.",
+          "name": "Houston",
           "seed": 2,
           "region": "South",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/michigan-st.70.png",
-          "record": "25-7",
-          "conference": "Big Ten",
-          "kenpomRank": 9,
-          "kenpomAdjEM": 28.95
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/h/houston.70.png",
+          "record": "28-6",
+          "conference": "Big 12",
+          "kenpomRank": 5,
+          "kenpomAdjEM": 33.43
         }
       ]
     },
     {
       "id": "south-seed-1",
-      "label": "Auburn",
+      "label": "Florida",
       "teams": [
         {
-          "name": "Auburn",
+          "name": "Florida",
           "seed": 1,
           "region": "South",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/a/auburn.70.png",
-          "record": "17-16",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/f/florida.70.png",
+          "record": "26-7",
           "conference": "SEC",
-          "kenpomRank": 39,
-          "kenpomAdjEM": 18.73
+          "kenpomRank": 4,
+          "kenpomAdjEM": 33.79
         }
       ]
     },
     {
       "id": "midwest-14-15-16-seeds",
-      "label": "SIU Edwardsville / Wofford / Troy",
+      "label": "UMBC or Howard / Tennessee St. / Wright St.",
       "teams": [
         {
-          "name": "SIU Edwardsville",
+          "name": "UMBC",
           "seed": 16,
           "region": "Midwest",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/s/siu-edwardsville.70.png",
-          "record": "19-13",
-          "conference": "OVC",
-          "kenpomRank": 257,
-          "kenpomAdjEM": -7.6
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/u/umbc.70.png",
+          "isPlayIn": true,
+          "record": "24-8",
+          "conference": "America East",
+          "kenpomRank": 185,
+          "kenpomAdjEM": -1.67
         },
         {
-          "name": "Wofford",
+          "name": "Howard",
+          "seed": 16,
+          "region": "Midwest",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/h/howard.70.png",
+          "isPlayIn": true,
+          "record": "23-10",
+          "conference": "MEAC",
+          "kenpomRank": 207,
+          "kenpomAdjEM": -3.19
+        },
+        {
+          "name": "Tennessee St.",
           "seed": 15,
           "region": "Midwest",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/w/wofford.70.png",
-          "record": "19-13",
-          "conference": "SoCon",
-          "kenpomRank": 254,
-          "kenpomAdjEM": -7.3
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/t/tennessee-st.70.png",
+          "record": "23-9",
+          "conference": "OVC",
+          "kenpomRank": 187,
+          "kenpomAdjEM": -1.83
         },
         {
-          "name": "Troy",
+          "name": "Wright St.",
           "seed": 14,
           "region": "Midwest",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/t/troy.70.png",
-          "record": "22-11",
-          "conference": "Sun Belt",
-          "kenpomRank": 142,
-          "kenpomAdjEM": 1.72
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/w/wright-st.70.png",
+          "record": "23-11",
+          "conference": "Horizon",
+          "kenpomRank": 140,
+          "kenpomAdjEM": 2.04
         }
       ]
     },
     {
       "id": "midwest-12-13-seeds",
-      "label": "High Point / McNeese",
+      "label": "Hofstra / Akron",
       "teams": [
         {
-          "name": "High Point",
+          "name": "Hofstra",
           "seed": 13,
           "region": "Midwest",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/h/high-point.70.png",
-          "record": "30-4",
-          "conference": "Big South",
-          "kenpomRank": 93,
-          "kenpomAdjEM": 8.47
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/h/hofstra.70.png",
+          "record": "24-10",
+          "conference": "CAA",
+          "kenpomRank": 87,
+          "kenpomAdjEM": 9.49
         },
         {
-          "name": "McNeese",
+          "name": "Akron",
           "seed": 12,
           "region": "Midwest",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/mcneese.70.png",
-          "record": "28-5",
-          "conference": "Southland",
-          "kenpomRank": 69,
-          "kenpomAdjEM": 11.96
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/a/akron.70.png",
+          "record": "29-5",
+          "conference": "MAC",
+          "kenpomRank": 64,
+          "kenpomAdjEM": 12.8
         }
       ]
     },
     {
       "id": "midwest-seed-11",
-      "label": "Xavier",
+      "label": "Miami (Ohio) or SMU",
       "teams": [
         {
-          "name": "Xavier",
+          "name": "Miami (Ohio)",
           "seed": 11,
           "region": "Midwest",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/x/xavier.70.png",
-          "record": "15-18",
-          "conference": "Big East",
-          "kenpomRank": 96,
-          "kenpomAdjEM": 7.77
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/miami-oh.70.png",
+          "isPlayIn": true,
+          "kenpomRank": 93,
+          "kenpomAdjEM": 8.26
+        },
+        {
+          "name": "SMU",
+          "seed": 11,
+          "region": "Midwest",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/s/smu.70.png",
+          "isPlayIn": true,
+          "record": "20-13",
+          "conference": "ACC",
+          "kenpomRank": 42,
+          "kenpomAdjEM": 18.09
         }
       ]
     },
     {
       "id": "midwest-seed-10",
-      "label": "Utah St.",
+      "label": "Santa Clara",
       "teams": [
         {
-          "name": "Utah St.",
+          "name": "Santa Clara",
           "seed": 10,
           "region": "Midwest",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/u/utah-st.70.png",
-          "record": "28-6",
-          "conference": "Mountain West",
-          "kenpomRank": 36,
-          "kenpomAdjEM": 19.6
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/s/santa-clara.70.png",
+          "record": "26-8",
+          "conference": "WCC",
+          "kenpomRank": 35,
+          "kenpomAdjEM": 19.4
         }
       ]
     },
     {
       "id": "midwest-seed-9",
-      "label": "Georgia",
+      "label": "Saint Louis",
       "teams": [
         {
-          "name": "Georgia",
+          "name": "Saint Louis",
           "seed": 9,
           "region": "Midwest",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/g/georgia.70.png",
-          "record": "22-10",
-          "conference": "SEC",
-          "kenpomRank": 30,
-          "kenpomAdjEM": 21.06
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/s/saint-louis.70.png",
+          "record": "28-5",
+          "conference": "Atlantic 10",
+          "kenpomRank": 41,
+          "kenpomAdjEM": 18.32
         }
       ]
     },
     {
       "id": "midwest-seed-8",
-      "label": "Gonzaga",
+      "label": "Georgia",
       "teams": [
         {
-          "name": "Gonzaga",
+          "name": "Georgia",
           "seed": 8,
           "region": "Midwest",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/g/gonzaga.70.png",
-          "record": "30-3",
-          "conference": "WCC",
-          "kenpomRank": 11,
-          "kenpomAdjEM": 28.18
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/g/georgia.70.png",
+          "record": "22-10",
+          "conference": "SEC",
+          "kenpomRank": 32,
+          "kenpomAdjEM": 20.48
         }
       ]
     },
     {
       "id": "midwest-seed-7",
-      "label": "UCLA",
+      "label": "Kentucky",
       "teams": [
         {
-          "name": "UCLA",
+          "name": "Kentucky",
           "seed": 7,
           "region": "Midwest",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/u/ucla.70.png",
-          "record": "23-11",
-          "conference": "Big Ten",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/k/kentucky.70.png",
+          "record": "21-13",
+          "conference": "SEC",
           "kenpomRank": 28,
-          "kenpomAdjEM": 21.23
+          "kenpomAdjEM": 21.48
         }
       ]
     },
     {
       "id": "midwest-seed-6",
-      "label": "Illinois",
-      "teams": [
-        {
-          "name": "Illinois",
-          "seed": 6,
-          "region": "Midwest",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/i/illinois.70.png",
-          "record": "24-8",
-          "conference": "Big Ten",
-          "kenpomRank": 5,
-          "kenpomAdjEM": 32.73
-        }
-      ]
-    },
-    {
-      "id": "midwest-seed-5",
-      "label": "Clemson",
-      "teams": [
-        {
-          "name": "Clemson",
-          "seed": 5,
-          "region": "Midwest",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/c/clemson.70.png",
-          "record": "24-10",
-          "conference": "ACC",
-          "kenpomRank": 38,
-          "kenpomAdjEM": 18.95
-        }
-      ]
-    },
-    {
-      "id": "midwest-seed-4",
-      "label": "Purdue",
-      "teams": [
-        {
-          "name": "Purdue",
-          "seed": 4,
-          "region": "Midwest",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/p/purdue.70.png",
-          "record": "26-8",
-          "conference": "Big Ten",
-          "kenpomRank": 8,
-          "kenpomAdjEM": 29.48
-        }
-      ]
-    },
-    {
-      "id": "midwest-seed-3",
-      "label": "Kentucky",
-      "teams": [
-        {
-          "name": "Kentucky",
-          "seed": 3,
-          "region": "Midwest",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/k/kentucky.70.png",
-          "record": "21-13",
-          "conference": "SEC",
-          "kenpomRank": 27,
-          "kenpomAdjEM": 21.39
-        }
-      ]
-    },
-    {
-      "id": "midwest-seed-2",
       "label": "Tennessee",
       "teams": [
         {
           "name": "Tennessee",
-          "seed": 2,
+          "seed": 6,
           "region": "Midwest",
           "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/t/tennessee.70.png",
           "record": "22-11",
           "conference": "SEC",
           "kenpomRank": 16,
-          "kenpomAdjEM": 26.11
+          "kenpomAdjEM": 26.02
+        }
+      ]
+    },
+    {
+      "id": "midwest-seed-5",
+      "label": "Texas Tech",
+      "teams": [
+        {
+          "name": "Texas Tech",
+          "seed": 5,
+          "region": "Midwest",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/t/texas-tech.70.png",
+          "record": "22-10",
+          "conference": "Big 12",
+          "kenpomRank": 20,
+          "kenpomAdjEM": 25.22
+        }
+      ]
+    },
+    {
+      "id": "midwest-seed-4",
+      "label": "Alabama",
+      "teams": [
+        {
+          "name": "Alabama",
+          "seed": 4,
+          "region": "Midwest",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/a/alabama.70.png",
+          "record": "23-9",
+          "conference": "SEC",
+          "kenpomRank": 18,
+          "kenpomAdjEM": 25.72
+        }
+      ]
+    },
+    {
+      "id": "midwest-seed-3",
+      "label": "Virginia",
+      "teams": [
+        {
+          "name": "Virginia",
+          "seed": 3,
+          "region": "Midwest",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/v/virginia.70.png",
+          "record": "29-5",
+          "conference": "ACC",
+          "kenpomRank": 13,
+          "kenpomAdjEM": 26.71
+        }
+      ]
+    },
+    {
+      "id": "midwest-seed-2",
+      "label": "Iowa St.",
+      "teams": [
+        {
+          "name": "Iowa St.",
+          "seed": 2,
+          "region": "Midwest",
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/i/iowa-st.70.png",
+          "record": "27-7",
+          "conference": "Big 12",
+          "kenpomRank": 6,
+          "kenpomAdjEM": 32.42
         }
       ]
     },
     {
       "id": "midwest-seed-1",
-      "label": "Houston",
+      "label": "Michigan",
       "teams": [
         {
-          "name": "Houston",
+          "name": "Michigan",
           "seed": 1,
           "region": "Midwest",
-          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/h/houston.70.png",
-          "record": "28-6",
-          "conference": "Big 12",
-          "kenpomRank": 6,
-          "kenpomAdjEM": 32.47
+          "logoUrl": "https://www.ncaa.com/sites/default/files/images/logos/schools/m/michigan.70.png",
+          "record": "31-2",
+          "conference": "Big Ten",
+          "kenpomRank": 3,
+          "kenpomAdjEM": 37.59
         }
       ]
     }

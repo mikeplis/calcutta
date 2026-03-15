@@ -14,6 +14,7 @@ export type Team = {
   conference?: string
   kenpomRank?: number
   kenpomAdjEM?: number
+  isPlayIn?: boolean // true for both teams in a play-in matchup (First Four)
 }
 
 export type Lot = {
