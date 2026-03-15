@@ -4,37 +4,42 @@ import { generateDefaultLots, loadDefaultConfig } from './defaults'
 describe('generateDefaultLots', () => {
   const lots = generateDefaultLots()
 
-  it('generates 56 total lots', () => {
-    expect(lots).toHaveLength(56)
+  it('generates 52 total lots', () => {
+    expect(lots).toHaveLength(52)
   })
 
-  it('generates 8 bundle lots (2 per region)', () => {
-    const bundles = lots.filter((l) => l.teams.length === 2)
-    expect(bundles).toHaveLength(8)
+  it('generates 4 triple-bundle lots (14/15/16, one per region)', () => {
+    const tripleBundles = lots.filter((l) => l.teams.length === 3)
+    expect(tripleBundles).toHaveLength(4)
   })
 
-  it('generates 48 individual lots', () => {
+  it('generates 4 double-bundle lots (12/13, one per region)', () => {
+    const doubleBundles = lots.filter((l) => l.teams.length === 2)
+    expect(doubleBundles).toHaveLength(4)
+  })
+
+  it('generates 44 individual lots', () => {
     const individuals = lots.filter((l) => l.teams.length === 1)
-    expect(individuals).toHaveLength(48)
+    expect(individuals).toHaveLength(44)
   })
 
   it('has unique IDs for all lots', () => {
     const ids = lots.map((l) => l.id)
-    expect(new Set(ids).size).toBe(56)
+    expect(new Set(ids).size).toBe(52)
   })
 
   it('bundle lots contain correct seeds', () => {
-    const east1516 = lots.find((l) => l.id === 'east-15-16-seeds')!
-    expect(east1516.teams.map((t) => t.seed)).toEqual([15, 16])
-    expect(east1516.label).toBe('East 15/16 Seeds')
+    const east141516 = lots.find((l) => l.id === 'east-14-15-16-seeds')!
+    expect(east141516.teams.map((t) => t.seed)).toEqual([14, 15, 16])
+    expect(east141516.label).toBe('East 14/15/16 Seeds')
 
-    const west1314 = lots.find((l) => l.id === 'west-13-14-seeds')!
-    expect(west1314.teams.map((t) => t.seed)).toEqual([13, 14])
+    const west1213 = lots.find((l) => l.id === 'west-12-13-seeds')!
+    expect(west1213.teams.map((t) => t.seed)).toEqual([12, 13])
   })
 
-  it('individual lots cover seeds 1-12 for each region', () => {
+  it('individual lots cover seeds 1-11 for each region', () => {
     for (const region of ['East', 'West', 'South', 'Midwest']) {
-      for (let seed = 1; seed <= 12; seed++) {
+      for (let seed = 1; seed <= 11; seed++) {
         const lot = lots.find((l) => l.id === `${region.toLowerCase()}-seed-${seed}`)
         expect(lot).toBeDefined()
         expect(lot!.teams[0].seed).toBe(seed)
@@ -43,19 +48,19 @@ describe('generateDefaultLots', () => {
     }
   })
 
-  it('lots are grouped by region with bundles first then seeds 12 to 1', () => {
-    // Each region should have 14 lots: 2 bundles + 12 individual
+  it('lots are grouped by region with bundles first then seeds 11 to 1', () => {
+    // Each region should have 13 lots: 2 bundles + 11 individual
     for (let r = 0; r < 4; r++) {
-      const regionLots = lots.slice(r * 14, (r + 1) * 14)
+      const regionLots = lots.slice(r * 13, (r + 1) * 13)
 
-      // First two are bundles
-      expect(regionLots[0].teams).toHaveLength(2)
+      // First is the 3-team bundle (14/15/16), second is 2-team bundle (12/13)
+      expect(regionLots[0].teams).toHaveLength(3)
       expect(regionLots[1].teams).toHaveLength(2)
 
-      // Remaining 12 are individual, from seed 12 down to 1
-      for (let i = 0; i < 12; i++) {
+      // Remaining 11 are individual, from seed 11 down to 1
+      for (let i = 0; i < 11; i++) {
         expect(regionLots[2 + i].teams).toHaveLength(1)
-        expect(regionLots[2 + i].teams[0].seed).toBe(12 - i)
+        expect(regionLots[2 + i].teams[0].seed).toBe(11 - i)
       }
     }
   })
@@ -83,8 +88,8 @@ describe('loadDefaultConfig', () => {
     vi.spyOn(globalThis, 'fetch').mockRejectedValueOnce(new Error('Network error'))
 
     const config = await loadDefaultConfig()
-    expect(config.lots).toHaveLength(56)
-    expect(config.lots[0].teams[0].name).toBe('East 15 Seed')
+    expect(config.lots).toHaveLength(52)
+    expect(config.lots[0].teams[0].name).toBe('East 14 Seed')
 
     vi.restoreAllMocks()
   })
@@ -96,7 +101,7 @@ describe('loadDefaultConfig', () => {
     } as Response)
 
     const config = await loadDefaultConfig()
-    expect(config.lots).toHaveLength(56)
+    expect(config.lots).toHaveLength(52)
 
     vi.restoreAllMocks()
   })

@@ -181,30 +181,31 @@ function buildLots(teams: Team[]): Lot[] {
       bySeed.set(t.seed, t)
     }
 
-    // 15/16 bundle
+    // 14/15/16 bundle
+    const seed14 = bySeed.get(14)
     const seed15 = bySeed.get(15)
     const seed16 = bySeed.get(16)
-    if (seed15 && seed16) {
+    if (seed14 && seed15 && seed16) {
       lots.push({
-        id: `${region.toLowerCase()}-15-16-seeds`,
-        label: `${seed16.name} / ${seed15.name}`,
-        teams: [seed16, seed15],
+        id: `${region.toLowerCase()}-14-15-16-seeds`,
+        label: `${seed16.name} / ${seed15.name} / ${seed14.name}`,
+        teams: [seed16, seed15, seed14],
       })
     }
 
-    // 13/14 bundle
+    // 12/13 bundle
+    const seed12 = bySeed.get(12)
     const seed13 = bySeed.get(13)
-    const seed14 = bySeed.get(14)
-    if (seed13 && seed14) {
+    if (seed12 && seed13) {
       lots.push({
-        id: `${region.toLowerCase()}-13-14-seeds`,
-        label: `${seed14.name} / ${seed13.name}`,
-        teams: [seed14, seed13],
+        id: `${region.toLowerCase()}-12-13-seeds`,
+        label: `${seed13.name} / ${seed12.name}`,
+        teams: [seed13, seed12],
       })
     }
 
-    // Individual seeds 12 down to 1
-    for (let seed = 12; seed >= 1; seed--) {
+    // Individual seeds 11 down to 1
+    for (let seed = 11; seed >= 1; seed--) {
       const team = bySeed.get(seed)
       if (team) {
         lots.push({
