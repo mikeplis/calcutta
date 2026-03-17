@@ -19,6 +19,11 @@ export function RecentScreen() {
               <li key={entry.auctionId}>
                 <a
                   href={`/auction/${entry.auctionId}`}
+                  onClick={() => {
+                    if (entry.role === 'admin') {
+                      sessionStorage.setItem('calcutta-admin-auction-id', entry.auctionId)
+                    }
+                  }}
                   className="flex items-center justify-between px-4 py-3 bg-white rounded-lg border border-slate-200 hover:border-indigo-300 hover:shadow-sm transition-all"
                 >
                   <div>
