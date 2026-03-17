@@ -139,7 +139,7 @@ function AppRoutes() {
 
     const initialState: AuctionState = {
       auctionId: crypto.randomUUID(),
-      name: auctionName || undefined,
+      ...(auctionName ? { name: auctionName } : {}),
       players,
       lots,
       lotStates,
