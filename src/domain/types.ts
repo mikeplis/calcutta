@@ -37,6 +37,7 @@ export type LotAuctionState =
 
 export type AuctionState = {
   auctionId: string
+  name?: string
   players: Player[]
   lots: Lot[]
   lotStates: Record<string, LotAuctionState>

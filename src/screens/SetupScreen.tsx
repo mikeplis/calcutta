@@ -4,7 +4,7 @@ import { PlayerSetup } from './components/PlayerSetup'
 import { LotSetup } from './components/LotSetup'
 
 export function SetupScreen({ onStart }: { onStart: () => void }) {
-  const { players, lots, testMode, setTestMode } = useSetupStore()
+  const { players, lots, testMode, setTestMode, auctionName, setAuctionName } = useSetupStore()
   const [activeTab, setActiveTab] = useState<'players' | 'lots'>('players')
 
   const canStart = players.length >= 2 && lots.length >= 1
@@ -14,9 +14,23 @@ export function SetupScreen({ onStart }: { onStart: () => void }) {
     <div className="min-h-screen bg-slate-50">
       <header className="sticky top-0 z-20 bg-slate-900 text-white px-4 md:px-6 py-3 flex items-center justify-between">
         <h1 className="text-lg font-bold tracking-tight">Calcutta Auction</h1>
+        <a href="/recent" className="text-slate-300 hover:text-white text-sm transition-colors">Recent Auctions</a>
       </header>
       <div className="max-w-4xl mx-auto px-4 md:px-8 pt-4">
         <p className="text-slate-500 text-sm mt-1 mb-4">Configure players and lots before starting the auction.</p>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-slate-700 mb-1">
+            Auction name <span className="text-slate-400 font-normal">(optional)</span>
+          </label>
+          <input
+            type="text"
+            value={auctionName}
+            onChange={(e) => setAuctionName(e.target.value)}
+            placeholder="e.g. March Madness 2026"
+            className="w-full sm:w-80 px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          />
+        </div>
 
         <div className="flex border-b border-slate-200 mb-6">
           <button

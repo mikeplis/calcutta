@@ -9,6 +9,7 @@ type SetupState = {
   defaultBalance: number
   loading: boolean
   testMode: boolean
+  auctionName: string
   addPlayer: (name: string) => void
   removePlayer: (id: string) => void
   movePlayer: (id: string, direction: 'up' | 'down') => void
@@ -17,6 +18,7 @@ type SetupState = {
   setLots: (lots: Lot[]) => void
   resetLots: () => void
   setTestMode: (enabled: boolean) => void
+  setAuctionName: (name: string) => void
   importConfig: (config: { players: Player[]; lots: Lot[]; openerPlayerId: string }) => void
   exportConfig: () => { players: Player[]; lots: Lot[]; openerPlayerId: string }
 }
@@ -30,6 +32,7 @@ export const useSetupStore = create<SetupState>((set, get) => ({
   defaultBalance: 100,
   loading: true,
   testMode: false,
+  auctionName: '',
 
   addPlayer: (name) => {
     const id = `player-${nextPlayerId++}`
@@ -79,6 +82,8 @@ export const useSetupStore = create<SetupState>((set, get) => ({
   setDefaultBalance: (balance) => set({ defaultBalance: balance }),
 
   setTestMode: (enabled) => set({ testMode: enabled }),
+
+  setAuctionName: (name) => set({ auctionName: name }),
 
   setLots: (lots) => set({ lots }),
 

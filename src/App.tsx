@@ -8,9 +8,11 @@ import { AuctionScreen } from './screens/AuctionScreen'
 import { SummaryScreen } from './screens/SummaryScreen'
 import { PlayerSelectScreen } from './screens/PlayerSelectScreen'
 import { AnimationPlayground } from './screens/AnimationPlayground'
+import { RecentScreen } from './screens/RecentScreen'
 import { useAuction } from './hooks/useAuction'
 import { ErrorBoundary } from './screens/components/ErrorBoundary'
 import type { AuctionState, LotAuctionState } from './domain/types'
+import { addToHistory } from './lib/auctionHistory'
 
 const SESSION_TOKEN_KEY = 'calcutta-session-token'
 const ADMIN_AUCTION_KEY = 'calcutta-admin-auction-id'
@@ -62,13 +64,15 @@ function AuctionRoute() {
         return
       }
       if (svc) {
+        const state = svc.getState()
+        addToHistory({ auctionId: auctionId!, name: state.name, lastVisited: Date.now(), role: isAdmin ? 'admin' : 'participant' })
         setService(svc)
         // In test mode, skip player claiming and auto-select first player
-        if (svc.getState().testMode) {
-          setCurrentPlayerId(svc.getState().players[0].id)
+        if (state.testMode) {
+          setCurrentPlayerId(state.players[0].id)
         } else {
           // Check if we already claimed a player (reconnect)
-          const existing = findClaimedPlayerId(svc.getState(), sessionToken)
+          const existing = findClaimedPlayerId(state, sessionToken)
           if (existing) setCurrentPlayerId(existing)
         }
       } else {
@@ -126,7 +130,7 @@ function AppRoutes() {
   const sessionToken = useState(() => getSessionToken())[0]
 
   const handleStart = useCallback(async () => {
-    const { players, lots, openerPlayerId, testMode } = useSetupStore.getState()
+    const { players, lots, openerPlayerId, testMode, auctionName } = useSetupStore.getState()
 
     const lotStates: Record<string, LotAuctionState> = {}
     for (const lot of lots) {
@@ -135,6 +139,7 @@ function AppRoutes() {
 
     const initialState: AuctionState = {
       auctionId: crypto.randomUUID(),
+      name: auctionName || undefined,
       players,
       lots,
       lotStates,
@@ -151,6 +156,7 @@ function AppRoutes() {
     const svc = await FirebaseAuctionService.create(initialState)
     await svc.dispatch({ type: 'START_AUCTION' })
     sessionStorage.setItem(ADMIN_AUCTION_KEY, initialState.auctionId)
+    addToHistory({ auctionId: initialState.auctionId, name: initialState.name, lastVisited: Date.now(), role: 'admin' })
     setService(svc)
     if (testMode) {
       setCurrentPlayerId(players[0].id)
@@ -195,6 +201,7 @@ function AppRoutes() {
           )
         }
       />
+      <Route path="/recent" element={<RecentScreen />} />
       <Route path="/animations" element={<AnimationPlayground />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
