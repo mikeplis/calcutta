@@ -203,7 +203,10 @@ function AppRoutes() {
               <PlayerSelectScreen
                 service={service}
                 sessionToken={sessionToken}
-                onPlayerSelected={setCurrentPlayerId}
+                onPlayerSelected={(playerId) => {
+                  localStorage.setItem(playerStorageKey(service.getState().auctionId), playerId)
+                  setCurrentPlayerId(playerId)
+                }}
               />
             ) : (
               <AuctionServiceProvider service={service} isAdmin={true} currentPlayerId={currentPlayerId}>

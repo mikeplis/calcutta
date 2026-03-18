@@ -357,10 +357,11 @@ export function applyAction(state: AuctionState, action: AuctionAction): Auction
     case 'UNDO': {
       if (state.stateHistory.length === 0) return state
       const previousState = state.stateHistory[state.stateHistory.length - 1]
-      // Restore with the history minus the last entry
+      // Restore with the history minus the last entry, preserving current player claims
       return {
         ...previousState,
         stateHistory: state.stateHistory.slice(0, -1),
+        claimedPlayers: state.claimedPlayers,
       }
     }
 
