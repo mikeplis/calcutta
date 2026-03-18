@@ -18,10 +18,10 @@ const SESSION_TOKEN_KEY = 'calcutta-session-token'
 const ADMIN_AUCTION_KEY = 'calcutta-admin-auction-id'
 
 function getSessionToken(): string {
-  let token = sessionStorage.getItem(SESSION_TOKEN_KEY)
+  let token = localStorage.getItem(SESSION_TOKEN_KEY)
   if (!token) {
     token = crypto.randomUUID()
-    sessionStorage.setItem(SESSION_TOKEN_KEY, token)
+    localStorage.setItem(SESSION_TOKEN_KEY, token)
   }
   return token
 }
