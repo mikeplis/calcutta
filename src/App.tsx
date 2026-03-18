@@ -46,6 +46,10 @@ function AuctionView({ onNewAuction }: { onNewAuction: () => void }) {
 }
 
 /** Viewer route: joins an existing auction by ID from the URL. */
+function playerStorageKey(auctionId: string) {
+  return `calcutta-player-${auctionId}`
+}
+
 function AuctionRoute() {
   const { auctionId } = useParams<{ auctionId: string }>()
   const [service, setService] = useState<FirebaseAuctionService | null>(null)
@@ -53,6 +57,11 @@ function AuctionRoute() {
   const [currentPlayerId, setCurrentPlayerId] = useState<string | null>(null)
   const sessionToken = useState(() => getSessionToken())[0]
   const isAdmin = auctionId === sessionStorage.getItem(ADMIN_AUCTION_KEY)
+
+  const handlePlayerSelected = useCallback((playerId: string) => {
+    if (auctionId) localStorage.setItem(playerStorageKey(auctionId), playerId)
+    setCurrentPlayerId(playerId)
+  }, [auctionId])
 
   useEffect(() => {
     if (!auctionId) return
@@ -71,9 +80,14 @@ function AuctionRoute() {
         if (state.testMode) {
           setCurrentPlayerId(state.players[0].id)
         } else {
-          // Check if we already claimed a player (reconnect)
+          // Check if we already claimed a player (reconnect).
+          // First try session token match, then fall back to localStorage mapping.
           const existing = findClaimedPlayerId(state, sessionToken)
-          if (existing) setCurrentPlayerId(existing)
+            ?? localStorage.getItem(playerStorageKey(auctionId))
+          if (existing) {
+            localStorage.setItem(playerStorageKey(auctionId), existing)
+            setCurrentPlayerId(existing)
+          }
         }
       } else {
         setError('Auction not found')
@@ -111,7 +125,7 @@ function AuctionRoute() {
       <PlayerSelectScreen
         service={service}
         sessionToken={sessionToken}
-        onPlayerSelected={setCurrentPlayerId}
+        onPlayerSelected={handlePlayerSelected}
       />
     )
   }
