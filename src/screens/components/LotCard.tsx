@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback, Fragment } from 'react'
 import type { AuctionState } from '../../domain/types'
-import { getCurrentLot, getCurrentLotState } from '../../domain/logic'
+import { getCurrentLot, getCurrentLotState, getPendingTurnPlayer } from '../../domain/logic'
 import { SEED_PROBS } from '../../domain/seedProbabilities'
 
 type SoldInfo = { winner: string; amount: number; lotLabel: string; seedLabel: string }
@@ -165,7 +165,9 @@ export function LotCard({ state, soldInfo, onDismissSold }: Props) {
           <div className="bg-gray-50 rounded-lg p-4 text-center">
             <div className="text-sm text-gray-400 font-medium">Current High Bid</div>
             <div className="text-4xl font-bold text-gray-300">&mdash;</div>
-            <div className="text-sm text-gray-400">Waiting for opening bid</div>
+            <div className="text-sm text-gray-400">
+            Waiting for {getPendingTurnPlayer(state)?.name ?? '…'} to open
+          </div>
           </div>
         ) : null}
 

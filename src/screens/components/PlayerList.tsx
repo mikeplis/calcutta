@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { AuctionState } from '../../domain/types'
-import { getActivePlayerTurn, getCurrentLotState, getEligibleBidders } from '../../domain/logic'
+import { getActivePlayerTurn, getCurrentLotState, getEligibleBidders, getPendingTurnPlayer } from '../../domain/logic'
 
 type Props = {
   state: AuctionState
@@ -10,6 +10,7 @@ export function PlayerList({ state }: Props) {
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set())
   const lotState = getCurrentLotState(state)
   const activePlayer = getActivePlayerTurn(state)
+  const pendingTurnPlayer = lotState?.status === 'pending' ? getPendingTurnPlayer(state) : null
   const eligible = lotState?.status === 'active' ? getEligibleBidders(state) : []
   const eligibleIds = new Set(eligible.map((p) => p.id))
   const passedIds = lotState?.status === 'active' ? new Set(lotState.passedPlayerIds) : new Set<string>()
@@ -28,6 +29,7 @@ export function PlayerList({ state }: Props) {
       <div className="divide-y divide-slate-100">
         {state.players.map((player) => {
           const isActive = activePlayer?.id === player.id
+          const isPendingOpener = pendingTurnPlayer?.id === player.id
           const hasPassed = passedIds.has(player.id)
           const isEligible = eligibleIds.has(player.id)
           const isCurrentBidder =
@@ -47,7 +49,7 @@ export function PlayerList({ state }: Props) {
             <div key={player.id}>
               <div
                 className={`flex items-center justify-between py-3 px-2 rounded-lg transition-colors ${
-                  isActive
+                  isActive || isPendingOpener
                     ? 'bg-indigo-50 border-l-2 border-indigo-500 -ml-2 pl-4'
                     : isCurrentBidder
                       ? 'bg-green-50'
@@ -64,6 +66,11 @@ export function PlayerList({ state }: Props) {
                   {isActive && (
                     <span className="text-xs bg-indigo-600 text-white px-2 py-0.5 rounded-full animate-pulse">
                       BIDDING
+                    </span>
+                  )}
+                  {isPendingOpener && (
+                    <span className="text-xs bg-indigo-600 text-white px-2 py-0.5 rounded-full animate-pulse">
+                      OPENING
                     </span>
                   )}
                   {isCurrentBidder && !isActive && (

@@ -28,9 +28,9 @@ describe('LotCard', () => {
       const { getByText } = render(<LotCard state={state} />)
 
       expect(getByText('AWAITING OPEN')).toBeInTheDocument()
-      expect(getByText('Waiting for opening bid')).toBeInTheDocument()
+      expect(getByText(/Waiting for .* to open/)).toBeInTheDocument()
       // The pending bid placeholder shows a dash in the large-text element
-      const dash = getByText('Waiting for opening bid').closest('.bg-gray-50')!
+      const dash = getByText(/Waiting for .* to open/).closest('.bg-gray-50')!
       expect(dash).toHaveTextContent('—')
     })
   })
