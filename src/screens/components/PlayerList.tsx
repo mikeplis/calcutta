@@ -100,7 +100,7 @@ export function PlayerList({ state }: Props) {
               </div>
               {isExpanded && (
                 <div className="px-3 pb-3 space-y-1">
-                  {player.lotsWon.map((lotId) => {
+                  {[...player.lotsWon].reverse().map((lotId) => {
                     const lot = state.lots.find((l) => l.id === lotId)
                     const ls = state.lotStates[lotId]
                     const seeds = lot?.teams.map((t) => `#${t.seed}`).join('/') ?? ''

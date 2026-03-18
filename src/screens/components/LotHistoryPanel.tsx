@@ -11,6 +11,7 @@ export function LotHistoryPanel({ state }: Props) {
   const completedLots = state.lots
     .map((lot) => ({ lot, lotState: state.lotStates[lot.id] }))
     .filter(({ lotState }) => lotState?.status === 'sold' || lotState?.status === 'skipped')
+    .reverse()
 
   if (completedLots.length === 0) return null
 
