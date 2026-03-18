@@ -120,7 +120,8 @@ function AuctionRoute() {
     )
   }
 
-  if (!currentPlayerId) {
+  const auctionPhase = service.getState().phase
+  if (!currentPlayerId && auctionPhase !== 'complete') {
     return (
       <PlayerSelectScreen
         service={service}
