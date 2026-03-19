@@ -58,7 +58,9 @@ export function SummaryScreen({ onNewAuction }: { onNewAuction: () => void }) {
     if (!results) return []
 
     const resultMap = new Map(results.teams.map((t) => [`${t.name}:${t.seed}`, t]))
-    const maxWins = Math.max(0, ...results.teams.map((t) => t.roundsWon.length))
+    const eliminatedMap = new Map(
+      (results.eliminatedTeams ?? []).map((t) => [`${t.name}:${t.seed}`, t.eliminatedInRound]),
+    )
 
     const rows: Array<{
       teamName: string
@@ -76,14 +78,15 @@ export function SummaryScreen({ onNewAuction }: { onNewAuction: () => void }) {
         for (const team of lot.teams) {
           const result = resultMap.get(`${team.name}:${team.seed}`)
           const roundsWon = result?.roundsWon ?? []
-          const isRemaining = maxWins === 0 || roundsWon.length === maxWins
+          const eliminatedInRound = eliminatedMap.get(`${team.name}:${team.seed}`) ?? null
+          const isRemaining = eliminatedInRound === null
           rows.push({
             teamName: team.name,
             seed: team.seed,
             ownerName: player.name,
             roundsWon,
             isRemaining,
-            eliminatedInRound: isRemaining ? null : roundsWon.length + 1,
+            eliminatedInRound,
           })
         }
       }

@@ -26,6 +26,7 @@ function makeResults(overrides: Partial<TournamentResults> = {}): TournamentResu
     year: 2025,
     lastUpdated: Date.now(),
     teams: [],
+    eliminatedTeams: [],
     ...overrides,
   }
 }

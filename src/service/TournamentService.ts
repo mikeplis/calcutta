@@ -1,6 +1,6 @@
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
-import type { TournamentResults, TeamRoundResult, RoundOpponent } from '../domain/tournamentTypes'
+import type { TournamentResults, TeamRoundResult, EliminatedTeam, RoundOpponent } from '../domain/tournamentTypes'
 
 const CACHE_TTL_MS = 5 * 60 * 1000
 const NCAA_API_BASE = '/api/ncaa'
@@ -84,6 +84,7 @@ async function fetchFromNcaaApi(year: number): Promise<TournamentResults> {
   const visited = new Set<string>()
   const roundsByTeam = new Map<string, number[]>()
   const opponentsByTeam = new Map<string, RoundOpponent[]>()
+  const lostInRound = new Map<string, number>() // key → round they were eliminated in
 
   while (queue.length > 0) {
     const { game, round } = queue.shift()!
@@ -105,6 +106,7 @@ async function fetchFromNcaaApi(year: number): Promise<TournamentResults> {
         if (loser?.nameShort && loser.seed != null) {
           const opps = opponentsByTeam.get(key) ?? []
           opponentsByTeam.set(key, [...opps, { round, opponentName: loser.nameShort, opponentSeed: loser.seed }])
+          lostInRound.set(`${loser.nameShort}:${loser.seed}`, round)
         }
       }
     }
@@ -133,9 +135,21 @@ async function fetchFromNcaaApi(year: number): Promise<TournamentResults> {
     teams.push({ name, seed, roundsWon, isChampion, roundOpponents })
   }
 
+  // Build eliminatedTeams array — teams that have lost a game
+  const eliminatedTeams: EliminatedTeam[] = []
+  for (const [key, eliminatedInRound] of lostInRound) {
+    const colonIdx = key.lastIndexOf(':')
+    eliminatedTeams.push({
+      name: key.slice(0, colonIdx),
+      seed: parseInt(key.slice(colonIdx + 1), 10),
+      eliminatedInRound,
+    })
+  }
+
   return {
     year,
     lastUpdated: Date.now(),
     teams,
+    eliminatedTeams,
   }
 }

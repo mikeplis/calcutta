@@ -12,8 +12,15 @@ export type TeamRoundResult = {
   roundOpponents?: RoundOpponent[] // opponent defeated in each round
 }
 
+export type EliminatedTeam = {
+  name: string
+  seed: number
+  eliminatedInRound: number
+}
+
 export type TournamentResults = {
   year: number
   lastUpdated: number // epoch ms
   teams: TeamRoundResult[]
+  eliminatedTeams: EliminatedTeam[]
 }
