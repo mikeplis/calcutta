@@ -8,10 +8,14 @@
       "**/node_modules/**"
     ],
     "rewrites": [
+      { "source": "/api/ncaa/**", "function": "ncaaProxy" },
       {
         "source": "**",
         "destination": "/index.html"
       }
     ]
+  },
+  "functions": {
+    "source": "functions"
   }
 }

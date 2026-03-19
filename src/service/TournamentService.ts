@@ -3,9 +3,7 @@ import { db } from '../firebase'
 import type { TournamentResults, TeamRoundResult, RoundOpponent } from '../domain/tournamentTypes'
 
 const CACHE_TTL_MS = 5 * 60 * 1000
-const NCAA_API_BASE = import.meta.env.DEV
-  ? '/api/ncaa'
-  : 'https://ncaa-api.henrygd.me/brackets/basketball-men/d1'
+const NCAA_API_BASE = '/api/ncaa'
 
 type ApiTeam = {
   nameShort?: string
