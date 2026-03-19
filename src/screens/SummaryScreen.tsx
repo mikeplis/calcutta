@@ -306,16 +306,21 @@ export function SummaryScreen({ onNewAuction }: { onNewAuction: () => void }) {
                       </tr>
                     </thead>
                     <tbody>
-                      {allTeamRows.map(({ teamName, seed, ownerName, isRemaining }) => (
-                        <tr
-                          key={`${teamName}-${seed}`}
-                          className={`border-b border-gray-100 ${isRemaining ? '' : 'text-gray-400'}`}
-                        >
-                          <td className={`py-1.5 pr-4 ${isRemaining ? 'text-gray-500' : ''}`}>#{seed}</td>
-                          <td className={`py-1.5 pr-4 ${isRemaining ? '' : 'line-through'}`}>{teamName}{teamPriceMap.has(`${teamName}:${seed}`) ? ` ($${teamPriceMap.get(`${teamName}:${seed}`)})` : ''}</td>
-                          <td className="py-1.5 font-medium">{ownerName ?? '—'}</td>
-                        </tr>
-                      ))}
+                      {allTeamRows.map(({ teamName, seed, ownerName, isRemaining, roundsWon }) => {
+                        const hasWon = roundsWon.length > 0
+                        const rowClass = !isRemaining
+                          ? 'text-gray-300'
+                          : hasWon
+                            ? 'text-green-700'
+                            : 'text-gray-400'
+                        return (
+                          <tr key={`${teamName}-${seed}`} className={`border-b border-gray-100 ${rowClass}`}>
+                            <td className="py-1.5 pr-4">#{seed}</td>
+                            <td className={`py-1.5 pr-4 ${!isRemaining ? 'line-through' : ''}`}>{teamName}{teamPriceMap.has(`${teamName}:${seed}`) ? ` ($${teamPriceMap.get(`${teamName}:${seed}`)})` : ''}</td>
+                            <td className="py-1.5 font-medium">{ownerName ?? '—'}</td>
+                          </tr>
+                        )
+                      })}
                     </tbody>
                   </table>
                 ) : !champion ? (
