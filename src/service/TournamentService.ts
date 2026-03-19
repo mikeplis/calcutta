@@ -2,7 +2,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import type { TournamentResults, TeamRoundResult, EliminatedTeam, RoundOpponent } from '../domain/tournamentTypes'
 
-const CACHE_TTL_MS = 5 * 60 * 1000
+const CACHE_TTL_MS = 10 * 60 * 1000
 const NCAA_API_BASE = '/api/ncaa'
 
 type ApiTeam = {
