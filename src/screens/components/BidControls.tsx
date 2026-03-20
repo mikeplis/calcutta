@@ -63,20 +63,21 @@ export function BidControls({ state, onBid, onPass }: Props) {
   }
 
   const maxBid = activePlayer.balance
+  const isValidBid = Number.isInteger(bidAmount) && bidAmount >= minBid && bidAmount <= maxBid
   const quickIncrements = [1, 5, 10, 25]
 
   const [bidAnim, setBidAnim] = useState(false)
   const [passAnim, setPassAnim] = useState(false)
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && bidAmount >= minBid && bidAmount <= maxBid) {
+    if (e.key === 'Enter' && isValidBid) {
       setBidAnim(true)
       onBid(activePlayer.id, bidAmount)
     } else if (e.key === 'Escape' && (isPending || isActive)) {
       setPassAnim(true)
       onPass(activePlayer.id)
     }
-  }, [bidAmount, minBid, maxBid, activePlayer.id, isActive, onBid, onPass])
+  }, [isValidBid, bidAmount, activePlayer.id, isActive, isPending, onBid, onPass])
 
   return (
     <div className="bg-indigo-50 rounded-xl shadow-sm p-4" onKeyDown={handleKeyDown}>
@@ -95,6 +96,7 @@ export function BidControls({ state, onBid, onPass }: Props) {
             onChange={(e) => setBidInput(e.target.value)}
             min={minBid}
             max={maxBid}
+            step={1}
             className="w-24 px-3 py-2 border border-gray-300 rounded-lg text-center text-lg font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
@@ -102,7 +104,7 @@ export function BidControls({ state, onBid, onPass }: Props) {
         <button
           onClick={() => { setBidAnim(true); onBid(activePlayer.id, bidAmount) }}
           onAnimationEnd={() => setBidAnim(false)}
-          disabled={bidAmount < minBid || bidAmount > maxBid}
+          disabled={!isValidBid}
           className={`px-10 py-3 bg-indigo-600 text-white rounded-xl font-bold text-lg hover:bg-indigo-700 disabled:bg-slate-300 disabled:cursor-not-allowed ${bidAnim ? 'animate-button-flash' : ''}`}
         >
           {isPending ? 'Open' : 'Raise'}

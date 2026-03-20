@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useSetupStore } from '../../hooks/useSetupStore'
 
+const MAX_BALANCE = 1_000_000
+
 export function PlayerSetup() {
   const {
     players,
@@ -13,6 +15,27 @@ export function PlayerSetup() {
   } = useSetupStore()
 
   const [newName, setNewName] = useState('')
+  const [balanceInput, setBalanceInput] = useState(String(defaultBalance))
+
+  const handleBalanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const digits = e.target.value.replace(/\D/g, '')
+    const stripped = digits.replace(/^0+(\d)/, '$1')
+    if (stripped === '') {
+      setBalanceInput('')
+      return
+    }
+    const num = Math.min(parseInt(stripped, 10), MAX_BALANCE)
+    const clamped = String(num)
+    setBalanceInput(clamped)
+    setDefaultBalance(num)
+  }
+
+  const handleBalanceBlur = () => {
+    if (balanceInput === '' || parseInt(balanceInput, 10) < 1) {
+      setBalanceInput('1')
+      setDefaultBalance(1)
+    }
+  }
 
   const handleAdd = () => {
     const trimmed = newName.trim()
@@ -27,13 +50,17 @@ export function PlayerSetup() {
         <h2 className="text-xl font-semibold text-gray-900">Players</h2>
         <div className="flex items-center gap-2">
           <label className="text-sm text-gray-600">Balance:</label>
-          <input
-            type="number"
-            value={defaultBalance}
-            onChange={(e) => setDefaultBalance(Number(e.target.value))}
-            min={1}
-            className="w-24 px-2 py-1 border border-gray-300 rounded text-sm"
-          />
+          <div className="flex items-center border border-gray-300 rounded overflow-hidden">
+            <span className="px-2 text-sm text-gray-500 bg-gray-50 border-r border-gray-300">$</span>
+            <input
+              type="text"
+              inputMode="numeric"
+              value={balanceInput}
+              onChange={handleBalanceChange}
+              onBlur={handleBalanceBlur}
+              className="w-24 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
         </div>
       </div>
 
