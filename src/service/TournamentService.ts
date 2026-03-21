@@ -86,6 +86,17 @@ async function fetchFromNcaaApi(year: number): Promise<TournamentResults> {
   const opponentsByTeam = new Map<string, RoundOpponent[]>()
   const lostInRound = new Map<string, number>() // key → round they were eliminated in
 
+  // Process play-in games (section 1) to record losers eliminated before round 1
+  for (const game of games.filter((g) => g.sectionId === 1)) {
+    if (game.gameState === 'F') {
+      const winner = game.teams.find((t) => t.winner === true || t.isWinner === true)
+      const loser = game.teams.find((t) => t !== winner)
+      if (loser?.nameShort && loser.seed != null) {
+        lostInRound.set(`${loser.nameShort}:${loser.seed}`, 0)
+      }
+    }
+  }
+
   while (queue.length > 0) {
     const { game, round } = queue.shift()!
 
