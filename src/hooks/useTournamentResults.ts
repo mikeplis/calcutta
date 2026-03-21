@@ -14,10 +14,10 @@ export function useTournamentResults(year: number): {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const refresh = useCallback(() => {
+  const fetchResults = useCallback((force: boolean) => {
     setLoading(true)
     setError(null)
-    getTournamentResults(year)
+    getTournamentResults(year, force)
       .then((data) => {
         setResults(data)
         setLoading(false)
@@ -28,11 +28,13 @@ export function useTournamentResults(year: number): {
       })
   }, [year])
 
+  const refresh = useCallback(() => fetchResults(true), [fetchResults])
+
   useEffect(() => {
-    refresh()
-    const interval = setInterval(refresh, REFRESH_INTERVAL_MS)
+    fetchResults(false)
+    const interval = setInterval(() => fetchResults(false), REFRESH_INTERVAL_MS)
     return () => clearInterval(interval)
-  }, [refresh])
+  }, [fetchResults])
 
   return { results, loading, error, refresh }
 }

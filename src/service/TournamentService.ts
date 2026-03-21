@@ -27,11 +27,12 @@ type ApiResponse = {
 }
 
 // Main entry point — returns cached data or fetches fresh
-export async function getTournamentResults(year: number): Promise<TournamentResults | null> {
+// Pass force=true to bypass the TTL and always re-fetch from the NCAA API
+export async function getTournamentResults(year: number, force = false): Promise<TournamentResults | null> {
   const ref = doc(db, 'tournamentResults', String(year))
   const snap = await getDoc(ref)
 
-  if (snap.exists()) {
+  if (!force && snap.exists()) {
     const cached = snap.data() as TournamentResults
     if (cached.lastUpdated + CACHE_TTL_MS > Date.now()) {
       return cached
