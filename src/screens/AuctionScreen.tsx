@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect, useCallback } from 'react'
 import { useAuction } from '../hooks/useAuction'
+import { useMyTurnSound } from '../hooks/useMyTurnSound'
 import { LotCard } from './components/LotCard'
 import { BidControls } from './components/BidControls'
 import { PlayerList } from './components/PlayerList'
@@ -14,6 +15,15 @@ export function AuctionScreen({ onNewAuction }: { onNewAuction: () => void }) {
   const { state, dispatch, isAdmin, currentPlayerId } = useAuction()
   const [soldInfo, setSoldInfo] = useState<SoldInfo | null>(null)
   const prevLotStatesRef = useRef<Record<string, LotAuctionState>>(state.lotStates)
+
+  const activeLotState = getCurrentLotState(state)
+  let activePlayerId: string | null = null
+  if (activeLotState?.status === 'pending') {
+    activePlayerId = getPendingTurnPlayer(state)?.id ?? null
+  } else if (activeLotState?.status === 'active') {
+    activePlayerId = getActivePlayerTurn(state)?.id ?? null
+  }
+  useMyTurnSound(activePlayerId, currentPlayerId, state.currentLotIndex ?? -1)
   const soldTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // Start auto-dismiss timer when soldInfo is set
@@ -116,13 +126,6 @@ export function AuctionScreen({ onNewAuction }: { onNewAuction: () => void }) {
             <LotCard state={state} soldInfo={soldInfo ?? undefined} onDismissSold={handleDismissSold} />
             {(() => {
               if (!currentPlayerId) return null
-              const lotState = getCurrentLotState(state)
-              let activePlayerId: string | null = null
-              if (lotState?.status === 'pending') {
-                activePlayerId = getPendingTurnPlayer(state)?.id ?? null
-              } else if (lotState?.status === 'active') {
-                activePlayerId = getActivePlayerTurn(state)?.id ?? null
-              }
               const showControls = state.testMode
                 ? activePlayerId != null
                 : activePlayerId === currentPlayerId
